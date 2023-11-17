@@ -1,9 +1,9 @@
 :root {
   --background-rgb: 29 30 34;
-  
+
   --blue-rgb: 33 150 243;
   --primary-rgb: var(--blue-rgb);
-  
+
   --blob-color-1: rgb(var(--blue-rgb));
   --blob-color-2: dodgerblue;
 }
@@ -62,13 +62,13 @@ body {
   from {
     background-position: 0% 0%;
   }
-  
+
   to {
     background-position: 0% -100%;
   }
 }
 
-.screen-overlay {    
+.screen-overlay {
   background: linear-gradient(
     rgb(var(--primary-rgb) / 0.15),
     rgb(var(--primary-rgb) / 0.15) 3px,
@@ -85,52 +85,52 @@ body {
   top: 0px;
 }
 
-@keyframes pan-image {  
+@keyframes pan-image {
   0% {
     background-position: 36% 42%;
     background-size: 200%;
   }
-  
+
   20% {
     background-position: 30% 35%;
     background-size: 200%;
   }
-  
+
   20.0001% { /* -- View 2 -- */
     background-position: 60% 85%;
     background-size: 500%;
   }
-  
+
   40% {
     background-position: 49% 81%;
     background-size: 500%;
   }
-  
+
   40.0001% { /* -- View 3 -- */
     background-position: 80% 42%;
     background-size: 300%;
   }
-  
+
   60% {
     background-position: 84% 33%;
     background-size: 300%;
   }
-  
+
   60.0001% { /* -- View 4 -- */
     background-position: 0% 0%;
     background-size: 300%;
   }
-  
+
   80% {
     background-position: 15% 4%;
     background-size: 300%;
   }
-  
+
   80.0001% { /* -- View 5 -- */
     background-position: 80% 10%;
     background-size: 300%;
   }
-  
+
   100% {
     background-position: 72% 14%;
     background-size: 300%;
@@ -206,7 +206,7 @@ body {
 
 .screen > .screen-content > .screen-user > :is(.name, .link) {
   font-family: "Gill Sans Extrabold", sans-serif;
-  color: white; 
+  color: white;
   text-align: center;
 }
 
@@ -233,10 +233,10 @@ body {
 
 .screen > .screen-content > .screen-user > .name:after {
   top: 45%;
-  left: -1.5rem;  
+  left: -1.5rem;
 }
 
-.screen > .screen-content > .screen-user > .link {  
+.screen > .screen-content > .screen-user > .link {
   opacity: 0.8;
   font-size: 1.5rem;
   text-shadow: 0px 0px 0.5rem white;
@@ -245,8 +245,8 @@ body {
   text-decoration: none;
 }
 
-.screen > .screen-content > .screen-user > .link:is(:hover, :focus) {  
-  text-decoration: underline; 
+.screen > .screen-content > .screen-user > .link:is(:hover, :focus) {
+  text-decoration: underline;
 }
 
 @media(max-width: 700px) {
@@ -262,11 +262,11 @@ body {
   from {
     rotate: 0deg;
   }
-  
+
   50% {
     scale: 1 1.5;
   }
-  
+
   to {
     rotate: 360deg;
   }
@@ -274,9 +274,9 @@ body {
 
 #blob {
   background-color: white;
-  height: 34vmax;
+  height: 30%;
   aspect-ratio: 1;
-  position: absolute;
+  position: fixed;
   left: 50%;
   top: 50%;
   translate: -50% -50%;
@@ -320,7 +320,7 @@ body {
 }
 
 .meta-link > .label {
-  width: 160px; 
+  width: 160px;
   text-align: right;
 }
 
@@ -334,7 +334,7 @@ body {
 }
 
 .meta-link > a:is(:hover, :focus) > i {
-  color: white;  
+  color: white;
 }
 
 .meta-link > a.youtube {
@@ -342,7 +342,7 @@ body {
 }
 
 .meta-link > a.youtube > i {
-  padding-top: 0.2rem; 
+  padding-top: 0.2rem;
 }
 
 .meta-link > a > i {
