@@ -6,17 +6,44 @@
 <title>Maremoto — Somos tu departamento de ingeniería</title>
 <meta name="description" content="Tu empresa necesita software, no necesita contratar a tres personas para construirlo. Arquitectura, desarrollo, infraestructura y soporte, liderados por un ingeniero senior. Maremoto SpA, Santiago de Chile.">
 <meta name="theme-color" content="#0B0D10">
+<link rel="canonical" href="https://maremoto.dev/">
 
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://maremoto.dev/">
+<meta property="og:site_name" content="Maremoto">
 <meta property="og:title" content="Maremoto — Somos tu departamento de ingeniería">
-<meta property="og:description" content="El departamento de ingeniería completo para empresas que no pueden contratar tres sueldos. Liderado por un ingeniero senior.">
+<meta property="og:description" content="El departamento de ingeniería completo para empresas que no pueden contratar tres sueldos. Un líder senior a cargo, una flota de agentes en lo repetible.">
+<meta property="og:image" content="https://maremoto.dev/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:locale" content="es_CL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Maremoto — Somos tu departamento de ingeniería">
+<meta name="twitter:description" content="Un líder senior a cargo. Una flota de agentes en lo repetible. Salida a 60 días, sin causa.">
+<meta name="twitter:image" content="https://maremoto.dev/og.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./style.css">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./icon-180.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Maremoto SpA",
+  "alternateName": "Maremoto",
+  "url": "https://maremoto.dev/",
+  "logo": "https://maremoto.dev/og.png",
+  "email": "julio@ware.cl",
+  "description": "Departamento de ingeniería externalizado: arquitectura, desarrollo, infraestructura y soporte, liderados por un ingeniero senior.",
+  "address": { "@type": "PostalAddress", "addressLocality": "Santiago", "addressCountry": "CL" },
+  "areaServed": "LatAm",
+  "taxID": "78.426.196-4"
+}
+</script>
 </head>
 <body>
 
@@ -45,24 +72,50 @@
 
 <!-- ─────────────── HERO ─────────────── -->
 <section class="hero" id="top">
-  <div class="wrap">
-    <p class="eyebrow reveal">Maremoto SpA · Santiago de Chile</p>
-    <h1 class="reveal">Somos tu<br><span class="accent">departamento de ingeniería.</span></h1>
-    <p class="lede reveal">
-      Tu empresa necesita software. No necesita contratar a tres personas para construirlo.
-      Nosotros ponemos el departamento completo — arquitectura, desarrollo, infraestructura y
-      soporte — <strong>liderado por un ingeniero senior</strong>, no por un equipo junior que
-      hay que supervisar.
-    </p>
-    <div class="cta-row reveal">
-      <a class="btn btn-primary" href="#contacto">Conversemos</a>
-      <a class="btn btn-ghost" href="#como">Cómo funciona</a>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow reveal">Maremoto SpA · Santiago de Chile</p>
+      <h1 class="reveal">Somos tu<br><span class="accent">departamento de ingeniería.</span></h1>
+      <p class="lede reveal">
+        Tu empresa necesita software. No necesita contratar a tres personas para construirlo.
+        Nosotros ponemos el departamento completo — arquitectura, desarrollo, infraestructura y
+        soporte — <strong>liderado por un ingeniero senior</strong>, no por un equipo junior que
+        hay que supervisar.
+      </p>
+      <div class="cta-row reveal">
+        <a class="btn btn-primary" href="#contacto">Conversemos</a>
+        <a class="btn btn-ghost" href="#como">Cómo funciona</a>
+      </div>
     </div>
 
+    <!-- diagrama: un líder, una flota, tu tablero -->
+    <figure class="hero-viz reveal" aria-labelledby="vizcap">
+      <div class="viz-frame">
+        <svg class="swarm" viewBox="0 0 420 420" role="img" aria-label="Diagrama: un líder senior al centro, seis agentes alrededor trabajando en tareas repetibles, y un tablero donde el cliente lo ve todo.">
+          <g class="swarm-links" id="swarmLinks"></g>
+          <g class="swarm-nodes" id="swarmNodes"></g>
+          <g class="swarm-core">
+            <circle class="core-halo" cx="210" cy="210" r="62"></circle>
+            <circle class="core-disc" cx="210" cy="210" r="44"></circle>
+            <text class="core-t1" x="210" y="205">LÍDER</text>
+            <text class="core-t2" x="210" y="222">senior</text>
+          </g>
+        </svg>
+        <div class="viz-legend">
+          <span><i class="dot dot-core"></i>1 líder responde por tu producto</span>
+          <span><i class="dot dot-agent"></i>agentes en lo repetible, 24/7</span>
+        </div>
+      </div>
+      <figcaption id="vizcap" class="viz-cap">Así se cubre un departamento entero sin el costo de un departamento entero.</figcaption>
+    </figure>
+  </div>
+
+  <div class="wrap">
     <ul class="stat-strip reveal" aria-label="Cifras">
       <li><span class="stat-n">1</span><span class="stat-l">líder senior a cargo de tu producto</span></li>
       <li><span class="stat-n">24/7</span><span class="stat-l">agentes trabajando en lo repetible</span></li>
       <li><span class="stat-n">60</span><span class="stat-l">días de aviso para salir, sin causa</span></li>
+      <li><span class="stat-n">0</span><span class="stat-l">costo de contratación, finiquito o vacaciones</span></li>
     </ul>
   </div>
 </section>
@@ -79,18 +132,68 @@
     </p>
     <div class="grid grid-3">
       <article class="card reveal">
+        <span class="card-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 17 3 12l5-5"/><path d="m16 7 5 5-5 5"/><path d="M13.5 4 10.5 20"/></svg>
+        </span>
         <h3>Alguien que construya</h3>
         <p>Un desarrollador con criterio, capaz de decidir arquitectura y no sólo de ejecutar tickets.</p>
       </article>
       <article class="card reveal">
+        <span class="card-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>
+        </span>
         <h3>Alguien que lo mantenga en pie</h3>
         <p>Servidores, despliegues, respaldos, seguridad, incidentes. El trabajo que sólo se nota cuando falla.</p>
       </article>
       <article class="card reveal">
+        <span class="card-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3"/><circle cx="12" cy="12" r="6"/><path d="M12 9v3l2 2"/><path d="M3.5 12H6M18 12h2.5M5.6 5.6 7.4 7.4M16.6 16.6l1.8 1.8"/></svg>
+        </span>
         <h3>Alguien que decida qué construir</h3>
         <p>Traducir el negocio a producto, priorizar, y decir que no. El rol que casi nadie contrata y todos necesitan.</p>
       </article>
     </div>
+
+    <!-- comparación visual: tres caminos -->
+    <div class="compare reveal" role="table" aria-label="Comparación entre contratar un equipo, una fábrica de horas y Maremoto">
+      <div class="cmp-head" role="row">
+        <span role="columnheader"></span>
+        <span role="columnheader">Contratar un equipo</span>
+        <span role="columnheader">Fábrica de horas</span>
+        <span role="columnheader" class="cmp-us">Maremoto</span>
+      </div>
+      <div class="cmp-row" role="row">
+        <span class="cmp-k" role="rowheader">Quién decide la arquitectura</span>
+        <span role="cell" data-h="Contratar un equipo"><b class="v-mid">Tú contratas a alguien</b>si aciertas</span>
+        <span role="cell" data-h="Fábrica de horas"><b class="v-no">Tú</b>o nadie</span>
+        <span role="cell" class="cmp-us" data-h="Maremoto"><b class="v-yes">Un líder senior</b>con nombre y apellido</span>
+      </div>
+      <div class="cmp-row" role="row">
+        <span class="cmp-k" role="rowheader">Quién supervisa el trabajo</span>
+        <span role="cell" data-h="Contratar un equipo"><b class="v-no">Tú</b>todos los días</span>
+        <span role="cell" data-h="Fábrica de horas"><b class="v-no">Tú</b>y es el costo oculto</span>
+        <span role="cell" class="cmp-us" data-h="Maremoto"><b class="v-yes">Nosotros</b>el líder revisa antes que tú veas</span>
+      </div>
+      <div class="cmp-row" role="row">
+        <span class="cmp-k" role="rowheader">Costo de partir</span>
+        <span role="cell" data-h="Contratar un equipo"><b class="v-no">Alto</b>búsqueda, contratación, curva</span>
+        <span role="cell" data-h="Fábrica de horas"><b class="v-mid">Medio</b>rota gente cada proyecto</span>
+        <span role="cell" class="cmp-us" data-h="Maremoto"><b class="v-yes">Una conversación</b>y un presupuesto por escrito</span>
+      </div>
+      <div class="cmp-row" role="row">
+        <span class="cmp-k" role="rowheader">Costo de salir</span>
+        <span role="cell" data-h="Contratar un equipo"><b class="v-no">Finiquito</b>y el conocimiento se va</span>
+        <span role="cell" data-h="Fábrica de horas"><b class="v-mid">Variable</b>según lo que diga el contrato</span>
+        <span role="cell" class="cmp-us" data-h="Maremoto"><b class="v-yes">60 días</b>sin causa, simétrico</span>
+      </div>
+      <div class="cmp-row" role="row">
+        <span class="cmp-k" role="rowheader">Qué pasa a las 3 a.m.</span>
+        <span role="cell" data-h="Contratar un equipo"><b class="v-no">Nadie</b>tu equipo duerme</span>
+        <span role="cell" data-h="Fábrica de horas"><b class="v-no">Nadie</b>salvo que pagues guardia</span>
+        <span role="cell" class="cmp-us" data-h="Maremoto"><b class="v-mid">Guardia si la contratas</b>te lo decimos antes, no después</span>
+      </div>
+    </div>
+
     <p class="pullquote reveal">
       La alternativa habitual es una fábrica de software que te vende horas junior y te deja
       a ti el trabajo de supervisarlas. Eso no es un departamento: es un costo con tarea para ti.
@@ -108,12 +211,24 @@
       separado ni se coordinan entre proveedores: son un solo responsable.
     </p>
     <div class="grid grid-3 domains">
-      <article class="card reveal"><span class="idx">01</span><h3>Arquitectura</h3><p>Las decisiones que abren o cierran opciones comerciales dos años después.</p></article>
-      <article class="card reveal"><span class="idx">02</span><h3>Desarrollo de producto</h3><p>La lógica de negocio, las pantallas, el producto que tus clientes usan.</p></article>
-      <article class="card reveal"><span class="idx">03</span><h3>Integraciones</h3><p>ERPs, pasarelas, servicios tributarios, APIs de terceros. Y mantenerlas cuando cambian.</p></article>
-      <article class="card reveal"><span class="idx">04</span><h3>Infraestructura y seguridad</h3><p>Hosting, despliegues, respaldos, monitoreo, actualizaciones de seguridad.</p></article>
-      <article class="card reveal"><span class="idx">05</span><h3>Soporte</h3><p>Incidentes de tus clientes, resueltos con plazo comprometido por escrito.</p></article>
-      <article class="card reveal"><span class="idx">06</span><h3>Onboarding técnico</h3><p>Que el cliente número veinte no cueste lo mismo que el primero.</p></article>
+      <article class="card reveal"><span class="idx">01</span>
+        <span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8v8l9 5 9-5V8z"/><path d="M12 12 3 8M12 12l9-4M12 12v9"/></svg></span>
+        <h3>Arquitectura</h3><p>Las decisiones que abren o cierran opciones comerciales dos años después.</p></article>
+      <article class="card reveal"><span class="idx">02</span>
+        <span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg></span>
+        <h3>Desarrollo de producto</h3><p>La lógica de negocio, las pantallas, el producto que tus clientes usan.</p></article>
+      <article class="card reveal"><span class="idx">03</span>
+        <span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l2.6-2.6a4.5 4.5 0 0 0-6.4-6.4L11 6.6"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0L5 12.6a4.5 4.5 0 0 0 6.4 6.4L13 17.4"/></svg></span>
+        <h3>Integraciones</h3><p>ERPs, pasarelas, servicios tributarios, APIs de terceros. Y mantenerlas cuando cambian.</p></article>
+      <article class="card reveal"><span class="idx">04</span>
+        <span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.4 3.4 8.2 8 9 4.6-.8 8-4.6 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
+        <h3>Infraestructura y seguridad</h3><p>Hosting, despliegues, respaldos, monitoreo, actualizaciones de seguridad.</p></article>
+      <article class="card reveal"><span class="idx">05</span>
+        <span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"/><path d="M9 9h7M9 12.5h4"/></svg></span>
+        <h3>Soporte</h3><p>Incidentes de tus clientes, resueltos con plazo comprometido por escrito.</p></article>
+      <article class="card reveal"><span class="idx">06</span>
+        <span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20v-1a5 5 0 0 1 5-5h1"/><circle cx="9.5" cy="7.5" r="3.5"/><path d="M15 15h6M18 12v6"/></svg></span>
+        <h3>Onboarding técnico</h3><p>Que el cliente número veinte no cueste lo mismo que el primero.</p></article>
     </div>
   </div>
 </section>
@@ -128,6 +243,33 @@
       repetible no lo hacen personas. Lo decimos de frente, porque es la razón por la que los
       números funcionan.
     </p>
+
+    <!-- flujo visual: de tu pedido a tu tablero -->
+    <div class="flow reveal" id="flow" aria-label="Flujo: tú pides, el líder decide, los agentes ejecutan, tú lo ves en el tablero">
+      <div class="flow-track" aria-hidden="true"><span class="flow-dot"></span></div>
+      <ol class="flow-steps">
+        <li>
+          <span class="flow-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"/></svg></span>
+          <h3>Tú pides</h3>
+          <p>En la reunión semanal o cuando surja. En tus palabras, no en formato de ticket.</p>
+        </li>
+        <li>
+          <span class="flow-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a5 5 0 0 1 5 5c0 2-1 3-2 4.2-.7.9-1 1.8-1 2.8H10c0-1-.3-1.9-1-2.8C8 11 7 10 7 8a5 5 0 0 1 5-5z"/><path d="M10 19h4M10.5 21.5h3"/></svg></span>
+          <h3>El líder decide</h3>
+          <p>Arquitectura, alcance y prioridad. Lo que no conviene hacer, se dice.</p>
+        </li>
+        <li>
+          <span class="flow-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 10h.01M8 14h.01M11.5 10H16M11.5 14H16"/></svg></span>
+          <h3>Los agentes ejecutan</h3>
+          <p>Código, pruebas y documentación en paralelo, día y noche. Nada llega sin revisión.</p>
+        </li>
+        <li>
+          <span class="flow-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18v12H3z"/><path d="M7 9v4M12 8v5M17 11v2M3 21h18"/></svg></span>
+          <h3>Tú lo ves</h3>
+          <p>Tablero abierto: cada tarea, su estado y lo que se hizo. Cuando se te ocurra abrirlo.</p>
+        </li>
+      </ol>
+    </div>
 
     <div class="how">
       <article class="how-item reveal">
@@ -229,6 +371,46 @@
       </article>
     </div>
 
+    <!-- rampa visual -->
+    <div class="ramp reveal">
+      <div class="ramp-head">
+        <h3>La rampa: partes abajo y subes cuando el negocio sube</h3>
+        <p>El tramo cambia con un hito objetivo y verificable —tu facturación recurrente—, no con una conversación incómoda. <strong>Y baja solo si el negocio baja.</strong></p>
+      </div>
+      <ol class="ramp-track">
+        <li style="--h:26%">
+          <span class="ramp-bar" aria-hidden="true"></span>
+          <span class="ramp-n">Fase 0</span>
+          <b>Arranque</b>
+          <em>Precio fijo, plazo fijo, alcance escrito. De cero a algo que se puede mostrar y vender.</em>
+        </li>
+        <li style="--h:46%">
+          <span class="ramp-bar" aria-hidden="true"></span>
+          <span class="ramp-n">Fase 1</span>
+          <b>Entrada</b>
+          <em>Ya hay producto en producción. Capacidad mínima de desarrollo + soporte básico.</em>
+        </li>
+        <li style="--h:72%">
+          <span class="ramp-bar" aria-hidden="true"></span>
+          <span class="ramp-n">Fase 2</span>
+          <b>Crecimiento</b>
+          <em>Cuando tu facturación recurrente cruza el hito acordado, sube la capacidad.</em>
+        </li>
+        <li style="--h:100%">
+          <span class="ramp-bar" aria-hidden="true"></span>
+          <span class="ramp-n">Fase 3</span>
+          <b>Operación</b>
+          <em>El producto es crítico para tu negocio: respuesta más rápida y operación incluida.</em>
+        </li>
+      </ol>
+      <p class="ramp-foot">
+        <span class="ramp-shield" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.4 3.4 8.2 8 9 4.6-.8 8-4.6 8-9V6z"/></svg>
+        </span>
+        <span><b>Tope de proporción.</b> Desde la Fase 2, lo que pagas nunca supera una proporción acordada de tu propia facturación del trimestre anterior. Si la supera, bajas de tramo automáticamente — sin pedirlo y sin renegociar.</span>
+      </p>
+    </div>
+
     <div class="notnegotiable reveal">
       <h3>Lo que decimos de entrada</h3>
       <div class="nn-grid">
@@ -247,17 +429,17 @@
     <div class="split">
       <div class="split-a reveal">
         <p class="kicker">Sin amarres</p>
-        <h2>Tu código es tuyo.<br>Desde el primer día.</h2>
+        <h2>Tu código es tuyo.<br>Escrito antes de empezar.</h2>
         <p class="section-lede">
           La mayor objeción para externalizar ingeniería es quedar atrapado. Lo resolvemos en el
-          contrato, antes de empezar, y no en la letra chica.
+          contrato, antes de la primera línea de código, y no en la letra chica.
         </p>
       </div>
       <div class="split-b">
         <ul class="facts">
           <li class="reveal">
-            <h3>El producto queda a tu nombre</h3>
-            <p>Todo lo que construimos específicamente para tu negocio se te transfiere a medida que lo vas pagando. Las dependencias de terceros conservan sus propias licencias, como en cualquier software.</p>
+            <h3>El producto pasa a tu nombre a medida que lo pagas</h3>
+            <p>La cesión se perfecciona con el pago: cada entregable es tuyo cuando su factura está pagada. Las dependencias de terceros conservan sus propias licencias, como en cualquier software.</p>
           </li>
           <li class="reveal">
             <h3>Si te vas, te lo llevas</h3>
@@ -282,23 +464,38 @@
   <div class="wrap">
     <p class="kicker reveal">Cómo trabajamos</p>
     <h2 class="reveal">Verificable, no prometido.</h2>
-    <div class="grid grid-3">
-      <article class="card reveal">
-        <h3>Pruebas automatizadas</h3>
-        <p>Cada cosa que se construye llega con pruebas que corren solas. Si algo se rompe más adelante, se sabe el mismo día y no cuando lo reporta un cliente.</p>
-      </article>
-      <article class="card reveal">
-        <h3>Documentación viva</h3>
-        <p>Las decisiones quedan escritas mientras se toman, con su motivo. Si mañana cambias de proveedor —o de opinión— el porqué está registrado.</p>
-      </article>
-      <article class="card reveal">
-        <h3>Todo queda trazado</h3>
-        <p>Cada cambio queda ligado a la tarea que lo pidió. Se puede auditar hacia atrás sin depender de la memoria de nadie.</p>
-      </article>
-    </div>
-    <p class="mono-note reveal">
-      <span class="mono">$</span> De cero a producción en tres meses: 16 módulos, seguridad verificada en tres capas, 268 pruebas en verde.
+    <p class="section-lede reveal">
+      Todo lo que se entrega llega con pruebas que corren solas y con la decisión escrita al lado.
+      No es una promesa de calidad: es un registro que puedes revisar.
     </p>
+
+    <div class="method-grid">
+      <div class="grid grid-1 method-cards">
+        <article class="card reveal">
+          <h3>Pruebas automatizadas</h3>
+          <p>Cada cosa que se construye llega con pruebas que corren solas. Si algo se rompe más adelante, se sabe el mismo día y no cuando lo reporta un cliente.</p>
+        </article>
+        <article class="card reveal">
+          <h3>Documentación viva</h3>
+          <p>Las decisiones quedan escritas mientras se toman, con su motivo. Si mañana cambias de proveedor —o de opinión— el porqué está registrado.</p>
+        </article>
+        <article class="card reveal">
+          <h3>Todo queda trazado</h3>
+          <p>Cada cambio queda ligado a la tarea que lo pidió. Se puede auditar hacia atrás sin depender de la memoria de nadie.</p>
+        </article>
+      </div>
+
+      <!-- terminal: cómo se ve una tarea por dentro -->
+      <figure class="term reveal" id="term">
+        <div class="term-bar">
+          <span class="term-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="term-title">ghostware · tarea del día</span>
+        </div>
+        <pre class="term-body" id="termBody" aria-hidden="true"></pre>
+        <p class="sr-only">Ejemplo de una tarea: el líder la asigna, los agentes implementan y prueban, el líder revisa y se despliega, y todo queda en el tablero.</p>
+        <figcaption class="term-cap">Ejemplo ilustrativo con datos ficticios. El tablero real es el de tu proyecto.</figcaption>
+      </figure>
+    </div>
   </div>
 </section>
 
@@ -367,13 +564,56 @@
 <!-- ─────────────── CONTACTO ─────────────── -->
 <section class="section contact" id="contacto">
   <div class="wrap">
-    <h2 class="reveal">¿Conversamos?</h2>
-    <p class="section-lede center reveal">
-      Cuéntanos qué quieres construir. Si no somos lo que necesitas, te lo decimos en la primera
-      conversación.
-    </p>
-    <div class="cta-row center reveal">
-      <a class="btn btn-primary" href="mailto:julio@ware.cl?subject=Departamento%20de%20ingenier%C3%ADa%20—%20consulta">julio@ware.cl</a>
+    <div class="contact-grid">
+      <div class="contact-copy reveal">
+        <p class="kicker">Conversemos</p>
+        <h2>Cuéntanos qué quieres construir.</h2>
+        <p class="section-lede">
+          Cuatro campos. Con eso preparamos la primera conversación antes de que empiece —
+          y si no somos lo que necesitas, te lo decimos ahí mismo, sin costo.
+        </p>
+        <ul class="contact-facts">
+          <li>Respondemos en un día hábil.</li>
+          <li>La primera conversación no se cobra ni compromete a nada.</li>
+          <li>Si prefieres escribir directo: <a href="mailto:julio@ware.cl?subject=Departamento%20de%20ingenier%C3%ADa%20—%20consulta">julio@ware.cl</a></li>
+        </ul>
+      </div>
+
+      <form class="cform reveal" id="cform" novalidate>
+        <div class="f-row">
+          <label for="f-nombre">Tu nombre y empresa</label>
+          <input id="f-nombre" name="nombre" type="text" required autocomplete="organization" placeholder="Ana Pérez · Acme SpA">
+        </div>
+        <div class="f-row">
+          <label for="f-mail">Correo</label>
+          <input id="f-mail" name="mail" type="email" required autocomplete="email" placeholder="ana@acme.cl">
+        </div>
+        <div class="f-row">
+          <span class="f-label">¿En qué está hoy tu producto?</span>
+          <div class="f-chips" role="radiogroup" aria-label="Estado del producto">
+            <label><input type="radio" name="estado" value="Todavía no existe"><span>Todavía no existe</span></label>
+            <label><input type="radio" name="estado" value="A medias"><span>A medias</span></label>
+            <label><input type="radio" name="estado" value="En producción con clientes"><span>En producción</span></label>
+          </div>
+        </div>
+        <div class="f-row">
+          <label for="f-que">¿Qué necesitas construir o arreglar?</label>
+          <textarea id="f-que" name="que" rows="4" required placeholder="En tus palabras. Una frase basta para empezar."></textarea>
+        </div>
+        <div class="f-row">
+          <span class="f-label">¿Para cuándo?</span>
+          <div class="f-chips" role="radiogroup" aria-label="Plazo">
+            <label><input type="radio" name="plazo" value="Urgente (este mes)"><span>Este mes</span></label>
+            <label><input type="radio" name="plazo" value="Este trimestre"><span>Este trimestre</span></label>
+            <label><input type="radio" name="plazo" value="Explorando todavía"><span>Explorando</span></label>
+          </div>
+        </div>
+        <button class="btn btn-primary f-submit" type="submit">Enviar y agendar la conversación</button>
+        <p class="f-note" id="fNote">
+          Se abre tu correo con el mensaje ya escrito — así queda la copia en tu bandeja de enviados.
+          No usamos formularios que se pierden en un servidor.
+        </p>
+      </form>
     </div>
     <p class="contact-note reveal">Trabajamos con empresas en Chile y la región.</p>
   </div>
