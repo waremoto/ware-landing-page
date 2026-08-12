@@ -1,28 +1,396 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Waremoto</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Source+Code+Pro:wght@400;500;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="./style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maremoto — Somos tu departamento de ingeniería</title>
+<meta name="description" content="Tu empresa necesita software, no necesita contratar a tres personas para construirlo. Arquitectura, desarrollo, infraestructura y soporte, liderados por un ingeniero senior. Maremoto SpA, Santiago de Chile.">
+<meta name="theme-color" content="#0B0D10">
 
+<meta property="og:type" content="website">
+<meta property="og:title" content="Maremoto — Somos tu departamento de ingeniería">
+<meta property="og:description" content="El departamento de ingeniería completo para empresas que no pueden contratar tres sueldos. Liderado por un ingeniero senior.">
+<meta property="og:locale" content="es_CL">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
 </head>
 <body>
-<div class="screen">
-  <div class="screen-image"></div>
-  <div class="screen-content">
-    <i class="screen-icon fa-brands fa-shopware"></i>
-    <div class="screen-user">
-      <span class="name" data-value="Maremoto">Waremoto</span>
-      <a class="link" href="https://spawn.cards" target="_blank">Spawn</a>
+
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">Maremoto</span>
+    </a>
+    <nav class="nav-links" aria-label="Principal">
+      <a href="#departamento">El departamento</a>
+      <a href="#como">Cómo funciona</a>
+      <a href="#lineas">Qué se contrata</a>
+      <a href="#codigo">Tu código</a>
+      <a class="nav-cta" href="#contacto">Conversemos</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Cambiar tema">
+      <span class="theme-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ─────────────── HERO ─────────────── -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <p class="eyebrow reveal">Maremoto SpA · Santiago de Chile</p>
+    <h1 class="reveal">Somos tu<br><span class="accent">departamento de ingeniería.</span></h1>
+    <p class="lede reveal">
+      Tu empresa necesita software. No necesita contratar a tres personas para construirlo.
+      Nosotros ponemos el departamento completo — arquitectura, desarrollo, infraestructura y
+      soporte — <strong>liderado por un ingeniero senior</strong>, no por un equipo junior que
+      hay que supervisar.
+    </p>
+    <div class="cta-row reveal">
+      <a class="btn btn-primary" href="#contacto">Conversemos</a>
+      <a class="btn btn-ghost" href="#como">Cómo funciona</a>
+    </div>
+
+    <ul class="stat-strip reveal" aria-label="Cifras">
+      <li><span class="stat-n">1</span><span class="stat-l">líder senior a cargo de tu producto</span></li>
+      <li><span class="stat-n">24/7</span><span class="stat-l">agentes trabajando en lo repetible</span></li>
+      <li><span class="stat-n">60</span><span class="stat-l">días de aviso para salir, sin causa</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ─────────────── PROBLEMA ─────────────── -->
+<section class="section" id="problema">
+  <div class="wrap">
+    <p class="kicker reveal">El problema</p>
+    <h2 class="reveal">Tres sueldos que todavía no puedes pagar.</h2>
+    <p class="section-lede reveal">
+      Para construir y sostener un producto de software hacen falta al menos tres personas.
+      Contratarlas cuesta entre 6 y 9 millones al mes en Chile — y las vas a ocupar
+      una fracción del tiempo.
+    </p>
+    <div class="grid grid-3">
+      <article class="card reveal">
+        <h3>Alguien que construya</h3>
+        <p>Un desarrollador con criterio, capaz de decidir arquitectura y no sólo de ejecutar tickets.</p>
+      </article>
+      <article class="card reveal">
+        <h3>Alguien que lo mantenga en pie</h3>
+        <p>Servidores, despliegues, respaldos, seguridad, incidentes. El trabajo que sólo se nota cuando falla.</p>
+      </article>
+      <article class="card reveal">
+        <h3>Alguien que decida qué construir</h3>
+        <p>Traducir el negocio a producto, priorizar, y decir que no. El rol que casi nadie contrata y todos necesitan.</p>
+      </article>
+    </div>
+    <p class="pullquote reveal">
+      La alternativa habitual es una fábrica de software que te vende horas junior y te deja
+      a ti el trabajo de supervisarlas. Eso no es un departamento: es un costo con tarea para ti.
+    </p>
+  </div>
+</section>
+
+<!-- ─────────────── EL DEPARTAMENTO ─────────────── -->
+<section class="section alt" id="departamento">
+  <div class="wrap">
+    <p class="kicker reveal">Qué recibes</p>
+    <h2 class="reveal">El departamento completo, no una persona.</h2>
+    <p class="section-lede reveal">
+      Estos son los dominios que quedan cubiertos desde el primer mes. No se contratan por
+      separado ni se coordinan entre proveedores: son un solo responsable.
+    </p>
+    <div class="grid grid-3 domains">
+      <article class="card reveal"><span class="idx">01</span><h3>Arquitectura</h3><p>Las decisiones que abren o cierran opciones comerciales dos años después.</p></article>
+      <article class="card reveal"><span class="idx">02</span><h3>Desarrollo de producto</h3><p>La lógica de negocio, las pantallas, el producto que tus clientes usan.</p></article>
+      <article class="card reveal"><span class="idx">03</span><h3>Integraciones</h3><p>ERPs, pasarelas, servicios tributarios, APIs de terceros. Y mantenerlas cuando cambian.</p></article>
+      <article class="card reveal"><span class="idx">04</span><h3>Infraestructura y seguridad</h3><p>Hosting, despliegues, respaldos, monitoreo, actualizaciones de seguridad.</p></article>
+      <article class="card reveal"><span class="idx">05</span><h3>Soporte</h3><p>Incidentes de tus clientes, resueltos con plazo comprometido por escrito.</p></article>
+      <article class="card reveal"><span class="idx">06</span><h3>Onboarding técnico</h3><p>Que el cliente número veinte no cueste lo mismo que el primero.</p></article>
     </div>
   </div>
-</div>
+</section>
 
-<div id="blob"></div>
-<div id="blur"></div>
+<!-- ─────────────── CÓMO FUNCIONA ─────────────── -->
+<section class="section" id="como">
+  <div class="wrap">
+    <p class="kicker reveal">Cómo funciona</p>
+    <h2 class="reveal">Un líder senior. Una flota de agentes.<br>Tu tablero, siempre a la vista.</h2>
+    <p class="section-lede reveal">
+      Podemos cubrir un departamento entero por el costo de una fracción de él porque el trabajo
+      repetible no lo hacen personas. Lo decimos de frente, porque es la razón por la que los
+      números funcionan.
+    </p>
+
+    <div class="how">
+      <article class="how-item reveal">
+        <span class="how-n">01</span>
+        <div>
+          <h3>Un ingeniero líder, senior, a cargo</h3>
+          <p>
+            Una persona con nombre que conoce tu negocio, toma las decisiones técnicas y responde
+            por el resultado. No rota, no te lo cambian, y no hay que explicarle el proyecto de
+            nuevo cada mes.
+          </p>
+        </div>
+      </article>
+      <article class="how-item reveal">
+        <span class="how-n">02</span>
+        <div>
+          <h3>Agentes de IA haciendo el trabajo repetible, 24/7</h3>
+          <p>
+            Sobre <strong>GhostWare</strong>, nuestra propia plataforma de orquestación. Los agentes
+            escriben, prueban y documentan bajo supervisión; el líder revisa y decide. Es lo que
+            reemplaza al equipo junior — sin el costo de gestionarlo.
+          </p>
+        </div>
+      </article>
+      <article class="how-item reveal">
+        <span class="how-n">03</span>
+        <div>
+          <h3>Una reunión semanal contigo</h3>
+          <p>
+            Al principio para levantar lo que necesitas; después para revisar avances. Va escrita
+            en el contrato, no es cortesía. Es lo que hace que se sienta un departamento propio y
+            no un proveedor al que hay que perseguir.
+          </p>
+        </div>
+      </article>
+      <article class="how-item reveal">
+        <span class="how-n">04</span>
+        <div>
+          <h3>Un tablero que puedes mirar cuando quieras</h3>
+          <p>
+            Cada tarea, su estado y lo que se hizo. Sin informes de avance escritos para
+            tranquilizarte: el estado real, verificable, cuando se te ocurra abrirlo.
+          </p>
+        </div>
+      </article>
+    </div>
+
+    <div class="callout reveal">
+      <h3>Sin impuesto de gestión</h3>
+      <p>
+        Un equipo barato y junior tiene un costo que no aparece en la cotización: alguien de tu
+        lado tiene que revisarlo, corregirlo y coordinarlo. Ese alguien normalmente eres tú.
+        Con un líder senior a cargo, ese costo no existe.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── LÍNEAS ─────────────── -->
+<section class="section alt" id="lineas">
+  <div class="wrap">
+    <p class="kicker reveal">Qué se contrata</p>
+    <h2 class="reveal">Tres líneas. Por separado.</h2>
+    <p class="section-lede reveal">
+      Se contratan y se cancelan de forma independiente. Empiezas por donde te haga sentido y
+      subes cuando el negocio lo pida — con hitos objetivos, no con promesas.
+    </p>
+
+    <div class="grid grid-3 lines">
+      <article class="card line reveal">
+        <p class="line-tag">Línea 01</p>
+        <h3>Desarrollo</h3>
+        <p class="line-desc">Construimos tu producto. Se contrata por capacidad reservada al mes, no por alcance cerrado — para que un cambio de idea no sea una renegociación.</p>
+        <ul class="ticks">
+          <li>Arquitectura y desarrollo</li>
+          <li>Integraciones</li>
+          <li>Capacidad garantizada al mes</li>
+        </ul>
+      </article>
+      <article class="card line reveal">
+        <p class="line-tag">Línea 02</p>
+        <h3>Soporte</h3>
+        <p class="line-desc">Una vez que hay clientes usando el producto. Incidentes, corrección de defectos y consultas, con tiempo de respuesta comprometido por escrito.</p>
+        <ul class="ticks">
+          <li>Horario hábil por defecto</li>
+          <li>Tiempos de respuesta por tramo</li>
+          <li>Guardia extendida, si la contratas</li>
+        </ul>
+      </article>
+      <article class="card line reveal">
+        <p class="line-tag">Línea 03 · opcional</p>
+        <h3>Operación</h3>
+        <p class="line-desc">Si prefieres no preocuparte de servidores: los operamos nosotros. También puedes quedarte con tu infraestructura y usar sólo las otras dos líneas.</p>
+        <ul class="ticks">
+          <li>Hosting y despliegues</li>
+          <li>Respaldos y monitoreo</li>
+          <li>Actualizaciones de seguridad</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="notnegotiable reveal">
+      <h3>Lo que decimos de entrada</h3>
+      <div class="nn-grid">
+        <p><span class="nn-k">Sin exclusividad</span> Trabajamos con otros clientes, y tú puedes trabajar con otros proveedores.</p>
+        <p><span class="nn-k">Sin guardia por defecto</span> Si necesitas respuesta de madrugada, se contrata y se paga. No es una expectativa gratis.</p>
+        <p><span class="nn-k">Salida a 60 días</span> Cualquiera de los dos, sin causa y sin explicaciones. Simétrico.</p>
+        <p><span class="nn-k">Precio antes de empezar</span> El presupuesto formal incluye desarrollo, soporte y las condiciones de salida. Nada aparece después.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── TU CÓDIGO ─────────────── -->
+<section class="section" id="codigo">
+  <div class="wrap">
+    <div class="split">
+      <div class="split-a reveal">
+        <p class="kicker">Sin amarres</p>
+        <h2>Tu código es tuyo.<br>Desde el primer día.</h2>
+        <p class="section-lede">
+          La mayor objeción para externalizar ingeniería es quedar atrapado. Lo resolvemos en el
+          contrato, antes de empezar, y no en la letra chica.
+        </p>
+      </div>
+      <div class="split-b">
+        <ul class="facts">
+          <li class="reveal">
+            <h3>El producto es de tu propiedad</h3>
+            <p>Todo lo que construimos específicamente para tu negocio queda a tu nombre, en propiedad plena, a medida que lo vas pagando.</p>
+          </li>
+          <li class="reveal">
+            <h3>Si te vas, te lo llevas</h3>
+            <p>Código, infraestructura como código, datos y credenciales. Con un período de transición pactado para que el traspaso no sea un salto al vacío.</p>
+          </li>
+          <li class="reveal">
+            <h3>Puedes operarlo tú</h3>
+            <p>Levantas tu propio servicio y pagas menos por tus servidores. A cambio asumes tú el soporte: infraestructura, errores y nuevas funcionalidades.</p>
+          </li>
+          <li class="reveal">
+            <h3>La plataforma se licencia, no se regala</h3>
+            <p>GhostWare — el motor que ejecuta tu producto — no es parte de la cesión: te queda una licencia comercial perpetua para seguir operando. Está escrito así desde la propuesta, sin sorpresas al final.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── CÓMO TRABAJAMOS ─────────────── -->
+<section class="section alt" id="metodo">
+  <div class="wrap">
+    <p class="kicker reveal">Cómo trabajamos</p>
+    <h2 class="reveal">Verificable, no prometido.</h2>
+    <div class="grid grid-3">
+      <article class="card reveal">
+        <h3>Pruebas automatizadas</h3>
+        <p>Cada cosa que se construye llega con pruebas que corren solas. Si algo se rompe más adelante, se sabe el mismo día y no cuando lo reporta un cliente.</p>
+      </article>
+      <article class="card reveal">
+        <h3>Documentación viva</h3>
+        <p>Las decisiones quedan escritas mientras se toman, con su motivo. Si mañana cambias de proveedor —o de opinión— el porqué está registrado.</p>
+      </article>
+      <article class="card reveal">
+        <h3>Todo queda trazado</h3>
+        <p>Cada cambio queda ligado a la tarea que lo pidió. Se puede auditar hacia atrás sin depender de la memoria de nadie.</p>
+      </article>
+    </div>
+    <p class="mono-note reveal">
+      <span class="mono">$</span> De cero a producción en tres meses: 16 módulos, seguridad verificada en tres capas, 268 pruebas en verde.
+    </p>
+  </div>
+</section>
+
+<!-- ─────────────── PARA QUIÉN ─────────────── -->
+<section class="section" id="paraquien">
+  <div class="wrap">
+    <p class="kicker reveal">Antes de escribirnos</p>
+    <h2 class="reveal">Para quién sí, y para quién no.</h2>
+    <p class="section-lede reveal">
+      Preferimos decirlo ahora y no en el mes tres. Si estás en la columna derecha, te lo vamos a
+      decir en la primera conversación y no te vamos a cobrar por descubrirlo.
+    </p>
+    <div class="fit">
+      <div class="fit-col yes reveal">
+        <h3>Tiene sentido si…</h3>
+        <ul>
+          <li>Tienes clientes, o los tienes a la vista, y necesitas un producto real para atenderlos.</li>
+          <li>No puedes —o no quieres— armar y gestionar un equipo interno todavía.</li>
+          <li>Prefieres un responsable con nombre antes que una bolsa de horas.</li>
+          <li>Quieres saber desde el principio cómo termina la relación si decides terminarla.</li>
+        </ul>
+      </div>
+      <div class="fit-col no reveal">
+        <h3>No tiene sentido si…</h3>
+        <ul>
+          <li>Estás buscando la hora más barata del mercado. No competimos ahí.</li>
+          <li>Necesitas respuesta 24/7 desde el primer día pero no quieres pagar por esa guardia.</li>
+          <li>El alcance no se puede acotar ni siquiera para el primer mes.</li>
+          <li>Esperas equity en vez de una relación comercial. Trabajamos con contrato y factura.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── PROCESO ─────────────── -->
+<section class="section alt" id="proceso">
+  <div class="wrap">
+    <p class="kicker reveal">El proceso</p>
+    <h2 class="reveal">De la primera conversación al primer sprint.</h2>
+    <ol class="steps">
+      <li class="reveal">
+        <span class="step-n">01</span>
+        <h3>Conversación de levantamiento</h3>
+        <p>Una hora. Qué quieres construir, para quién, con qué plazo y con qué presupuesto real. Sin costo y sin compromiso.</p>
+      </li>
+      <li class="reveal">
+        <span class="step-n">02</span>
+        <h3>Presupuesto formal</h3>
+        <p>Por escrito: alternativas con sus implicancias, costo de desarrollo, costo de soporte mensual y las condiciones de salida. Todo por adelantado.</p>
+      </li>
+      <li class="reveal">
+        <span class="step-n">03</span>
+        <h3>Contrato entre empresas</h3>
+        <p>Empresa a empresa, con propiedad intelectual, plazos y responsabilidades definidas. Revisable por tu abogado antes de firmar.</p>
+      </li>
+      <li class="reveal">
+        <span class="step-n">04</span>
+        <h3>Primer sprint</h3>
+        <p>Arrancamos. Tablero disponible desde el día uno y primera reunión de avance a la semana.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ─────────────── CONTACTO ─────────────── -->
+<section class="section contact" id="contacto">
+  <div class="wrap">
+    <h2 class="reveal">¿Conversamos?</h2>
+    <p class="section-lede center reveal">
+      Cuéntanos qué quieres construir. Si no somos lo que necesitas, te lo decimos en la primera
+      conversación.
+    </p>
+    <div class="cta-row center reveal">
+      <a class="btn btn-primary" href="mailto:julio@ware.cl?subject=Departamento%20de%20ingenier%C3%ADa%20—%20consulta">julio@ware.cl</a>
+    </div>
+    <p class="contact-note reveal">Trabajamos con empresas en Chile y la región.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <p class="footer-brand">Maremoto SpA</p>
+      <p class="footer-meta">RUT 78.426.196-4 · Santiago de Chile</p>
+    </div>
+    <p class="footer-meta">© <span id="year">2026</span> Maremoto SpA</p>
+  </div>
+</footer>
+
 <script src="./script.js"></script>
-
 </body>
 </html>
