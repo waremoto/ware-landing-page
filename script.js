@@ -5,7 +5,7 @@
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* Agenda publica (Cal.com u otro). Vacio = oculto; poner la URL la activa. */
-  var AGENDA_URL = '';
+  var AGENDA_URL = 'https://cal.com/maremoto';
 
   /* ---------- theme ---------- */
   var root = document.documentElement;
@@ -112,41 +112,228 @@
     }, 1400);
   })();
 
+  /* ---------- GhostShell: tablero que avanza solo ---------- */
+  (function board() {
+    var kb = document.getElementById('kb');
+    var shell = document.getElementById('shell');
+    var act = document.getElementById('shellAct');
+    if (!kb || !shell) return;
+
+    var cols = Array.prototype.slice.call(kb.querySelectorAll('.kb-cards'));
+    var nums = Array.prototype.slice.call(kb.querySelectorAll('.kb-n'));
+    if (cols.length !== 4) return;
+
+    // [titulo, meta, columna inicial]
+    var TASKS = [
+      ['Factura electronica al SII', 'ACME-142', 0],
+      ['Recordatorio de pago por correo', 'ACME-147', 0],
+      ['Panel de cobranzas', 'ACME-139', 1],
+      ['Login con clave unica', 'ACME-131', 2],
+      ['Alta de clientes en dos pasos', 'ACME-128', 3],
+      ['Respaldos automaticos', 'ACME-119', 3]
+    ];
+
+    // lo que va entrando por la izquierda, para que el tablero no se vacie nunca
+    var INCOMING = [
+      'Exportar cartera a Excel',
+      'Aviso de stock bajo',
+      'Descuento por volumen',
+      'Buscador con filtros',
+      'Firma del contrato en linea',
+      'Reporte mensual automatico'
+    ];
+
+    var ACTIVITY = [
+      'agente 2 · escribiendo pruebas',
+      'agente 1 · integrando el SII',
+      'lider · revisando ACME-131',
+      'agente 3 · documentando la decision',
+      'agente 1 · desplegando a produccion',
+      'lider · rechaza y pide un cambio'
+    ];
+
+    function card(t) {
+      var el = document.createElement('article');
+      el.className = 'kb-card';
+      var b = document.createElement('b');
+      b.textContent = t[0];
+      var m = document.createElement('span');
+      m.className = 'kb-meta';
+      m.textContent = t[1];
+      el.appendChild(b);
+      el.appendChild(m);
+      return el;
+    }
+
+    function paint() {
+      cols.forEach(function (c, i) { nums[i].textContent = c.children.length; });
+      cols.forEach(function (c, i) {
+        Array.prototype.forEach.call(c.children, function (el) {
+          el.classList.toggle('is-live', i === 1);
+          el.classList.toggle('is-done', i === 3);
+        });
+      });
+    }
+
+    function build() {
+      cols.forEach(function (c) { c.innerHTML = ''; });
+      TASKS.forEach(function (t) { cols[t[2]].appendChild(card(t)); });
+      paint();
+    }
+
+    build();
+    if (reduced || !('IntersectionObserver' in window)) return;
+
+    var runId = 0;
+    var paused = true;
+    function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
+    async function loop() {
+      var me = ++runId;
+      var step = 0;
+      var nextId = 148;
+      var incoming = 0;
+
+      while (me === runId) {
+        while (paused) {
+          await sleep(250);
+          if (me !== runId) return;
+        }
+
+        // entra trabajo nuevo: el tablero de un cliente vivo nunca esta vacio
+        if (cols[0].children.length < 2) {
+          var t = [INCOMING[incoming % INCOMING.length], 'ACME-' + (nextId++), 0];
+          incoming++;
+          var fresh = card(t);
+          fresh.classList.add('entering');
+          cols[0].appendChild(fresh);
+          paint();
+          void fresh.offsetWidth;
+          fresh.classList.remove('entering');
+          await sleep(750);
+          if (me !== runId) return;
+        }
+
+        // se archiva lo que ya lleva rato en Listo
+        if (cols[3].children.length > 3) {
+          var old = cols[3].firstElementChild;
+          old.classList.add('leaving');
+          await sleep(340);
+          if (me !== runId) return;
+          if (old.parentNode) old.parentNode.removeChild(old);
+          paint();
+        }
+
+        // avanza la tarea mas a la derecha que todavia puede moverse
+        var from = -1;
+        for (var i = 2; i >= 0; i--) { if (cols[i].children.length) { from = i; break; } }
+        if (from === -1) { await sleep(700); continue; }
+
+        var el = cols[from].lastElementChild;
+        if (act) act.textContent = ACTIVITY[step % ACTIVITY.length];
+        step++;
+
+        el.classList.add('leaving');
+        await sleep(340);
+        if (me !== runId) return;
+
+        cols[from + 1].appendChild(el);
+        el.classList.remove('leaving');
+        el.classList.add('entering');
+        paint();
+        // reflow para que la transicion de entrada corra
+        void el.offsetWidth;
+        el.classList.remove('entering');
+
+        await sleep(1800);
+        if (me !== runId) return;
+      }
+    }
+
+    var bio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { paused = !e.isIntersecting; });
+    }, { threshold: 0.2 });
+    bio.observe(shell);
+    loop();
+  })();
+
   /* ---------- terminal ilustrativa ---------- */
   (function terminal() {
     var body = document.getElementById('termBody');
     var box = document.getElementById('term');
     if (!body || !box) return;
 
-    // [texto, clase, escribir-caracter-a-caracter]
-    var SCRIPT = [
-      ['$ ', 't-pr', false],
-      ['ghost tarea nueva "factura electronica al SII"', 't-cmd', true],
-      ['\n  lider    ', 't-dim', false],
-      ['alcance acotado, 2 integraciones, sin datos sensibles', 't-dim', false],
-      ['\n  plan     ', 't-dim', false],
-      ['4 subtareas, 6 pruebas nuevas', 't-dim', false],
-      ['\n\n  agente 1 ', 't-acc', false],
-      ['implementa emision  ', 't-dim', false],
-      ['ok', 't-ok', false],
-      ['\n  agente 2 ', 't-acc', false],
-      ['implementa folios   ', 't-dim', false],
-      ['ok', 't-ok', false],
-      ['\n  agente 3 ', 't-acc', false],
-      ['escribe pruebas     ', 't-dim', false],
-      ['ok', 't-ok', false],
-      ['\n  agente 4 ', 't-acc', false],
-      ['documenta decision  ', 't-dim', false],
-      ['ok', 't-ok', false],
-      ['\n\n  pruebas  ', 't-dim', false],
-      ['268 en verde', 't-ok', false],
-      ['  ·  cobertura 91%', 't-dim', false],
-      ['\n  revision ', 't-dim', false],
-      ['aprobada por el lider humano', 't-ok', false],
-      ['\n  entrega  ', 't-dim', false],
-      ['produccion 14:32  ·  visible en tu tablero', 't-dim', false],
-      ['\n\n', 't-dim', false],
-      ['listo. sin reunion de coordinacion, sin ticket perdido.', 't-ok', false]
+    // Tres actos. Cada linea: [texto, clase, escribir-caracter-a-caracter]
+    var ACTS = [
+      // 1 — el gestor: todos tus proyectos en un comando
+      [
+        ['$ ', 't-pr', false],
+        ['ware status', 't-cmd', true],
+        ['\n\n  PROYECTO        RAMA    CAMBIOS   PRUEBAS   METODO', 't-dim', false],
+        ['\n  acme-portal     main    limpio    ', 't-dim', false],
+        ['268 ok', 't-ok', false],
+        ['    al dia', 't-dim', false],
+        ['\n  acme-api        main    2 sin subir  ', 't-dim', false],
+        ['91 ok', 't-ok', false],
+        ['     al dia', 't-dim', false],
+        ['\n  acme-tienda     main    limpio    ', 't-dim', false],
+        ['44 ok', 't-ok', false],
+        ['     ', 't-dim', false],
+        ['1 desvio', 't-warn', false],
+        ['\n\n  ', 't-dim', false],
+        ['Tres proyectos, un comando. El desvio ya tiene tarea abierta.', 't-dim', false]
+      ],
+      // 2 — el trabajo del dia
+      [
+        ['$ ', 't-pr', false],
+        ['ghost tarea nueva "factura electronica al SII"', 't-cmd', true],
+        ['\n  lider     ', 't-dim', false],
+        ['alcance acotado · 2 integraciones · sin datos sensibles', 't-dim', false],
+        ['\n  plan      ', 't-dim', false],
+        ['4 subtareas · 6 pruebas nuevas · 1 decision a documentar', 't-dim', false],
+        ['\n\n  agente 1  ', 't-acc', false],
+        ['emision de documentos    ', 't-dim', false],
+        ['ok', 't-ok', false],
+        ['\n  agente 2  ', 't-acc', false],
+        ['folios y reintentos      ', 't-dim', false],
+        ['ok', 't-ok', false],
+        ['\n  agente 3  ', 't-acc', false],
+        ['pruebas de los dos casos ', 't-dim', false],
+        ['ok', 't-ok', false],
+        ['\n  agente 4  ', 't-acc', false],
+        ['documenta el porque      ', 't-dim', false],
+        ['ok', 't-ok', false],
+        ['\n\n  pruebas   ', 't-dim', false],
+        ['268 en verde', 't-ok', false],
+        ['  ·  ninguna quedo sin correr', 't-dim', false],
+        ['\n  revision  ', 't-dim', false],
+        ['aprobada por el lider humano', 't-ok', false],
+        ['\n  tablero   ', 't-dim', false],
+        ['ACME-142 movida a Listo, con lo que se hizo', 't-dim', false]
+      ],
+      // 3 — entrega, y lo que sigue corriendo cuando nadie mira
+      [
+        ['$ ', 't-pr', false],
+        ['ware release acme-portal --minor', 't-cmd', true],
+        ['\n  version   ', 't-dim', false],
+        ['1.4.0 -> 1.5.0', 't-acc', false],
+        ['\n  notas     ', 't-dim', false],
+        ['escritas desde las tareas cerradas, no a mano', 't-dim', false],
+        ['\n  publicado ', 't-dim', false],
+        ['14:41  ·  sin sacar el sitio de linea', 't-ok', false],
+        ['\n\n$ ', 't-pr', false],
+        ['ghost vigilancia', 't-cmd', true],
+        ['\n  servicios ', 't-dim', false],
+        ['3 en verde', 't-ok', false],
+        ['  ·  ultimo incidente: ninguno en 41 dias', 't-dim', false],
+        ['\n  respaldos ', 't-dim', false],
+        ['diarios', 't-ok', false],
+        ['  ·  restauracion probada el 09/08', 't-dim', false],
+        ['\n  agente 5  ', 't-acc', false],
+        ['nuevo, en modo sombra: propone, no ejecuta', 't-dim', false],
+        ['\n\n  ', 't-dim', false],
+        ['Esto corre igual un sabado a las 3 a.m.', 't-ok', false]
+      ]
     ];
 
     var runId = 0;
@@ -166,45 +353,56 @@
     }
 
     function full() {
-      return SCRIPT.map(function (l) { return [l[0], l[1]]; });
+      var out = [];
+      ACTS.forEach(function (act, i) {
+        if (i) out.push(['\n\n', 't-dim']);
+        act.forEach(function (l) { out.push([l[0], l[1]]); });
+      });
+      return out;
     }
 
     async function run() {
       var me = ++runId;
-      var shown = [];
-      render(shown, true);
-      await sleep(400);
-      if (me !== runId) return;
 
-      for (var i = 0; i < SCRIPT.length; i++) {
-        var line = SCRIPT[i];
-        if (line[2]) {
-          shown.push(['', line[1]]);
-          var cur = shown[shown.length - 1];
-          for (var c = 0; c < line[0].length; c++) {
+      for (var a = 0; a < ACTS.length; a++) {
+        var act = ACTS[a];
+        var shown = [];
+        render(shown, true);
+        await sleep(a === 0 ? 400 : 700);
+        if (me !== runId) return;
+
+        for (var i = 0; i < act.length; i++) {
+          var line = act[i];
+          if (line[2]) {
+            shown.push(['', line[1]]);
+            var cur = shown[shown.length - 1];
+            for (var c = 0; c < line[0].length; c++) {
+              while (paused) { await sleep(200); }
+              cur[0] += line[0][c];
+              render(shown, true);
+              await sleep(24 + Math.random() * 30);
+              if (me !== runId) return;
+            }
+            await sleep(400);
+          } else {
             while (paused) { await sleep(200); }
-            cur[0] += line[0][c];
+            shown.push([line[0], line[1]]);
             render(shown, true);
-            await sleep(26 + Math.random() * 34);
-            if (me !== runId) return;
+            await sleep(line[0].indexOf('\n') === 0 ? 230 : 130);
           }
-          await sleep(420);
-        } else {
-          while (paused) { await sleep(200); }
-          shown.push([line[0], line[1]]);
-          render(shown, true);
-          await sleep(line[0].indexOf('\n') === 0 ? 260 : 150);
+          if (me !== runId) return;
         }
+
+        render(shown, true);
+        await sleep(a === ACTS.length - 1 ? 5200 : 3400);
         if (me !== runId) return;
       }
 
-      render(shown, true);
-      await sleep(5200);
-      if (me !== runId) return;
       run();
     }
 
     if (reduced || !('IntersectionObserver' in window)) {
+      box.classList.add('term-static');
       render(full(), false);
       return;
     }
@@ -267,13 +465,13 @@
         'Enviado desde maremoto.dev'
       ].join('\n');
 
-      var href = 'mailto:julio@ware.cl'
+      var href = 'mailto:julio@maremoto.dev'
         + '?subject=' + encodeURIComponent('Departamento de ingenieria - ' + nombre)
         + '&body=' + encodeURIComponent(body);
 
       if (note) {
         note.className = 'f-note ok';
-        note.textContent = 'Abriendo tu correo con el mensaje escrito. Si no se abre, escribenos a julio@ware.cl.';
+        note.textContent = 'Abriendo tu correo con el mensaje escrito. Si no se abre, escribenos a julio@maremoto.dev.';
       }
       window.location.href = href;
 

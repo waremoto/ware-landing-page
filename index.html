@@ -36,7 +36,7 @@
   "alternateName": "Maremoto",
   "url": "https://maremoto.dev/",
   "logo": "https://maremoto.dev/og.png",
-  "email": "julio@ware.cl",
+  "email": "julio@maremoto.dev",
   "description": "Departamento de ingeniería externalizado: arquitectura, desarrollo, infraestructura y soporte, liderados por un ingeniero senior.",
   "address": { "@type": "PostalAddress", "addressLocality": "Santiago", "addressCountry": "CL" },
   "areaServed": "LatAm",
@@ -242,6 +242,51 @@
       repetible no lo hacen personas. Lo decimos de frente, porque es la razón por la que los
       números funcionan.
     </p>
+
+    <!-- GhostShell: el tablero que ves tú -->
+    <figure class="shell reveal" id="shell">
+      <div class="shell-bar">
+        <span class="shell-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="shell-title">GhostShell · tablero de Acme SpA</span>
+        <span class="shell-live" id="shellLive"><i aria-hidden="true"></i>en vivo</span>
+      </div>
+
+      <div class="kb" id="kb" aria-hidden="true">
+        <div class="kb-col">
+          <p class="kb-h">Pedido <span class="kb-n">0</span></p>
+          <div class="kb-cards"></div>
+        </div>
+        <div class="kb-col">
+          <p class="kb-h">Los agentes lo hacen <span class="kb-n">0</span></p>
+          <div class="kb-cards"></div>
+        </div>
+        <div class="kb-col">
+          <p class="kb-h">El líder revisa <span class="kb-n">0</span></p>
+          <div class="kb-cards"></div>
+        </div>
+        <div class="kb-col kb-done">
+          <p class="kb-h">Listo <span class="kb-n">0</span></p>
+          <div class="kb-cards"></div>
+        </div>
+      </div>
+
+      <p class="sr-only">
+        Vista simplificada del tablero: las tareas avanzan de tu pedido, a los agentes que la ejecutan,
+        a la revisión del líder humano, y sólo entonces a Listo. El pie muestra la actividad en curso.
+      </p>
+
+      <div class="shell-foot">
+        <span class="shell-act" id="shellAct">agente 2 · escribiendo pruebas</span>
+        <span class="shell-metrics">
+          <b>268</b> pruebas en verde
+          <i aria-hidden="true"></i>
+          <b>3</b> agentes trabajando
+        </span>
+      </div>
+      <figcaption class="shell-cap">
+        El mismo tablero que miramos nosotros. Sin informes de avance: el estado real, cuando se te ocurra abrirlo.
+      </figcaption>
+    </figure>
 
     <!-- flujo visual: de tu pedido a tu tablero -->
     <div class="flow reveal" id="flow" aria-label="Flujo: tú pides, el líder decide, los agentes ejecutan, tú lo ves en el tablero">
@@ -455,6 +500,47 @@
         </ul>
       </div>
     </div>
+
+    <!-- el repositorio, tal cual queda -->
+    <figure class="repo reveal">
+      <div class="repo-bar">
+        <span class="repo-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v14H6.5A2.5 2.5 0 0 0 4 19.5z"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20v4H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg>
+        </span>
+        <span class="repo-name">acme-portal</span>
+        <span class="repo-owner">propiedad de Acme SpA</span>
+      </div>
+      <div class="repo-body">
+        <ul class="repo-tree">
+          <li class="dir">src/</li>
+          <li class="dir">infra/<span>como código</span></li>
+          <li class="dir">tests/<span>268</span></li>
+          <li class="dir">docs/<span>decisiones</span></li>
+          <li>README.md</li>
+          <li class="on">LICENSE.md</li>
+        </ul>
+        <pre class="repo-file"><span class="c">## 1 · El producto</span>
+Titular: <b>Acme SpA</b>.
+Cada entregable se cede al pagarse su factura.
+Incluye código, infraestructura como código,
+datos, credenciales y documentación.
+
+<span class="c">## 2 · La plataforma</span>
+GhostWare <b>no</b> entra en la cesión.
+Licencia comercial <b>perpetua</b>, no exclusiva,
+para seguir operando el producto — también
+si te vas.
+
+<span class="c">## 3 · Terceros</span>
+Cada dependencia conserva su licencia
+(MIT, Apache-2.0, PostgreSQL…), como en
+cualquier software del mundo.</pre>
+      </div>
+      <figcaption class="repo-cap">
+        Ejemplo con nombre ficticio. Lo importante es que esas tres secciones existen y están escritas
+        <strong>antes</strong> de la primera línea de código, no cuando decides irte.
+      </figcaption>
+    </figure>
   </div>
 </section>
 
@@ -465,7 +551,9 @@
     <h2 class="reveal">Verificable, no prometido.</h2>
     <p class="section-lede reveal">
       Todo lo que se entrega llega con pruebas que corren solas y con la decisión escrita al lado.
-      No es una promesa de calidad: es un registro que puedes revisar.
+      No es una promesa de calidad: es un registro que puedes revisar. A la derecha, un día de trabajo
+      real sobre GhostWare — del estado de todos tus proyectos a lo que sigue corriendo un sábado a las
+      tres de la mañana.
     </p>
 
     <div class="method-grid">
@@ -488,11 +576,11 @@
       <figure class="term reveal" id="term">
         <div class="term-bar">
           <span class="term-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="term-title">ghostware · tarea del día</span>
+          <span class="term-title">ghostware · un día cualquiera</span>
         </div>
         <pre class="term-body" id="termBody" aria-hidden="true"></pre>
         <p class="sr-only">Ejemplo de una tarea: el líder la asigna, los agentes implementan y prueban, el líder revisa y se despliega, y todo queda en el tablero.</p>
-        <figcaption class="term-cap">Ejemplo ilustrativo con datos ficticios. El tablero real es el de tu proyecto.</figcaption>
+        <figcaption class="term-cap">Comandos reales de GhostWare, con datos de ejemplo. Tú no escribes ninguno: los ves reflejados en el tablero.</figcaption>
       </figure>
     </div>
 
@@ -588,7 +676,7 @@
         <ul class="contact-facts">
           <li>Respondemos en un día hábil.</li>
           <li>La primera conversación no se cobra ni compromete a nada.</li>
-          <li>Si prefieres escribir directo: <a href="mailto:julio@ware.cl?subject=Departamento%20de%20ingenier%C3%ADa%20—%20consulta">julio@ware.cl</a></li>
+          <li>Si prefieres escribir directo: <a href="mailto:julio@maremoto.dev?subject=Departamento%20de%20ingenier%C3%ADa%20—%20consulta">julio@maremoto.dev</a></li>
         </ul>
         <!-- Agenda: se activa poniendo la URL en AGENDA_URL (script.js). Oculto mientras esté vacía. -->
         <p class="agenda" id="agendaWrap" hidden>
