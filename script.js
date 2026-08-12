@@ -4,6 +4,9 @@
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* Agenda publica (Cal.com u otro). Vacio = oculto; poner la URL la activa. */
+  var AGENDA_URL = '';
+
   /* ---------- theme ---------- */
   var root = document.documentElement;
   var STORE = 'maremoto-theme';
@@ -282,6 +285,17 @@
     form.addEventListener('input', function (ev) {
       if (ev.target.classList) ev.target.classList.remove('invalid');
     });
+  })();
+
+  /* ---------- agenda opcional ---------- */
+  (function agenda() {
+    var wrap = document.getElementById('agendaWrap');
+    var link = document.getElementById('agendaLink');
+    if (!wrap || !link || !AGENDA_URL) return;
+    link.href = AGENDA_URL;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    wrap.hidden = false;
   })();
 
   /* ---------- year ---------- */

@@ -22,9 +22,8 @@
 <meta name="twitter:description" content="Un líder senior a cargo. Una flota de agentes en lo repetible. Salida a 60 días, sin causa.">
 <meta name="twitter:image" content="https://maremoto.dev/og.png">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" href="./fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="./style.css">
 <link rel="icon" href="./favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="./icon-180.png">
@@ -496,6 +495,20 @@
         <figcaption class="term-cap">Ejemplo ilustrativo con datos ficticios. El tablero real es el de tu proyecto.</figcaption>
       </figure>
     </div>
+
+    <div class="proof reveal">
+      <p class="proof-k">Un proyecto real, sin nombre por acuerdo de confidencialidad</p>
+      <p class="proof-line">
+        <span class="proof-n">3</span><span class="proof-u">meses</span>
+        <span class="proof-sep" aria-hidden="true"></span>
+        <span class="proof-n">16</span><span class="proof-u">módulos</span>
+        <span class="proof-sep" aria-hidden="true"></span>
+        <span class="proof-n">3</span><span class="proof-u">capas de seguridad verificadas</span>
+        <span class="proof-sep" aria-hidden="true"></span>
+        <span class="proof-n">268</span><span class="proof-u">pruebas en verde</span>
+      </p>
+      <p class="proof-note">De cero a producción. No publicamos el nombre del cliente sin su permiso por escrito — es la misma discreción que tendrías tú.</p>
+    </div>
   </div>
 </section>
 
@@ -577,6 +590,10 @@
           <li>La primera conversación no se cobra ni compromete a nada.</li>
           <li>Si prefieres escribir directo: <a href="mailto:julio@ware.cl?subject=Departamento%20de%20ingenier%C3%ADa%20—%20consulta">julio@ware.cl</a></li>
         </ul>
+        <!-- Agenda: se activa poniendo la URL en AGENDA_URL (script.js). Oculto mientras esté vacía. -->
+        <p class="agenda" id="agendaWrap" hidden>
+          <a class="btn btn-ghost" id="agendaLink" href="#">Reservar hora directamente</a>
+        </p>
       </div>
 
       <form class="cform reveal" id="cform" novalidate>
