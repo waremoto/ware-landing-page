@@ -650,8 +650,7 @@
 
 <script src="./script.js"></script>
 
-<!-- Analitica de Cloudflare: sin cookies, sin datos personales, sin seguimiento entre sitios.
-     Se carga al final y con defer, asi que no compite con el render. -->
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "ea4905f5ae3748b18bb84ced86f5c814"}'></script>
+<!-- La analitica (Cloudflare Web Analytics, sin cookies) se inyecta en el edge: auto_install
+     sobre la zona. No hay script de terceros en este archivo a proposito. -->
 </body>
 </html>
