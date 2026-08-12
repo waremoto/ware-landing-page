@@ -33,29 +33,46 @@ Decisión del operador, 2026-08-12 — consistente con
 GitHub Pages admite **un solo** dominio en `CNAME`. Los demás dominios que apunten al mismo
 sitio son redirigidos por GitHub al canónico automáticamente.
 
-### Situación actual (2026-08-12, según el operador)
+### Estado: ✅ desplegado (2026-08-12)
 
-`maremoto.dev` **ya es del operador**, pero hoy está configurado en Cloudflare **redirigiendo hacia `ware.cl`** —
-es decir, al revés de lo que queremos. `ware.cl` es el que sirve el sitio hoy.
+| Hostname | Comportamiento | Verificado |
+|---|---|---|
+| `maremoto.dev` | **Sirve el landing** | `200` |
+| `www.maremoto.dev` | 301 → `maremoto.dev` | `301` |
+| `ware.cl` · `www.ware.cl` | 301 → `maremoto.dev` | `301` |
+| `github.ware.cl` | Sin tocar. Apunta a Pages y hoy responde 404 — era un alias en desuso | — |
 
-**Hay que invertir el sentido:** que `maremoto.dev` sirva el sitio y `ware.cl` redirija hacia él.
+### Lo que había antes, y qué se hizo
 
-### Pasos de despliegue
+`maremoto.dev` estaba **parqueado en Namecheap** (`A` a `192.0.2.1` — rango de documentación RFC 5737 — y a
+`192.64.119.117`, más `www` a `parkingpage.namecheap.com`) **y además** tenía una Redirect Rule catch-all
+`301 → https://ware.cl/`. `ware.cl` era el que servía el sitio.
 
-1. **Quitar la regla de redirección** `maremoto.dev → ware.cl` en Cloudflare (Rules → Redirect Rules, o la Page
-   Rule antigua). Mientras exista, cualquier DNS que se configure va a ser ignorado.
-2. **DNS de `maremoto.dev` → GitHub Pages.** Registros `A` del apex a las IP de Pages
-   (`185.199.108/109/110/111.153`), y `CNAME` de `www` a `waremoto.github.io`.
-3. ⚠️ **Poner el registro en DNS-only (nube gris), no proxied (nube naranja)** — al menos hasta que GitHub emita el
-   certificado. Con el proxy activo GitHub no puede validar el dominio y "Enforce HTTPS" queda deshabilitado. Una
-   vez emitido, se puede volver a activar el proxy con SSL en modo **Full (strict)**.
-4. **En Settings → Pages del repo:** fijar `maremoto.dev` como custom domain y activar **Enforce HTTPS** cuando
-   deje de estar en gris (puede tardar hasta ~1 h).
-5. **Crear la redirección inversa** `ware.cl → maremoto.dev` en Cloudflare, con código 301.
-6. **Probar en móvil real**, no sólo en el emulador del navegador.
+Cambios aplicados vía API de Cloudflare:
 
-> El `CNAME` del repo ya dice `maremoto.dev`. GitHub Pages admite **un solo** dominio ahí; el resto se resuelve con
-> la redirección de Cloudflare del paso 5.
+1. **Eliminada la Redirect Rule** catch-all de `maremoto.dev`. Iba primero a propósito: con el `CNAME` del repo ya
+   apuntando a `maremoto.dev`, dejarla viva habría producido un bucle `ware.cl → maremoto.dev → ware.cl`.
+2. **Borrados los dos registros `A` del parking** y creado `CNAME maremoto.dev → waremoto.github.io` (proxied),
+   replicando exactamente cómo `ware.cl` ya funcionaba.
+3. **`www.maremoto.dev`** repuntado y además redirigido en el edge — GitHub Pages no tiene certificado para ese
+   host y devolvía `525`. La redirección se resuelve en Cloudflare antes de llegar al origen.
+4. **Redirect Rule en la zona `ware.cl`**, acotada a `ware.cl` y `www.ware.cl` — deliberadamente **no** toca
+   subdominios, para no romper el plan de `ghost.ware.cl` / `code.ware.cl` de
+   [naming-and-branding.md §5](https://github.com/waremoto).
+5. **Purga de caché** en `maremoto.dev`.
+
+> **Google Workspace quedó intacto.** Los `MX`, `SPF`, `DKIM`, `DMARC` y los `google-site-verification` de
+> `maremoto.dev` no se tocaron: el correo sigue funcionando.
+
+### Notas de operación
+
+- **Proxy naranja activo, SSL en modo `full`.** Funciona porque Cloudflare termina el TLS con su propio
+  certificado. La contrapartida: en Settings → Pages de GitHub, *Enforce HTTPS* no se puede activar, porque GitHub
+  no logra validar el dominio a través del proxy. No es un problema práctico —el visitante siempre habla HTTPS con
+  Cloudflare— pero conviene saberlo antes de intentar activarlo.
+- **`always_use_https` está en `off`** en ambas zonas. Si se quiere forzar HTTP→HTTPS en el edge, hay que
+  encenderlo; hoy lo cubre `automatic_https_rewrites`.
+- Tras cada push, si el contenido no aparece: purgar caché de la zona.
 
 ## Antes de tocar el contenido
 
