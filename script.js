@@ -753,8 +753,8 @@
       ['\nTitular: ', ''], ['Andina Logística SpA', 'b'], ['.\n', ''],
       ['Cada entregable se cede al pagarse su factura.\nIncluye código, infraestructura como código,\ndatos, credenciales y documentación.\n\n', ''],
       ['## 2 · La plataforma', 'c'],
-      ['\nGhostWare ', ''], ['no', 'b'], [' entra en la cesión.\nLicencia comercial ', ''], ['perpetua', 'b'],
-      [', no exclusiva,\npara seguir operando el producto — también\nsi te vas.\n\n', ''],
+      ['\nEl sistema de orquestación ', ''], ['no', 'b'], [' entra\nen la cesión. Licencia comercial ', ''], ['perpetua', 'b'],
+      [',\nno exclusiva, para seguir operando el\nproducto — también si te vas.\n\n', ''],
       ['## 3 · Terceros', 'c'],
       ['\nCada dependencia conserva su licencia\n(MIT, Apache-2.0, PostgreSQL…), como en\ncualquier software del mundo.', '']
     ];
@@ -763,8 +763,8 @@
       ['\nOwner: ', ''], ['Andina Logística SpA', 'b'], ['.\n', ''],
       ['Each deliverable is assigned once its invoice\nis paid. Code, infrastructure as code, data,\ncredentials and documentation included.\n\n', ''],
       ['## 2 · The platform', 'c'],
-      ['\nGhostWare is ', ''], ['not', 'b'], [' part of the assignment.\nA ', ''], ['perpetual', 'b'],
-      [', non-exclusive commercial\nlicence to keep operating the product —\nincluding after you leave.\n\n', ''],
+      ['\nThe orchestration system is ', ''], ['not', 'b'], [' part\nof the assignment. A ', ''], ['perpetual', 'b'],
+      [',\nnon-exclusive commercial licence to keep\noperating the product — including after\nyou leave.\n\n', ''],
       ['## 3 · Third parties', 'c'],
       ['\nEvery dependency keeps its own licence\n(MIT, Apache-2.0, PostgreSQL…), as in any\nsoftware in the world.', '']
     ];
@@ -811,7 +811,7 @@
       ],
       [
         ['$ ', '$ ', 't-pr', false],
-        ['ghost tarea nueva "factura electronica al SII"', 'ghost task new "electronic invoicing"', 't-cmd', true],
+        ['ware tarea nueva "factura electronica al SII"', 'ware task new "electronic invoicing"', 't-cmd', true],
         ['\n  ingeniero ', '\n  engineer  ', 't-dim', false],
         ['alcance acotado · 2 integraciones · sin datos sensibles',
          'bounded scope · 2 integrations · no sensitive data', 't-dim', false],
@@ -850,7 +850,7 @@
         ['\n  publicado ', '\n  shipped   ', 't-dim', false],
         ['14:41  ·  sin sacar el sitio de linea', '14:41  ·  no downtime', 't-ok', false],
         ['\n\n$ ', '\n\n$ ', 't-pr', false],
-        ['ghost vigilancia', 'ghost watch', 't-cmd', true],
+        ['ware vigilancia', 'ware watch', 't-cmd', true],
         ['\n  servicios ', '\n  services  ', 't-dim', false],
         ['3 en verde', '3 green', 't-ok', false],
         ['  ·  ultimo incidente: ninguno en 41 dias', '  ·  last incident: none in 41 days', 't-dim', false],
