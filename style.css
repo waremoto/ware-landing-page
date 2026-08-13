@@ -517,22 +517,27 @@ h3 { font-size: 1.0625rem; letter-spacing: -.012em; line-height: 1.3; }
   fill: var(--fg-3); text-anchor: end; text-transform: uppercase;
 }
 
-.cl-link { stroke: var(--line); stroke-width: .9; opacity: .55; }
-.cl-beam {
-  stroke: var(--accent); stroke-width: 1.5; stroke-linecap: round;
-  stroke-dasharray: 12 150; opacity: 0;
-}
-.cl-on .cl-beam { opacity: .9; animation: clbeam 1.9s linear infinite; }
-@keyframes clbeam { from { stroke-dashoffset: 162; } to { stroke-dashoffset: 0; } }
+/* el tablero mini: las mismas cuatro columnas de "Como funciona", en 39 unidades */
+.mk-col { fill: transparent; }
+.mk-col.mk-k1 { fill: color-mix(in srgb, var(--accent) 5%, transparent); }
+.mk-col.mk-k2 { fill: color-mix(in srgb, var(--info) 6%, transparent); }
+.mk-col.mk-k3 { fill: color-mix(in srgb, var(--ok) 5%, transparent); }
+.mk-h { fill: var(--line); }
+.mk-h.mk-k1 { fill: var(--accent); }
+.mk-h.mk-k2 { fill: var(--info); }
+.mk-h.mk-k3 { fill: var(--ok); }
 
-.cl-bot { fill: var(--ink-2); stroke: var(--line); stroke-width: 1; }
-.cl-on .cl-bot {
-  fill: color-mix(in srgb, var(--accent) 12%, var(--ink-2));
-  stroke: color-mix(in srgb, var(--accent) 45%, transparent);
-}
-.cl-ring { fill: none; stroke: var(--accent); stroke-width: 1.8; stroke-linecap: round; opacity: 0; }
-.cl-on .cl-ring { opacity: .95; stroke-dasharray: 24 70; animation: clring 1.5s linear infinite; }
-@keyframes clring { to { stroke-dashoffset: -94; } }
+.mk-card { transition: transform .55s var(--ease); }
+.mk-c { stroke-width: 1; fill: var(--ink-2); stroke: var(--line); }
+.mk-c.mk-s1 { fill: color-mix(in srgb, var(--accent) 14%, var(--ink-2)); stroke: color-mix(in srgb, var(--accent) 45%, transparent); }
+.mk-c.mk-s2 { fill: color-mix(in srgb, var(--info) 14%, var(--ink-2)); stroke: color-mix(in srgb, var(--info) 45%, transparent); }
+.mk-c.mk-s3 { fill: color-mix(in srgb, var(--ok) 12%, var(--ink-2)); stroke: color-mix(in srgb, var(--ok) 38%, transparent); }
+
+/* cada punto es un agente trabajando en esa tarjeta */
+.mk-dot { fill: var(--accent); opacity: 0; }
+.mk-dot.mk-rev { fill: var(--info); }
+.mk-dot.on { opacity: 1; animation: mkwork 1.5s var(--ease) infinite; }
+@keyframes mkwork { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
 
 .cl-human-halo { fill: color-mix(in srgb, var(--accent) 12%, transparent); }
 .cl-human-disc { fill: var(--accent); }
@@ -540,7 +545,7 @@ h3 { font-size: 1.0625rem; letter-spacing: -.012em; line-height: 1.3; }
 .cl-human-glyph path { fill: none; stroke: var(--accent-ink); stroke-width: 2; stroke-linecap: round; }
 .cl-human-cap {
   font-family: var(--font-mono); font-size: 8px; letter-spacing: .08em;
-  fill: var(--fg-3); text-anchor: middle; text-transform: uppercase;
+  fill: var(--fg-2); text-transform: uppercase;
 }
 
 .viz-legend {
@@ -553,25 +558,26 @@ h3 { font-size: 1.0625rem; letter-spacing: -.012em; line-height: 1.3; }
 .viz-legend span { display: inline-flex; align-items: center; gap: .45rem; }
 .dot { width: 8px; height: 8px; border-radius: 100px; flex: none; }
 .dot-human { background: var(--accent); }
-.dot-fleet { background: transparent; border: 1.5px solid var(--accent); }
+.dot-task { width: 14px; height: 8px; border-radius: 2px; background: color-mix(in srgb, var(--accent) 30%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent); }
 .dot-cell { width: 10px; height: 10px; border-radius: 3px; background: var(--ink-3); border: 1px solid var(--line); }
 .viz-cap { margin-top: .9rem; font-size: .82rem; color: var(--fg-3); max-width: 46ch; }
 
-/* la microtipografia del diagrama se cae en pantallas chicas: se compensa en unidades de viewBox */
+/* la microtipografia del diagrama se cae en pantallas chicas: se compensa en unidades
+   de viewBox, y el conteo de agentes -- que la leyenda ya dice -- se retira */
 @media (max-width: 560px) {
   .cl-label { font-size: 12px; }
-  .cl-lock-t, .cl-count { font-size: 10.5px; }
+  .cl-lock-t { font-size: 10px; }
   .cl-human-cap { font-size: 10px; }
+  .cl-count { display: none; }
 }
 
 /* fuera de pantalla no gasta cuadros */
-.fleet.paused .cl-beam, .fleet.paused .cl-ring { animation-play-state: paused; }
+.fleet.paused .mk-dot.on { animation-play-state: paused; }
 
-/* sin movimiento: el enlace se dibuja entero y el anillo queda como arco fijo */
+/* sin movimiento: las tarjetas no se deslizan y los agentes no parpadean */
 @media (prefers-reduced-motion: reduce) {
-  .cl-beam { animation: none; stroke-dasharray: none; }
-  .cl-on .cl-beam { opacity: .5; }
-  .cl-ring { animation: none; }
+  .mk-card { transition: none; }
+  .mk-dot.on { animation: none; }
 }
 
 /* ---------- iconos de tarjeta ---------- */
@@ -714,13 +720,86 @@ h3 { font-size: 1.0625rem; letter-spacing: -.012em; line-height: 1.3; }
   100% { box-shadow: 0 0 0 0 transparent; }
 }
 
+/* ---------- la linea del dia ----------
+   Fija quien trabaja a cada hora: 09-18 el ingeniero y la flota, fuera de eso
+   solo los agentes. Se puede arrastrar; al soltar, sigue sola. */
+.day {
+  padding: .7rem .95rem .8rem;
+  border-bottom: 1px solid var(--line-soft);
+  background: var(--ink-3);
+}
+.day-head { display: flex; align-items: center; gap: .8rem; margin-bottom: .5rem; }
+.day-clock {
+  font-family: var(--font-mono); font-size: .95rem; color: var(--fg);
+  letter-spacing: .04em; font-variant-numeric: tabular-nums;
+}
+.day-phase {
+  display: inline-flex; align-items: center; gap: .45rem;
+  font-family: var(--font-mono); font-size: .66rem; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--accent);
+}
+.day-phase i { width: 7px; height: 7px; border-radius: 100px; background: currentColor; flex: none; }
+.day.night .day-phase { color: var(--info); }
+.day-hint { margin-left: auto; font-size: .68rem; color: var(--fg-3); }
+
+.day-track { position: relative; height: 32px; }
+.day-line {
+  position: absolute; left: 0; right: 0; top: 9px; height: 6px;
+  border-radius: 6px; background: var(--ink-2); border: 1px solid var(--line-soft);
+}
+/* la franja de oficina: de las 09 a las 18 sobre 24 horas */
+.day-office {
+  position: absolute; left: 37.5%; width: 37.5%; top: 10px; height: 6px;
+  border-radius: 3px; background: color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.day-ticks { position: absolute; left: 0; right: 0; top: 20px; height: 12px; }
+.day-ticks b {
+  position: absolute; transform: translateX(-50%);
+  font-family: var(--font-mono); font-weight: 400; font-size: .58rem; color: var(--fg-3);
+}
+.day-ticks b::before {
+  content: ""; position: absolute; left: 50%; top: -6px;
+  width: 1px; height: 4px; background: var(--line);
+}
+.day-range {
+  position: absolute; left: 0; top: 4px; width: 100%; height: 16px; margin: 0;
+  -webkit-appearance: none; appearance: none; background: transparent; cursor: ew-resize;
+}
+.day-range::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 12px; height: 16px; border-radius: 3px;
+  background: var(--accent); border: none; cursor: ew-resize;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.day-range::-moz-range-thumb {
+  width: 12px; height: 16px; border-radius: 3px; background: var(--accent);
+  border: none; cursor: ew-resize;
+}
+.day-range:focus-visible { outline: none; }
+.day-range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 50%, transparent); }
+.day-range:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 50%, transparent); }
+
+/* de noche el ingeniero no esta: su avatar se apaga y los agentes de refuerzo
+   se quedan quietos. La columna de revision es la que lo demuestra. */
+.kb.night .av-human {
+  background: transparent; border-color: var(--line); color: var(--fg-3); font-weight: 400;
+}
+.av-bot.idle { opacity: .28; }
+.av-bot.idle.on::after { animation: none; opacity: .3; }
+
+@media (max-width: 560px) {
+  .day-hint { display: none; }
+}
+
 /* columnas */
 .kb {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1px;
   background: var(--line-soft);
-  min-height: 330px;
+  /* alto para la columna mas llena que el guion permite (cuatro tarjetas, la cola
+     que se acumula de noche). Si el tablero creciera al llenarse, empujaria todo
+     lo de abajo: seria un layout shift a cambio de nada. */
+  min-height: 380px;
 }
 .kb-col { background: var(--ink-2); padding: .9rem .75rem 1.1rem; display: flex; flex-direction: column; }
 .kb-col[data-state="doing"]  { background: color-mix(in srgb, var(--accent) 4%, var(--ink-2)); }
@@ -1124,3 +1203,13 @@ h3 { font-size: 1.0625rem; letter-spacing: -.012em; line-height: 1.3; }
 .f-note.ok { color: var(--ok); }
 
 .contact-note { margin-top: 2.5rem; font-size: .875rem; color: var(--fg-3); text-align: center; }
+
+/* ---------- financiamiento ---------- */
+.price { display:flex; align-items:baseline; gap:.5rem; flex-wrap:wrap; margin:.15rem 0 .8rem; }
+.price-n { font-family:var(--font-display); font-size:1.65rem; font-weight:700; color:var(--accent); letter-spacing:-.03em; line-height:1; font-variant-numeric:tabular-nums; }
+.price-u { font-size:.85rem; color:var(--fg-3); }
+.fin-fine { max-width:70ch; margin:2rem auto 0; font-size:.9rem; color:var(--fg-2); text-align:center; }
+@media (max-width: 1100px) {
+  .nav-links { gap: 1.1rem; }
+  .nav-links a { font-size: .85rem; }
+}

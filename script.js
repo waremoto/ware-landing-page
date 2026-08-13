@@ -141,9 +141,10 @@
   }
 
   /* ---------- diagrama: varios clientes, cada uno aislado ----------
-     Cuatro celdas dentro de un mismo viewBox. Todo lo de un cliente vive
-     dentro de su celda: si ninguna linea la cruza, el aislamiento se ve
-     en vez de leerse. */
+     Cuatro celdas dentro de un mismo viewBox. Cada celda es una miniatura
+     del tablero de "Como funciona": las mismas cuatro columnas y los mismos
+     colores. Todo lo de un cliente vive dentro de su celda -- si ninguna
+     tarjeta la cruza, el aislamiento se ve en vez de leerse. */
   (function fleet() {
     var svg = document.getElementById('fleet');
     var host = document.getElementById('fleetCells');
@@ -151,17 +152,20 @@
 
     var NS = 'http://www.w3.org/2000/svg';
 
-    var SECTORS = [
-      ['RETAIL', 'RETAIL'], ['LOGISTICA', 'LOGISTICS'],
-      ['SALUD', 'HEALTHCARE'], ['FINTECH', 'FINTECH']
+    // [sector es, sector en, ingenieros, agentes, reparto inicial de tarjetas]
+    var CLIENTS = [
+      ['RETAIL', 'RETAIL', 1, 6, [5, 2, 2, 2]],
+      ['LOGISTICA', 'LOGISTICS', 2, 9, [4, 2, 2, 3]],
+      ['SALUD', 'HEALTHCARE', 1, 5, [5, 2, 1, 2]],
+      ['FINTECH', 'FINTECH', 2, 8, [4, 2, 2, 2]]
     ];
     var ISOLATED = ['AISLADO', 'ISOLATED'];
-    var ENGINEER = ['INGENIERO', 'ENGINEER'];
-    var FLEET = ['6 AGENTES', '6 AGENTS'];
+    var ENGINEERS = [['INGENIERO', 'ENGINEER'], ['2 INGENIEROS', '2 ENGINEERS']];
+    function agentsPair(n) { return [n + ' AGENTES', n + ' AGENTS']; }
 
-    var ORIGINS = [[6, 6], [215, 6], [6, 215], [215, 215]];  // 2x2 con 10 de calle
-    var HX = 46, HY = 106;                                    // el humano, a la izquierda
-    var COLS = [102, 140, 178], ROWS = [84, 128];             // la flota, a la derecha
+    var ORIGINS = [[6, 6], [215, 6], [6, 215], [215, 215]];
+    var COLX = [14, 58, 102, 146], COLW = 39;
+    var CARDW = 33, CARDH = 11, ROW0 = 44, ROWH = 15;
 
     function el(name, attrs) {
       var n = document.createElementNS(NS, name);
@@ -169,61 +173,103 @@
       return n;
     }
 
+    function human(x, y) {
+      var g = el('g', { transform: 'translate(' + x + ',' + y + ')', 'class': 'cl-human' });
+      g.appendChild(el('circle', { cx: 0, cy: 0, r: 12, 'class': 'cl-human-halo' }));
+      g.appendChild(el('circle', { cx: 0, cy: 0, r: 8.5, 'class': 'cl-human-disc' }));
+      var glyph = el('g', { 'class': 'cl-human-glyph' });
+      glyph.appendChild(el('circle', { cx: 0, cy: -2.1, r: 2.2 }));
+      glyph.appendChild(el('path', { d: 'M-4.2 4.6a4.2 4.2 0 0 1 8.4 0' }));
+      g.appendChild(glyph);
+      return g;
+    }
+
     var cells = [];
 
-    ORIGINS.forEach(function (o, ci) {
+    CLIENTS.forEach(function (client, ci) {
+      var engineers = client[2], agents = client[3], spread = client[4];
+      var o = ORIGINS[ci];
       var cell = el('g', { transform: 'translate(' + o[0] + ',' + o[1] + ')' });
       cell.appendChild(el('rect', { x: .5, y: .5, width: 198, height: 198, rx: 12, 'class': 'cl-box' }));
 
-      var label = el('text', { x: 14, y: 24, 'class': 'cl-label' });
-      label.textContent = t(SECTORS[ci]);
+      var label = el('text', { x: 14, y: 21, 'class': 'cl-label' });
+      label.textContent = t([client[0], client[1]]);
       cell.appendChild(label);
 
       // el candado: la respuesta visual a "?mis datos se mezclan con los de otro?"
-      var lock = el('g', { transform: 'translate(13,170)', 'class': 'cl-lock' });
+      var lock = el('g', { transform: 'translate(118,13)', 'class': 'cl-lock' });
       lock.appendChild(el('path', { d: 'M2.6 4.6V3.3a2.4 2.4 0 0 1 4.8 0v1.3' }));
       lock.appendChild(el('rect', { x: 1.3, y: 4.6, width: 7.4, height: 5.6, rx: 1.4 }));
       cell.appendChild(lock);
-      var lockT = el('text', { x: 26, y: 179, 'class': 'cl-lock-t' });
+      var lockT = el('text', { x: 131, y: 21, 'class': 'cl-lock-t' });
       lockT.textContent = t(ISOLATED);
       cell.appendChild(lockT);
 
-      // enlaces + agentes: siempre del humano de ESTA celda a un agente de ESTA celda
-      var bots = [];
-      ROWS.forEach(function (by) {
-        COLS.forEach(function (bx) {
-          var g = el('g', { 'class': 'cl-bot-g' });
-          g.appendChild(el('line', { x1: HX, y1: HY, x2: bx, y2: by, 'class': 'cl-link' }));
-          g.appendChild(el('line', { x1: HX, y1: HY, x2: bx, y2: by, 'class': 'cl-beam' }));
-          g.appendChild(el('circle', { cx: bx, cy: by, r: 12, 'class': 'cl-bot' }));
-          g.appendChild(el('circle', { cx: bx, cy: by, r: 15, 'class': 'cl-ring' }));
+      // el tablero: cuatro columnas, los mismos estados que abajo
+      for (var c = 0; c < 4; c++) {
+        cell.appendChild(el('rect', { x: COLX[c], y: 32, width: COLW, height: 108, rx: 5, 'class': 'mk-col mk-k' + c }));
+        cell.appendChild(el('rect', { x: COLX[c] + 3, y: 36, width: COLW - 6, height: 3, rx: 1.5, 'class': 'mk-h mk-k' + c }));
+      }
+
+      var cols = [[], [], [], []];
+      spread.forEach(function (count, c) {
+        for (var k = 0; k < count; k++) {
+          var g = el('g', { 'class': 'mk-card' });
+          var rect = el('rect', { width: CARDW, height: CARDH, rx: 3 });
+          g.appendChild(rect);
+          var dots = [];
+          for (var d = 0; d < 3; d++) {
+            var dot = el('circle', { cx: CARDW - 6 - d * 5, cy: CARDH / 2, r: 1.9 });
+            g.appendChild(dot);
+            dots.push(dot);
+          }
           cell.appendChild(g);
-          bots.push(g);
-        });
+          cols[c].push({ g: g, rect: rect, dots: dots, col: c, bots: 1 + ((k + c + ci) % 3) });
+        }
       });
 
-      // el ingeniero, encima de los enlaces
-      cell.appendChild(el('circle', { cx: HX, cy: HY, r: 25, 'class': 'cl-human-halo' }));
-      cell.appendChild(el('circle', { cx: HX, cy: HY, r: 17, 'class': 'cl-human-disc' }));
-      var glyph = el('g', { transform: 'translate(' + HX + ',' + HY + ')', 'class': 'cl-human-glyph' });
-      glyph.appendChild(el('circle', { cx: 0, cy: -4.2, r: 3.6 }));
-      glyph.appendChild(el('path', { d: 'M-6.6 7.4a6.6 6.6 0 0 1 13.2 0' }));
-      cell.appendChild(glyph);
-
-      var cap = el('text', { x: HX, y: 146, 'class': 'cl-human-cap' });
-      cap.textContent = t(ENGINEER);
+      // la gente: uno o dos ingenieros, segun el cliente
+      var hx = [20, 39];
+      for (var e = 0; e < engineers; e++) cell.appendChild(human(hx[e], 164));
+      var cap = el('text', { x: engineers > 1 ? 52 : 33, y: 168, 'class': 'cl-human-cap' });
+      cap.textContent = t(ENGINEERS[engineers - 1]);
       cell.appendChild(cap);
 
-      // la proporcion, escrita: 1 humano por celda, seis agentes por celda
-      var count = el('text', { x: 185, y: 179, 'class': 'cl-count' });
-      count.textContent = t(FLEET);
+      var count = el('text', { x: 186, y: 168, 'class': 'cl-count' });
+      count.textContent = t(agentsPair(agents));
       cell.appendChild(count);
 
       host.appendChild(cell);
       cells.push({
-        bots: bots,
-        texts: [[label, SECTORS[ci]], [lockT, ISOLATED], [cap, ENGINEER], [count, FLEET]]
+        cols: cols,
+        texts: [
+          [label, [client[0], client[1]]], [lockT, ISOLATED],
+          [cap, ENGINEERS[engineers - 1]], [count, agentsPair(agents)]
+        ]
       });
+    });
+
+    function dress(card) {
+      var s = card.col;
+      card.rect.setAttribute('class', 'mk-c mk-s' + s);
+      var lit = s === 1 ? card.bots : (s === 2 ? 1 : 0);
+      card.dots.forEach(function (dot, i) {
+        dot.setAttribute('class', 'mk-dot' + (s === 2 ? ' mk-rev' : '') + (i < lit ? ' on' : ''));
+        dot.style.animationDelay = (i * 0.24).toFixed(2) + 's';
+      });
+    }
+
+    function layout(cell) {
+      cell.cols.forEach(function (list, c) {
+        list.forEach(function (card, k) {
+          card.g.style.transform = 'translate(' + (COLX[c] + 3) + 'px,' + (ROW0 + k * ROWH) + 'px)';
+        });
+      });
+    }
+
+    cells.forEach(function (cell) {
+      cell.cols.forEach(function (list) { list.forEach(dress); });
+      layout(cell);
     });
 
     document.addEventListener('maremoto:lang', function () {
@@ -232,27 +278,42 @@
       });
     });
 
-    // cada cliente avanza en su propio compas: flotas separadas, no un reloj comun
-    var PHASE = [0, 1, 3, 4];   // cuatro desfases distintos: ninguna celda late igual que otra
+    // el mismo embudo del tablero grande: se alimenta antes de vaciarse
+    function advance(cell) {
+      var n = cell.cols.map(function (l) { return l.length; });
+      var from = -1;
+      if (n[1] < 2 && n[0]) from = 0;
+      else if (n[2] < 2 && n[1]) from = 1;
+      else if (n[2]) from = 2;
+      else if (n[1]) from = 1;
+      else if (n[0]) from = 0;
+      if (from === -1) return;
 
-    function light(tick) {
-      cells.forEach(function (c, ci) {
-        var n = c.bots.length;
-        var base = (tick + PHASE[ci]) % n;
-        var on = [base, (base + 1) % n, (base + 3) % n];
-        c.bots.forEach(function (g, i) {
-          g.setAttribute('class', on.indexOf(i) >= 0 ? 'cl-bot-g cl-on' : 'cl-bot-g');
-        });
-      });
+      var card = cell.cols[from].pop();
+      card.col = from + 1;
+      cell.cols[card.col].push(card);
+      dress(card);
+
+      // lo terminado se archiva y vuelve como trabajo nuevo: el tablero de un
+      // cliente vivo nunca se queda sin nada que hacer
+      if (cell.cols[3].length > 2) {
+        var oldest = cell.cols[3].shift();
+        oldest.col = 0;
+        oldest.bots = 1 + Math.floor(Math.random() * 3);
+        cell.cols[0].push(oldest);
+        dress(oldest);
+      }
+
+      layout(cell);
     }
 
-    if (reduced) { light(0); return; }
+    if (reduced) return;
 
-    var tick = 0, timer = null;
+    // una celda por turno: los cuatro tableros avanzan desfasados, nunca a la vez
+    var turn = 0, timer = null;
     function start() {
       if (timer) return;
-      light(tick);
-      timer = setInterval(function () { light(++tick); }, 1500);
+      timer = setInterval(function () { advance(cells[turn++ % cells.length]); }, 900);
     }
     function stop() {
       if (!timer) return;
@@ -319,14 +380,32 @@
       '': ['producto', 'product']
     };
 
+    // el trabajo que la flota agenda para cuando no hay nadie
+    var INCOMING_NIGHT = [
+      ['Respaldo nocturno verificado', 'Verified nightly backup', 'inf'],
+      ['Suite de regresión completa', 'Full regression suite', 'inf'],
+      ['Documentar la decisión de AND-142', 'Document the AND-142 decision', ''],
+      ['Actualizar dependencias', 'Dependency bump', 'inf'],
+      ['Rotación de logs y limpieza', 'Log rotation and cleanup', 'inf']
+    ];
+
     var ACTIVITY = [
       ['{a} escribe las pruebas de AND-142', '{a} is writing tests for AND-142'],
       ['{a} y {b} implementan en paralelo', '{a} and {b} are implementing in parallel'],
-      ['{a} corre la suite completa: 268 en verde', '{a} ran the full suite: 268 green'],
+      ['{a} corre la suite completa: {n} en verde', '{a} ran the full suite: {n} green'],
       ['el ingeniero revisa AND-131', 'the engineer is reviewing AND-131'],
       ['el ingeniero devuelve AND-139 con un cambio', 'the engineer sent AND-139 back with one change'],
       ['{a} documenta la decisión y cierra la tarea', '{a} documented the decision and closed the task'],
       ['{a} despliega a producción', '{a} is deploying to production']
+    ];
+
+    // de noche narra la flota sola: nada que necesite una decisión humana
+    var ACTIVITY_NIGHT = [
+      ['{a} corre la suite de regresión: {n} en verde', '{a} ran the regression suite: {n} green'],
+      ['{a} respalda la base y verifica la restauración', '{a} backed up the database and verified the restore'],
+      ['{a} actualiza dependencias y deja el cambio en revisión', '{a} bumped dependencies and left the change in review'],
+      ['{a} documenta la decisión de AND-142', '{a} documented the AND-142 decision'],
+      ['la cola espera al ingeniero: nada pasa a Finalizado sin su revisión', 'the queue is waiting for the engineer: nothing reaches Done without the review']
     ];
 
     var CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
@@ -383,7 +462,8 @@
 
       if (state === 'doing') {
         for (var i = 0; i < Math.max(1, task.bots); i++) {
-          avs.appendChild(avatar(BOTS[(task.id + i) % BOTS.length], 'av-bot on'));
+          // fuera de horario queda uno solo despierto; el resto espera al turno
+          avs.appendChild(avatar(BOTS[(task.id + i) % BOTS.length], 'av-bot on' + (!office && i > 0 ? ' idle' : '')));
         }
         bot.appendChild(avs);
         var prog = document.createElement('span');
@@ -422,8 +502,8 @@
     function paint() {
       cols.forEach(function (c, i) { nums[i].textContent = c.children.length; });
       if (botsEl) {
-        var working = kb.querySelectorAll('.av-bot.on').length;
-        botsEl.textContent = working;
+        // los que estan de verdad trabajando: los dormidos no cuentan
+        botsEl.textContent = kb.querySelectorAll('.av-bot.on:not(.idle)').length;
       }
     }
 
@@ -445,28 +525,117 @@
         el.querySelector('.kb-tag').textContent = t(TAGS[task.tag] || TAGS['']);
       });
       if (actEl && actEl._pair) actEl.textContent = fill(actEl._pair);
+      paintClock();
+    }
+
+    // la suite crece de noche: es trabajo que se hace mientras nadie mira
+    var testsEl = document.getElementById('mTests');
+    var tests = testsEl ? parseInt(testsEl.textContent, 10) || 268 : 268;
+    function bumpTests() {
+      if (!testsEl || tests >= 340) return;
+      tests += 1 + Math.floor(Math.random() * 2);
+      testsEl.textContent = tests;
     }
 
     function fill(pair) {
       return t(pair)
+        .replace('{n}', tests)
         .replace('{a}', BOTS[Math.floor(Math.random() * 3)])
         .replace('{b}', BOTS[3 + Math.floor(Math.random() * 2)]);
     }
 
-    function say(pair) {
+    // los avisos de cambio de turno se protegen un momento para que se alcancen a leer
+    function say(pair, priority) {
       if (!actEl) return;
+      if (!priority && Date.now() < hold) return;
       actEl._pair = pair;
       actEl.textContent = fill(pair);
     }
 
+    /* ---------- la linea del dia ----------
+       De 09 a 18 el ingeniero esta y el tablero se cierra hasta Finalizado.
+       Fuera de ese horario corre sola la flota: trabajo programado, pruebas,
+       respaldos y documentacion -- y la cola de revision se acumula, porque
+       eso es exactamente lo que promete la seccion. */
+    var OPEN = 9 * 60, CLOSE = 18 * 60;
+    // Minutos de reloj por cada 100 ms. La jornada corre despacio porque es donde
+    // pasa todo; la noche se adelanta, porque mirar una guardia en tiempo real es
+    // exactamente tan entretenido como suena. La hora rotulada siempre es la real.
+    var RATE_DAY = 1.8, RATE_NIGHT = 6;
+    var clock = 8 * 60 + 50;   // arranca poco antes de que llegue el ingeniero
+    var office = false;
+    var hold = 0;
+    var paused = true;
+    var scrubbing = false;
+
+    var dayEl = document.getElementById('day');
+    var clockEl = document.getElementById('dayClock');
+    var phaseTEl = document.getElementById('dayPhaseT');
+    var range = document.getElementById('dayRange');
+
+    var PHASES = [['horario de oficina', 'office hours'], ['fuera de horario', 'after hours']];
+    var ARRIVES = ['el ingeniero llega: revisa lo que la flota dejó listo', 'the engineer is in: reviewing what the fleet left ready'];
+    var LEAVES = ['el ingeniero cierra el día; la flota sigue con lo programado', 'the engineer signed off; the fleet carries on with scheduled work'];
+
+    function two(n) { return (n < 10 ? '0' : '') + n; }
+    function hhmm(m) { return two(Math.floor(m / 60) % 24) + ':' + two(Math.floor(m) % 60); }
+    function isOffice(m) { return m >= OPEN && m < CLOSE; }
+
+    function applyPhase() {
+      if (dayEl) dayEl.classList.toggle('night', !office);
+      kb.classList.toggle('night', !office);
+      Array.prototype.forEach.call(kb.querySelectorAll('.kb-avs'), function (avs) {
+        Array.prototype.forEach.call(avs.querySelectorAll('.av-bot'), function (b, i) {
+          b.classList.toggle('idle', !office && i > 0);
+        });
+      });
+      paint();
+    }
+
+    function paintClock() {
+      var phase = t(PHASES[office ? 0 : 1]);
+      if (clockEl) clockEl.textContent = hhmm(clock);
+      if (phaseTEl) phaseTEl.textContent = phase;
+      if (range) {
+        range.value = Math.round(clock);
+        range.setAttribute('aria-valuetext', hhmm(clock) + ', ' + phase);
+      }
+    }
+
+    function setClock(m, announce) {
+      clock = ((m % 1440) + 1440) % 1440;
+      var next = isOffice(clock);
+      if (next !== office) {
+        office = next;
+        applyPhase();
+        if (announce) { hold = Date.now() + 3200; say(office ? ARRIVES : LEAVES, true); }
+      }
+      paintClock();
+    }
+
     build();
-    say(ACTIVITY[0]);
+    applyPhase();
+    setClock(clock, false);
+    say(ACTIVITY_NIGHT[0]);
     document.addEventListener('maremoto:lang', relabel);
+
+    if (range) {
+      range.addEventListener('pointerdown', function () { scrubbing = true; });
+      range.addEventListener('input', function () { scrubbing = true; setClock(+range.value, true); });
+      // al soltar vuelve a correr sola, desde donde la dejaron
+      range.addEventListener('change', function () { scrubbing = false; });
+      range.addEventListener('blur', function () { scrubbing = false; });
+    }
 
     if (reduced || !('IntersectionObserver' in window)) return;
 
+    // el reloj solo corre con la seccion en pantalla y con nadie arrastrando
+    setInterval(function () {
+      if (paused || scrubbing) return;
+      setClock(clock + (office ? RATE_DAY : RATE_NIGHT), true);
+    }, 100);
+
     var runId = 0;
-    var paused = true;
     function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
 
     async function loop() {
@@ -476,14 +645,15 @@
       var incoming = 0;
 
       while (me === runId) {
-        while (paused) {
+        while (paused || scrubbing) {
           await sleep(250);
           if (me !== runId) return;
         }
 
-        // entra trabajo nuevo: el tablero de un cliente vivo nunca esta vacio
+        // entra trabajo nuevo: de dia lo pide el negocio, de noche lo agenda la flota
         if (cols[0].children.length < 2) {
-          var src = INCOMING[incoming % INCOMING.length];
+          var list = office ? INCOMING : INCOMING_NIGHT;
+          var src = list[incoming % list.length];
           incoming++;
           var fresh = { es: src[0], en: src[1], tag: src[2], id: nextId++, col: 0, bots: 0 };
           var fel = card(fresh);
@@ -496,8 +666,10 @@
           if (me !== runId) return;
         }
 
-        // se archiva lo que ya lleva rato terminado
-        if (cols[3].children.length > 3) {
+        // se archiva lo que ya lleva rato terminado. El tope es tambien de
+        // maquetacion: ninguna columna pasa de tres tarjetas, y por eso el
+        // tablero nunca cambia de alto ni empuja lo que tiene debajo.
+        if (cols[3].children.length > 2) {
           var old = cols[3].firstElementChild;
           old.classList.add('leaving');
           await sleep(340);
@@ -510,25 +682,42 @@
         // luego "en revision", y solo entonces se cierra. Asi el tablero se ve como
         // un equipo trabajando y no como una fila que se desagua.
         var from = -1;
-        if (cols[1].children.length < 2 && cols[0].children.length) from = 0;
-        else if (cols[2].children.length < 2 && cols[1].children.length) from = 1;
-        else if (cols[2].children.length) from = 2;
-        else if (cols[1].children.length) from = 1;
-        else if (cols[0].children.length) from = 0;
-        if (from === -1) { await sleep(700); continue; }
+        if (office) {
+          if (cols[1].children.length < 2 && cols[0].children.length) from = 0;
+          else if (cols[2].children.length < 2 && cols[1].children.length) from = 1;
+          else if (cols[2].children.length) from = 2;
+          else if (cols[1].children.length) from = 1;
+          else if (cols[0].children.length) from = 0;
+        } else {
+          // fuera de horario no hay quien revise: nada cruza a Finalizado y la
+          // cola de revision se acumula hasta que el ingeniero vuelve
+          if (!cols[1].children.length && cols[0].children.length && cols[2].children.length < 3) from = 0;
+          else if (cols[1].children.length && cols[2].children.length < 3) from = 1;
+        }
+        // sin nada que mover: de noche la guardia igual se hace notar
+        if (from === -1) {
+          if (office) { await sleep(900); continue; }
+          say(ACTIVITY_NIGHT[step % ACTIVITY_NIGHT.length]);
+          step++;
+          bumpTests();
+          await sleep(2600);
+          continue;
+        }
 
         var el = cols[from].lastElementChild;
         var task = el._task;
 
-        say(ACTIVITY[step % ACTIVITY.length]);
+        var script = office ? ACTIVITY : ACTIVITY_NIGHT;
+        say(script[step % script.length]);
         step++;
+        if (!office) bumpTests();
 
         el.classList.add('leaving');
         await sleep(340);
         if (me !== runId) return;
 
         task.col = from + 1;
-        if (task.col === 1) task.bots = 1 + Math.floor(Math.random() * 3);
+        if (task.col === 1) task.bots = office ? 1 + Math.floor(Math.random() * 3) : 1;
         dressUp(el, task);
         cols[task.col].appendChild(el);
         el.classList.remove('leaving');
@@ -541,7 +730,8 @@
           setTimeout(function () { moved.classList.remove('landed'); }, 700);
         })(el);
 
-        await sleep(from === 0 ? 1500 : 2400);
+        // de noche el ritmo baja: es trabajo programado, no una jornada
+        await sleep(office ? (from === 0 ? 1500 : 2400) : 2800);
         if (me !== runId) return;
       }
     }

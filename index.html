@@ -65,6 +65,7 @@
       <a href="#como" data-en="How it works">Cómo funciona</a>
       <a href="#lineas" data-en="What you hire">Qué se contrata</a>
       <a href="#codigo" data-en="Your code">Tu código</a>
+      <a href="#financiamiento" data-en="Pricing">Financiamiento</a>
       <a class="nav-cta" href="#contacto" data-en="Let's talk">Conversemos</a>
     </nav>
     <div class="nav-tools">
@@ -101,17 +102,17 @@
     <figure class="hero-viz reveal" aria-labelledby="vizcap">
       <div class="viz-frame">
         <svg class="fleet" id="fleet" viewBox="0 0 420 420" role="img"
-             aria-label="Diagrama: cuatro empresas cliente, cada una en su propio entorno aislado, cada una con su ingeniero de software y su flota de agentes trabajando. Nada conecta un cliente con otro."
-             data-en-aria="Diagram: four client companies, each in its own isolated environment, each with its software engineer and its fleet of agents at work. Nothing connects one client to another.">
+             aria-label="Diagrama: cuatro empresas cliente, cada una en su propio entorno aislado, cada una con su tablero, uno o dos ingenieros de software y su flota de agentes trabajando. Nada conecta un cliente con otro."
+             data-en-aria="Diagram: four client companies, each in its own isolated environment, each with its own board, one or two software engineers and its fleet of agents at work. Nothing connects one client to another.">
           <g id="fleetCells"></g>
         </svg>
         <div class="viz-legend">
-          <span><i class="dot dot-human"></i><span data-en="1 human engineer per client">1 ingeniero humano por cliente</span></span>
-          <span><i class="dot dot-fleet"></i><span data-en="its own fleet of agents, 24/7">su propia flota de agentes, 24/7</span></span>
+          <span><i class="dot dot-human"></i><span data-en="1 or 2 engineers per client">1-2 ingenieros por cliente</span></span>
+          <span><i class="dot dot-task"></i><span data-en="its own board and its fleet of 5 to 9 agents">su tablero y su flota de 5 a 9 agentes</span></span>
           <span><i class="dot dot-cell"></i><span data-en="isolated environment: nothing crosses over">entorno aislado: nada cruza</span></span>
         </div>
       </div>
-      <figcaption id="vizcap" class="viz-cap" data-en="Every client gets the whole department: its own engineer, its own fleet, its own environment. Nothing is shared between clients.">Cada cliente recibe el departamento completo: su ingeniero, su flota, su entorno. Nada se comparte entre clientes.</figcaption>
+      <figcaption id="vizcap" class="viz-cap" data-en="Every client gets the whole department: its own board, its own engineers, its own fleet. Nothing is shared between clients.">Cada cliente recibe el departamento completo: su tablero, sus ingenieros, su flota. Nada se comparte entre clientes.</figcaption>
     </figure>
   </div>
 
@@ -257,6 +258,24 @@
         <span class="shell-live" id="shellLive"><i aria-hidden="true"></i><span data-en="live">Live</span></span>
       </div>
 
+      <!-- la linea del dia: quien trabaja a cada hora. Se puede arrastrar. -->
+      <div class="day" id="day">
+        <div class="day-head">
+          <span class="day-clock" id="dayClock">08:40</span>
+          <span class="day-phase" id="dayPhase"><i aria-hidden="true"></i><span id="dayPhaseT"></span></span>
+          <span class="day-hint" data-en="drag to move through the day">arrastra para recorrer el día</span>
+        </div>
+        <div class="day-track">
+          <span class="day-line" aria-hidden="true"></span>
+          <span class="day-office" aria-hidden="true"></span>
+          <span class="day-ticks" aria-hidden="true">
+            <b style="left:0%">00</b><b style="left:25%">06</b><b style="left:37.5%">09</b><b style="left:50%">12</b><b style="left:75%">18</b><b style="left:100%">24</b>
+          </span>
+          <input class="day-range" id="dayRange" type="range" min="0" max="1435" step="5" value="530"
+                 aria-label="Hora del día en el tablero" data-en-aria="Time of day on the board">
+        </div>
+      </div>
+
       <div class="kb" id="kb" aria-hidden="true">
         <div class="kb-col" data-state="backlog">
           <p class="kb-h"><i class="kb-dot"></i><span data-en="Backlog">Backlog</span><span class="kb-n">0</span></p>
@@ -276,10 +295,13 @@
         </div>
       </div>
 
-      <p class="sr-only" data-en="Simplified view of the board: tasks move from the backlog, to the agents building and testing them, to the human engineer's review, and only then to done. The footer shows what is happening right now.">
+      <p class="sr-only" data-en="Simplified view of the board: tasks move from the backlog, to the agents building and testing them, to the human engineer's review, and only then to done. The slider above sets the time of day: between 9am and 6pm the engineer and the fleet work together; outside those hours only the agents run, on scheduled work — tests, backups, documentation — and nothing reaches Done until the engineer is back. The footer shows what is happening right now.">
         Vista simplificada del tablero: las tareas avanzan del backlog, a los agentes que las
         construyen y prueban, a la revisión del ingeniero humano, y sólo entonces a finalizado.
-        El pie muestra lo que está pasando ahora mismo.
+        El control de arriba fija la hora del día: entre las 9 y las 18 el ingeniero y la flota
+        trabajan juntos; fuera de ese horario sólo corren los agentes, en trabajo programado
+        — pruebas, respaldos, documentación — y nada llega a Finalizado hasta que el ingeniero
+        vuelve. El pie muestra lo que está pasando ahora mismo.
       </p>
 
       <div class="shell-foot">
@@ -290,10 +312,11 @@
           <b id="mBots">4</b> <span data-en="agents working">agentes trabajando</span>
         </span>
       </div>
-      <figcaption class="shell-cap" data-en-html="The same board we look at. No progress reports written to reassure you — the real state, whenever you feel like opening it. <strong>Nothing reaches Done without the engineer's review.</strong>">
+      <figcaption class="shell-cap" data-en-html="The same board we look at. No progress reports written to reassure you — the real state, whenever you feel like opening it. After hours the fleet keeps going on scheduled work — tests, backups, documentation — but the review column waits. <strong>Nothing reaches Done without the engineer's review.</strong>">
         El mismo tablero que miramos nosotros. Sin informes de avance escritos para tranquilizarte:
-        el estado real, cuando se te ocurra abrirlo. <strong>Nada llega a Finalizado sin pasar por
-        la revisión del ingeniero.</strong>
+        el estado real, cuando se te ocurra abrirlo. Fuera de horario la flota sigue con el trabajo
+        programado — pruebas, respaldos, documentación — pero la columna de revisión espera.
+        <strong>Nada llega a Finalizado sin pasar por la revisión del ingeniero.</strong>
       </figcaption>
     </figure>
 
@@ -538,8 +561,72 @@
   </div>
 </section>
 
+<!-- ─────────────── FINANCIAMIENTO ─────────────── -->
+<section class="section alt" id="financiamiento">
+  <div class="wrap">
+    <p class="kicker reveal" data-en="Pricing">Financiamiento</p>
+    <h2 class="reveal" data-en="The numbers, before the first meeting.">Los números, antes de la primera reunión.</h2>
+    <p class="section-lede reveal" data-en="Net amounts in Chilean pesos; invoiced with 19% VAT — a tax credit for your company, so it is not a cost. Two ways to buy development, several ways to finance it.">
+      Montos netos en pesos chilenos; se factura con IVA 19% — crédito fiscal para tu empresa,
+      así que no es costo. Dos formas de comprar desarrollo, varias de financiarlo.
+    </p>
+
+    <div class="grid grid-3 lines">
+      <article class="card line reveal">
+        <p class="line-tag" data-en="Per project">Por proyecto</p>
+        <h3 data-en="Kick-off">Arranque</h3>
+        <p class="price"><span class="price-n">$4–12 M</span><span class="price-u" data-en="fixed price, per scope">precio fijo, según alcance</span></p>
+        <p class="line-desc" data-en="Written scope, fixed deadline: 6 to 10 weeks from zero to something you can show and sell. Every next assignment gets its own quote.">Alcance por escrito, plazo fijo: 6 a 10 semanas de cero a algo que se puede mostrar y vender. Cada encargo siguiente, con su propia cotización.</p>
+        <ul class="ticks">
+          <li data-en="Payment: 40% upfront · 30% midway · 30% on delivery">Pago: 40% al inicio · 30% a mitad · 30% contra entrega</li>
+          <li data-en="Weekly meeting included">Reunión semanal incluida</li>
+          <li data-en="You can stop there: no obligation to continue">Puedes quedarte ahí: sin obligación de continuar</li>
+        </ul>
+      </article>
+      <article class="card line reveal">
+        <p class="line-tag" data-en="Ongoing">Relación continua</p>
+        <h3 data-en="Entry">Entrada</h3>
+        <p class="price"><span class="price-n">$1,6 M</span><span class="price-u" data-en="per month">al mes</span></p>
+        <p class="line-desc" data-en="The starting tier — and our floor: below this number we cannot serve you well, and we say so in the first conversation at no cost.">El tramo de partida — y nuestro piso: bajo este número no podemos atenderte bien, y te lo decimos en la primera conversación, sin costo.</p>
+        <ul class="ticks">
+          <li data-en="20 hours of development per month">20 horas de desarrollo al mes</li>
+          <li data-en="Support in business hours, committed response">Soporte en horario hábil, respuesta comprometida</li>
+          <li data-en="Open board and weekly meeting">Tablero abierto y reunión semanal</li>
+        </ul>
+      </article>
+      <article class="card line reveal">
+        <p class="line-tag" data-en="Ongoing">Relación continua</p>
+        <h3 data-en="Growth and operations">Crecimiento y operación</h3>
+        <p class="price"><span class="price-n">$3,7–5 M</span><span class="price-u" data-en="per month">al mes</span></p>
+        <p class="line-desc" data-en="When your recurring revenue crosses the agreed milestones: more capacity, faster response, and your infrastructure run by us if you want it.">Cuando tu facturación recurrente cruza los hitos acordados: más capacidad, respuesta más rápida, y tu infraestructura operada por nosotros si la quieres.</p>
+        <ul class="ticks">
+          <li data-en="80 hours of development per month">80 horas de desarrollo al mes</li>
+          <li data-en="Support with 4-hour response">Soporte con respuesta de 4 horas</li>
+          <li data-en="Hosting, backups and monitoring included">Hosting, respaldos y monitoreo incluidos</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="notnegotiable reveal">
+      <h3 data-en="If the cash is not there yet">Si todavía no hay caja</h3>
+      <div class="nn-grid">
+        <p data-en-html="<span class=&quot;nn-k&quot;>The ramp</span> You start at the entry tier and the price climbs only when your recurring revenue crosses the milestones in the contract — and it drops on its own if yours drops: never more than an agreed share of your last quarter's revenue."><span class="nn-k">La rampa</span> Partes en el tramo de entrada y el precio sube sólo cuando tu facturación recurrente cruza los hitos del contrato — y baja solo si la tuya baja: nunca más de una proporción acordada de tu facturación del trimestre anterior.</p>
+        <p data-en-html="<span class=&quot;nn-k&quot;>Past work in instalments</span> If we built something before the contract existed, it is paid as the first deliverable, in 3 to 6 monthly instalments — and it becomes yours instalment by instalment."><span class="nn-k">Trabajo previo en cuotas</span> Si construimos algo antes de que existiera el contrato, se paga como primer entregable, en 3 a 6 cuotas mensuales — y pasa a tu nombre cuota a cuota.</p>
+        <p data-en-html="<span class=&quot;nn-k&quot;>Bounded deferral</span> Part of the payment can wait — with a cap, a calendar date and a signed acknowledgement. The first payment is never deferred."><span class="nn-k">Diferimiento acotado</span> Parte del pago puede esperar — con tope, fecha de calendario y reconocimiento firmado. El primer pago nunca se difiere.</p>
+        <p data-en-html="<span class=&quot;nn-k&quot;>Equity: no</span> We do not take shares as payment. We charge cash — that is what lets us say yes to everything above."><span class="nn-k">Equity: no</span> No aceptamos participación como forma de pago. Cobramos en efectivo — eso es lo que nos permite decir que sí a todo lo de arriba.</p>
+      </div>
+    </div>
+
+    <p class="fin-fine reveal" data-en="Products handling sensitive data — health, third-party financial records, minors — carry a 35% surcharge, and we tell you exactly why before quoting. Hours outside the plan: $60,000 each, with an agreed monthly cap. The formal quote is free and in writing.">
+      Productos con datos sensibles — salud, información financiera de terceros, menores de edad — llevan un
+      recargo del 35%, y te decimos exactamente por qué antes de cotizar. Hora fuera de plan: $60.000, con tope
+      mensual acordado. El presupuesto formal es gratis y por escrito.
+    </p>
+  </div>
+</section>
+
 <!-- ─────────────── CÓMO TRABAJAMOS ─────────────── -->
-<section class="section alt" id="metodo">
+<section class="section" id="metodo">
   <div class="wrap">
     <p class="kicker reveal" data-en="How we work">Cómo trabajamos</p>
     <h2 class="reveal" data-en="Verifiable, not promised.">Verificable, no prometido.</h2>
@@ -599,7 +686,7 @@
 </section>
 
 <!-- ─────────────── PARA QUIÉN ─────────────── -->
-<section class="section" id="paraquien">
+<section class="section alt" id="paraquien">
   <div class="wrap">
     <p class="kicker reveal" data-en="Before you write to us">Antes de escribirnos</p>
     <h2 class="reveal" data-en="Who this is for, and who it is not.">Para quién sí, y para quién no.</h2>
@@ -631,7 +718,7 @@
 </section>
 
 <!-- ─────────────── PROCESO ─────────────── -->
-<section class="section alt" id="proceso">
+<section class="section" id="proceso">
   <div class="wrap">
     <p class="kicker reveal" data-en="The process">El proceso</p>
     <h2 class="reveal" data-en="From the first conversation to the first sprint.">De la primera conversación al primer sprint.</h2>
