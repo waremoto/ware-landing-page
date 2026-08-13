@@ -18,11 +18,11 @@
   var META = {
     es: {
       title: 'Maremoto — Somos tu departamento de ingeniería de software',
-      desc: 'Tu empresa necesita software, no necesita contratar a tres personas para construirlo. Arquitectura, desarrollo, infraestructura y soporte, a cargo de un ingeniero de software.'
+      desc: 'Desarrollo de software a medida en Chile — SaaS o sistema interno —, con infraestructura y soporte incluidos y un ingeniero de software a cargo. Tu empresa necesita software, no necesita contratar a tres personas para construirlo.'
     },
     en: {
       title: 'Maremoto — We are your software engineering department',
-      desc: 'Your company needs software; it does not need to hire three people to build it. Architecture, development, infrastructure and support, run by a software engineer.'
+      desc: 'Custom software development in Chile — SaaS or internal systems — with infrastructure and support included and a software engineer in charge. Your company needs software; it does not need to hire three people to build it.'
     }
   };
 

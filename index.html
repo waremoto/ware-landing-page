@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Maremoto — Somos tu departamento de ingeniería de software</title>
-<meta name="description" id="metaDesc" content="Tu empresa necesita software, no necesita contratar a tres personas para construirlo. Arquitectura, desarrollo, infraestructura y soporte, a cargo de un ingeniero de software.">
+<meta name="description" id="metaDesc" content="Desarrollo de software a medida en Chile — SaaS o sistema interno —, con infraestructura y soporte incluidos y un ingeniero de software a cargo. Tu empresa necesita software, no necesita contratar a tres personas para construirlo.">
 <meta name="theme-color" content="#0B0D10">
 <link rel="canonical" href="https://maremoto.dev/">
 
@@ -12,7 +12,7 @@
 <meta property="og:url" content="https://maremoto.dev/">
 <meta property="og:site_name" content="Maremoto">
 <meta property="og:title" content="Maremoto — Somos tu departamento de ingeniería de software">
-<meta property="og:description" content="El departamento de ingeniería de software completo para empresas que no pueden contratar tres sueldos. Un ingeniero de software a cargo, una flota de agentes en lo repetible.">
+<meta property="og:description" content="Desarrollo de software a medida en Chile para empresas que no pueden contratar tres sueldos: el departamento de ingeniería completo, con un ingeniero de software a cargo y una flota de agentes en lo repetible.">
 <meta property="og:image" content="https://maremoto.dev/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -20,7 +20,7 @@
 <meta property="og:locale:alternate" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Maremoto — Somos tu departamento de ingeniería de software">
-<meta name="twitter:description" content="Un ingeniero de software a cargo. Una flota de agentes en lo repetible. Salida a 60 días, sin causa.">
+<meta name="twitter:description" content="Desarrollo de software a medida en Chile. Un ingeniero de software a cargo. Una flota de agentes en lo repetible. Salida a 60 días, sin causa.">
 <meta name="twitter:image" content="https://maremoto.dev/og.png">
 
 <link rel="preload" href="./fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -32,15 +32,128 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Maremoto SpA",
-  "alternateName": "Maremoto",
-  "url": "https://maremoto.dev/",
-  "logo": "https://maremoto.dev/og.png",
-  "email": "julio@maremoto.dev",
-  "description": "Departamento de ingeniería de software externalizado: arquitectura, desarrollo, infraestructura y soporte, a cargo de un ingeniero de software.",
-  "address": { "@type": "PostalAddress", "addressLocality": "Santiago", "addressCountry": "CL" },
-  "areaServed": "LatAm"
+  "@graph": [
+    {
+      "@type": ["Organization", "ProfessionalService"],
+      "@id": "https://maremoto.dev/#org",
+      "name": "Maremoto SpA",
+      "alternateName": "Maremoto",
+      "url": "https://maremoto.dev/",
+      "logo": "https://maremoto.dev/og.png",
+      "image": "https://maremoto.dev/og.png",
+      "email": "julio@maremoto.dev",
+      "description": "Departamento de ingeniería de software externalizado: arquitectura, desarrollo, infraestructura y soporte, a cargo de un ingeniero de software.",
+      "address": { "@type": "PostalAddress", "addressLocality": "Santiago", "addressCountry": "CL" },
+      "areaServed": [
+        { "@type": "Country", "name": "Chile" },
+        { "@type": "Country", "name": "Colombia" }
+      ],
+      "knowsLanguage": ["es", "en"],
+      "foundingDate": "2026-05-18",
+      "inLanguage": "es",
+      "sameAs": []
+    },
+    {
+      "@type": "Service",
+      "@id": "https://maremoto.dev/#servicio-desarrollo",
+      "name": "Desarrollo de software a medida",
+      "serviceType": "Desarrollo de software a medida",
+      "provider": { "@id": "https://maremoto.dev/#org" },
+      "areaServed": [
+        { "@type": "Country", "name": "Chile" },
+        { "@type": "Country", "name": "Colombia" }
+      ],
+      "description": "Construcción del producto con capacidad mensual reservada: arquitectura, implementación y entregables con pruebas automatizadas. Cada entregable pasa a nombre del cliente cuando su factura está pagada.",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "CLP",
+        "availability": "https://schema.org/InStock",
+        "description": "Capacidad mensual reservada por tramos. El presupuesto formal se entrega por escrito antes de empezar e incluye desarrollo, soporte y las condiciones de salida."
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://maremoto.dev/#servicio-soporte",
+      "name": "Soporte de software",
+      "serviceType": "Soporte y mantenimiento de software",
+      "provider": { "@id": "https://maremoto.dev/#org" },
+      "areaServed": [
+        { "@type": "Country", "name": "Chile" },
+        { "@type": "Country", "name": "Colombia" }
+      ],
+      "description": "Corrección de errores, seguridad y continuidad del producto ya en producción, por tramos de cobertura. La guardia fuera de horario hábil no viene por defecto: se contrata y se paga aparte.",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "CLP",
+        "availability": "https://schema.org/InStock",
+        "description": "Tramos de cobertura acordados en el presupuesto formal, antes de empezar."
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://maremoto.dev/#servicio-operacion",
+      "name": "Operación de infraestructura",
+      "serviceType": "Operación de infraestructura de software",
+      "provider": { "@id": "https://maremoto.dev/#org" },
+      "areaServed": [
+        { "@type": "Country", "name": "Chile" },
+        { "@type": "Country", "name": "Colombia" }
+      ],
+      "description": "Servidores, despliegues, respaldos e incidentes del producto en producción. Es opcional: el cliente puede operar su propia infraestructura y contratar sólo desarrollo y soporte.",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "CLP",
+        "availability": "https://schema.org/InStock",
+        "description": "Opcional y acordada en el presupuesto formal. Si el cliente opera su propia infraestructura, no se cobra."
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://maremoto.dev/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Qué pasa si necesito ayuda a las 3 de la mañana?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No hay guardia por defecto. Si necesitas respuesta de madrugada, se contrata y se paga como parte del soporte: te lo decimos antes, no después. No es una expectativa gratis."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿De quién es el código?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tuyo, a medida que lo pagas: la cesión se perfecciona con el pago, así que cada entregable es tuyo cuando su factura está pagada. Las dependencias de terceros conservan sus propias licencias, como en cualquier software."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Voy a quedar amarrado a software de ustedes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Garantía multi-proveedor: ningún software propietario de Maremoto es necesario para operar ni para seguir desarrollando tu producto. El stack es estándar y abierto, verificable en tu propio repositorio, y cualquier proveedor puede tomarlo mañana. Si alguna herramienta nuestra quedara embebida, va con licencia perpetua y gratuita de respaldo."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cómo salgo si no quiero seguir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Con 60 días de aviso, sin causa y sin explicaciones, y es simétrico: cualquiera de las dos partes puede terminar. Si te vas, te llevas el código, la infraestructura como código, los datos y las credenciales, con un período de transición pactado."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿En qué se diferencia de una fábrica de software?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Una fábrica de software te vende horas junior y te deja a ti el trabajo de supervisarlas. Acá hay un ingeniero de software con nombre y apellido que decide la arquitectura y revisa el trabajo antes de que tú lo veas."
+          }
+        }
+      ]
+    }
+  ]
 }
 </script>
 </head>
@@ -126,10 +239,11 @@
   <div class="wrap">
     <p class="kicker reveal" data-en="The problem">El problema</p>
     <h2 class="reveal" data-en="Three salaries you cannot pay yet.">Tres sueldos que todavía no puedes pagar.</h2>
-    <p class="section-lede reveal" data-en="Building and sustaining a software product takes at least three people. Hiring them costs between 6 and 9 million pesos a month in Chile — and you will only use them a fraction of the time.">
+    <p class="section-lede reveal" data-en="Building and sustaining a software product takes at least three people. Hiring them costs between 6 and 9 million pesos a month in Chile — and you will only use them a fraction of the time. That is why almost everyone ends up looking for an external development team.">
       Para construir y sostener un producto de software hacen falta al menos tres personas.
       Contratarlas cuesta entre 6 y 9 millones al mes en Chile — y las vas a ocupar
-      una fracción del tiempo.
+      una fracción del tiempo. Por eso casi todos terminan buscando un equipo de
+      desarrollo externo.
     </p>
     <div class="grid grid-3">
       <article class="card reveal">
