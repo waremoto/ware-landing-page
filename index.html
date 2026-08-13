@@ -3,23 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Maremoto — Somos tu departamento de ingeniería</title>
-<meta name="description" content="Tu empresa necesita software, no necesita contratar a tres personas para construirlo. Arquitectura, desarrollo, infraestructura y soporte, liderados por un ingeniero senior. Maremoto SpA, Santiago de Chile.">
+<title>Maremoto — Somos tu departamento de ingeniería de software</title>
+<meta name="description" id="metaDesc" content="Tu empresa necesita software, no necesita contratar a tres personas para construirlo. Arquitectura, desarrollo, infraestructura y soporte, a cargo de un ingeniero de software.">
 <meta name="theme-color" content="#0B0D10">
 <link rel="canonical" href="https://maremoto.dev/">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://maremoto.dev/">
 <meta property="og:site_name" content="Maremoto">
-<meta property="og:title" content="Maremoto — Somos tu departamento de ingeniería">
-<meta property="og:description" content="El departamento de ingeniería completo para empresas que no pueden contratar tres sueldos. Un líder senior a cargo, una flota de agentes en lo repetible.">
+<meta property="og:title" content="Maremoto — Somos tu departamento de ingeniería de software">
+<meta property="og:description" content="El departamento de ingeniería de software completo para empresas que no pueden contratar tres sueldos. Un ingeniero de software a cargo, una flota de agentes en lo repetible.">
 <meta property="og:image" content="https://maremoto.dev/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="es_CL">
+<meta property="og:locale:alternate" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Maremoto — Somos tu departamento de ingeniería">
-<meta name="twitter:description" content="Un líder senior a cargo. Una flota de agentes en lo repetible. Salida a 60 días, sin causa.">
+<meta name="twitter:title" content="Maremoto — Somos tu departamento de ingeniería de software">
+<meta name="twitter:description" content="Un ingeniero de software a cargo. Una flota de agentes en lo repetible. Salida a 60 días, sin causa.">
 <meta name="twitter:image" content="https://maremoto.dev/og.png">
 
 <link rel="preload" href="./fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -37,16 +38,15 @@
   "url": "https://maremoto.dev/",
   "logo": "https://maremoto.dev/og.png",
   "email": "julio@maremoto.dev",
-  "description": "Departamento de ingeniería externalizado: arquitectura, desarrollo, infraestructura y soporte, liderados por un ingeniero senior.",
+  "description": "Departamento de ingeniería de software externalizado: arquitectura, desarrollo, infraestructura y soporte, a cargo de un ingeniero de software.",
   "address": { "@type": "PostalAddress", "addressLocality": "Santiago", "addressCountry": "CL" },
-  "areaServed": "LatAm",
-  "taxID": "78.426.196-4"
+  "areaServed": "LatAm"
 }
 </script>
 </head>
 <body>
 
-<a class="skip" href="#main">Saltar al contenido</a>
+<a class="skip" href="#main" data-en="Skip to content">Saltar al contenido</a>
 
 <header class="nav" id="nav">
   <div class="wrap nav-inner">
@@ -55,15 +55,20 @@
       <span class="brand-name">Maremoto</span>
     </a>
     <nav class="nav-links" aria-label="Principal">
-      <a href="#departamento">El departamento</a>
-      <a href="#como">Cómo funciona</a>
-      <a href="#lineas">Qué se contrata</a>
-      <a href="#codigo">Tu código</a>
-      <a class="nav-cta" href="#contacto">Conversemos</a>
+      <a href="#departamento" data-en="The department">El departamento</a>
+      <a href="#como" data-en="How it works">Cómo funciona</a>
+      <a href="#lineas" data-en="What you hire">Qué se contrata</a>
+      <a href="#codigo" data-en="Your code">Tu código</a>
+      <a class="nav-cta" href="#contacto" data-en="Let's talk">Conversemos</a>
     </nav>
-    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Cambiar tema">
-      <span class="theme-icon" aria-hidden="true"></span>
-    </button>
+    <div class="nav-tools">
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Change language / Cambiar idioma">
+        <span class="lang-a">ES</span><span class="lang-sep" aria-hidden="true"></span><span class="lang-b">EN</span>
+      </button>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Cambiar tema" data-en-aria="Change theme">
+        <span class="theme-icon" aria-hidden="true"></span>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -73,48 +78,47 @@
 <section class="hero" id="top">
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <p class="eyebrow reveal">Maremoto SpA · Santiago de Chile</p>
-      <h1 class="reveal">Somos tu<br><span class="accent">departamento de ingeniería.</span></h1>
-      <p class="lede reveal">
+      <h1 class="reveal" data-en-html="We are your<br><span class=&quot;accent&quot;>software engineering department.</span>">Somos tu<br><span class="accent">departamento de ingeniería de software.</span></h1>
+      <p class="lede reveal" data-en-html="Your company needs software. It does not need to hire three people to build it. We bring the whole department — architecture, development, infrastructure and support — <strong>run by a software engineer</strong>, not by a junior team you have to supervise.">
         Tu empresa necesita software. No necesita contratar a tres personas para construirlo.
         Nosotros ponemos el departamento completo — arquitectura, desarrollo, infraestructura y
-        soporte — <strong>liderado por un ingeniero senior</strong>, no por un equipo junior que
+        soporte — <strong>a cargo de un ingeniero de software</strong>, no de un equipo junior que
         hay que supervisar.
       </p>
       <div class="cta-row reveal">
-        <a class="btn btn-primary" href="#contacto">Conversemos</a>
-        <a class="btn btn-ghost" href="#como">Cómo funciona</a>
+        <a class="btn btn-primary" href="#contacto" data-en="Let's talk">Conversemos</a>
+        <a class="btn btn-ghost" href="#como" data-en="How it works">Cómo funciona</a>
       </div>
     </div>
 
-    <!-- diagrama: un líder, una flota, tu tablero -->
+    <!-- diagrama: un ingeniero, una flota -->
     <figure class="hero-viz reveal" aria-labelledby="vizcap">
       <div class="viz-frame">
-        <svg class="swarm" viewBox="0 0 420 420" role="img" aria-label="Diagrama: un líder senior al centro, seis agentes alrededor trabajando en tareas repetibles, y un tablero donde el cliente lo ve todo.">
+        <svg class="swarm" viewBox="0 0 420 420" role="img" aria-label="Diagrama: un ingeniero de software al centro y seis agentes alrededor trabajando en tareas repetibles." data-en-aria="Diagram: one software engineer at the centre, six agents around it working on repetitive tasks.">
           <g class="swarm-links" id="swarmLinks"></g>
           <g class="swarm-nodes" id="swarmNodes"></g>
           <g class="swarm-core">
             <circle class="core-halo" cx="210" cy="210" r="62"></circle>
             <circle class="core-disc" cx="210" cy="210" r="44"></circle>
-            <text class="core-t1" x="210" y="205">LÍDER</text>
-            <text class="core-t2" x="210" y="222">senior</text>
+            <text class="core-t1" x="210" y="205" data-en="ENGINEER">INGENIERO</text>
+            <text class="core-t2" x="210" y="222" data-en="human">humano</text>
           </g>
         </svg>
         <div class="viz-legend">
-          <span><i class="dot dot-core"></i>1 líder responde por tu producto</span>
-          <span><i class="dot dot-agent"></i>agentes en lo repetible, 24/7</span>
+          <span><i class="dot dot-core"></i><span data-en="1 engineer answers for your product">1 ingeniero responde por tu producto</span></span>
+          <span><i class="dot dot-agent"></i><span data-en="agents on the repetitive work, 24/7">agentes en lo repetible, 24/7</span></span>
         </div>
       </div>
-      <figcaption id="vizcap" class="viz-cap">Así se cubre un departamento entero sin el costo de un departamento entero.</figcaption>
+      <figcaption id="vizcap" class="viz-cap" data-en="That is how a whole department gets covered without the cost of a whole department.">Así se cubre un departamento entero sin el costo de un departamento entero.</figcaption>
     </figure>
   </div>
 
   <div class="wrap">
-    <ul class="stat-strip reveal" aria-label="Cifras">
-      <li><span class="stat-n">1</span><span class="stat-l">líder senior a cargo de tu producto</span></li>
-      <li><span class="stat-n">24/7</span><span class="stat-l">agentes trabajando en lo repetible</span></li>
-      <li><span class="stat-n">60</span><span class="stat-l">días de aviso para salir, sin causa</span></li>
-      <li><span class="stat-n">0</span><span class="stat-l">costo de contratación, finiquito o vacaciones</span></li>
+    <ul class="stat-strip reveal" aria-label="Cifras" data-en-aria="Key numbers">
+      <li><span class="stat-n">1</span><span class="stat-l" data-en="software engineer in charge of your product">ingeniero de software a cargo de tu producto</span></li>
+      <li><span class="stat-n">24/7</span><span class="stat-l" data-en="agents working on the repetitive part">agentes trabajando en lo repetible</span></li>
+      <li><span class="stat-n">60</span><span class="stat-l" data-en="days' notice to walk away, no cause needed">días de aviso para salir, sin causa</span></li>
+      <li><span class="stat-n">0</span><span class="stat-l" data-en="cost of hiring, severance or paid leave">costo de contratación, finiquito o vacaciones</span></li>
     </ul>
   </div>
 </section>
@@ -122,9 +126,9 @@
 <!-- ─────────────── PROBLEMA ─────────────── -->
 <section class="section" id="problema">
   <div class="wrap">
-    <p class="kicker reveal">El problema</p>
-    <h2 class="reveal">Tres sueldos que todavía no puedes pagar.</h2>
-    <p class="section-lede reveal">
+    <p class="kicker reveal" data-en="The problem">El problema</p>
+    <h2 class="reveal" data-en="Three salaries you cannot pay yet.">Tres sueldos que todavía no puedes pagar.</h2>
+    <p class="section-lede reveal" data-en="Building and sustaining a software product takes at least three people. Hiring them costs between 6 and 9 million pesos a month in Chile — and you will only use them a fraction of the time.">
       Para construir y sostener un producto de software hacen falta al menos tres personas.
       Contratarlas cuesta entre 6 y 9 millones al mes en Chile — y las vas a ocupar
       una fracción del tiempo.
@@ -134,66 +138,66 @@
         <span class="card-ico" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 17 3 12l5-5"/><path d="m16 7 5 5-5 5"/><path d="M13.5 4 10.5 20"/></svg>
         </span>
-        <h3>Alguien que construya</h3>
-        <p>Un desarrollador con criterio, capaz de decidir arquitectura y no sólo de ejecutar tickets.</p>
+        <h3 data-en="Someone to build it">Alguien que construya</h3>
+        <p data-en="A developer with judgement, able to decide architecture and not just close tickets.">Un desarrollador con criterio, capaz de decidir arquitectura y no sólo de ejecutar tickets.</p>
       </article>
       <article class="card reveal">
         <span class="card-ico" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>
         </span>
-        <h3>Alguien que lo mantenga en pie</h3>
-        <p>Servidores, despliegues, respaldos, seguridad, incidentes. El trabajo que sólo se nota cuando falla.</p>
+        <h3 data-en="Someone to keep it standing">Alguien que lo mantenga en pie</h3>
+        <p data-en="Servers, deployments, backups, security, incidents. The work nobody notices until it fails.">Servidores, despliegues, respaldos, seguridad, incidentes. El trabajo que sólo se nota cuando falla.</p>
       </article>
       <article class="card reveal">
         <span class="card-ico" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3"/><circle cx="12" cy="12" r="6"/><path d="M12 9v3l2 2"/><path d="M3.5 12H6M18 12h2.5M5.6 5.6 7.4 7.4M16.6 16.6l1.8 1.8"/></svg>
         </span>
-        <h3>Alguien que decida qué construir</h3>
-        <p>Traducir el negocio a producto, priorizar, y decir que no. El rol que casi nadie contrata y todos necesitan.</p>
+        <h3 data-en="Someone to decide what to build">Alguien que decida qué construir</h3>
+        <p data-en="Translating business into product, setting priorities, and saying no. The role almost nobody hires and everybody needs.">Traducir el negocio a producto, priorizar, y decir que no. El rol que casi nadie contrata y todos necesitan.</p>
       </article>
     </div>
 
     <!-- comparación visual: tres caminos -->
-    <div class="compare reveal" role="table" aria-label="Comparación entre contratar un equipo, una fábrica de horas y Maremoto">
+    <div class="compare reveal" role="table" aria-label="Comparación entre contratar un equipo, una fábrica de horas y Maremoto" data-en-aria="Comparison between hiring a team, an hours factory and Maremoto">
       <div class="cmp-head" role="row">
         <span role="columnheader"></span>
-        <span role="columnheader">Contratar un equipo</span>
-        <span role="columnheader">Fábrica de horas</span>
+        <span role="columnheader" data-en="Hire a team">Contratar un equipo</span>
+        <span role="columnheader" data-en="Hours factory">Fábrica de horas</span>
         <span role="columnheader" class="cmp-us">Maremoto</span>
       </div>
       <div class="cmp-row" role="row">
-        <span class="cmp-k" role="rowheader">Quién decide la arquitectura</span>
-        <span role="cell" data-h="Contratar un equipo"><b class="v-mid">Tú contratas a alguien</b>si aciertas</span>
-        <span role="cell" data-h="Fábrica de horas"><b class="v-no">Tú</b>o nadie</span>
-        <span role="cell" class="cmp-us" data-h="Maremoto"><b class="v-yes">Un líder senior</b>con nombre y apellido</span>
+        <span class="cmp-k" role="rowheader" data-en="Who decides the architecture">Quién decide la arquitectura</span>
+        <span role="cell" data-h="Contratar un equipo" data-en-h="Hire a team" data-en-html="<b class=&quot;v-mid&quot;>You hire someone</b>if you pick right"><b class="v-mid">Tú contratas a alguien</b>si aciertas</span>
+        <span role="cell" data-h="Fábrica de horas" data-en-h="Hours factory" data-en-html="<b class=&quot;v-no&quot;>You</b>or nobody"><b class="v-no">Tú</b>o nadie</span>
+        <span role="cell" class="cmp-us" data-h="Maremoto" data-en-h="Maremoto" data-en-html="<b class=&quot;v-yes&quot;>A software engineer</b>with a name"><b class="v-yes">Un ingeniero de software</b>con nombre y apellido</span>
       </div>
       <div class="cmp-row" role="row">
-        <span class="cmp-k" role="rowheader">Quién supervisa el trabajo</span>
-        <span role="cell" data-h="Contratar un equipo"><b class="v-no">Tú</b>todos los días</span>
-        <span role="cell" data-h="Fábrica de horas"><b class="v-no">Tú</b>y es el costo oculto</span>
-        <span role="cell" class="cmp-us" data-h="Maremoto"><b class="v-yes">Nosotros</b>el líder revisa antes que tú veas</span>
+        <span class="cmp-k" role="rowheader" data-en="Who supervises the work">Quién supervisa el trabajo</span>
+        <span role="cell" data-h="Contratar un equipo" data-en-h="Hire a team" data-en-html="<b class=&quot;v-no&quot;>You</b>every single day"><b class="v-no">Tú</b>todos los días</span>
+        <span role="cell" data-h="Fábrica de horas" data-en-h="Hours factory" data-en-html="<b class=&quot;v-no&quot;>You</b>and that is the hidden cost"><b class="v-no">Tú</b>y es el costo oculto</span>
+        <span role="cell" class="cmp-us" data-h="Maremoto" data-en-h="Maremoto" data-en-html="<b class=&quot;v-yes&quot;>We do</b>the engineer reviews before you see it"><b class="v-yes">Nosotros</b>el ingeniero revisa antes que tú veas</span>
       </div>
       <div class="cmp-row" role="row">
-        <span class="cmp-k" role="rowheader">Costo de partir</span>
-        <span role="cell" data-h="Contratar un equipo"><b class="v-no">Alto</b>búsqueda, contratación, curva</span>
-        <span role="cell" data-h="Fábrica de horas"><b class="v-mid">Medio</b>rota gente cada proyecto</span>
-        <span role="cell" class="cmp-us" data-h="Maremoto"><b class="v-yes">Una conversación</b>y un presupuesto por escrito</span>
+        <span class="cmp-k" role="rowheader" data-en="Cost to start">Costo de partir</span>
+        <span role="cell" data-h="Contratar un equipo" data-en-h="Hire a team" data-en-html="<b class=&quot;v-no&quot;>High</b>search, hiring, ramp-up"><b class="v-no">Alto</b>búsqueda, contratación, curva</span>
+        <span role="cell" data-h="Fábrica de horas" data-en-h="Hours factory" data-en-html="<b class=&quot;v-mid&quot;>Medium</b>people rotate every project"><b class="v-mid">Medio</b>rota gente cada proyecto</span>
+        <span role="cell" class="cmp-us" data-h="Maremoto" data-en-h="Maremoto" data-en-html="<b class=&quot;v-yes&quot;>One conversation</b>and a written quote"><b class="v-yes">Una conversación</b>y un presupuesto por escrito</span>
       </div>
       <div class="cmp-row" role="row">
-        <span class="cmp-k" role="rowheader">Costo de salir</span>
-        <span role="cell" data-h="Contratar un equipo"><b class="v-no">Finiquito</b>y el conocimiento se va</span>
-        <span role="cell" data-h="Fábrica de horas"><b class="v-mid">Variable</b>según lo que diga el contrato</span>
-        <span role="cell" class="cmp-us" data-h="Maremoto"><b class="v-yes">60 días</b>sin causa, simétrico</span>
+        <span class="cmp-k" role="rowheader" data-en="Cost to leave">Costo de salir</span>
+        <span role="cell" data-h="Contratar un equipo" data-en-h="Hire a team" data-en-html="<b class=&quot;v-no&quot;>Severance</b>and the knowledge walks out"><b class="v-no">Finiquito</b>y el conocimiento se va</span>
+        <span role="cell" data-h="Fábrica de horas" data-en-h="Hours factory" data-en-html="<b class=&quot;v-mid&quot;>It depends</b>on what the contract says"><b class="v-mid">Variable</b>según lo que diga el contrato</span>
+        <span role="cell" class="cmp-us" data-h="Maremoto" data-en-h="Maremoto" data-en-html="<b class=&quot;v-yes&quot;>60 days</b>no cause, symmetric"><b class="v-yes">60 días</b>sin causa, simétrico</span>
       </div>
       <div class="cmp-row" role="row">
-        <span class="cmp-k" role="rowheader">Qué pasa a las 3 a.m.</span>
-        <span role="cell" data-h="Contratar un equipo"><b class="v-no">Nadie</b>tu equipo duerme</span>
-        <span role="cell" data-h="Fábrica de horas"><b class="v-no">Nadie</b>salvo que pagues guardia</span>
-        <span role="cell" class="cmp-us" data-h="Maremoto"><b class="v-mid">Guardia si la contratas</b>te lo decimos antes, no después</span>
+        <span class="cmp-k" role="rowheader" data-en="What happens at 3 a.m.">Qué pasa a las 3 a.m.</span>
+        <span role="cell" data-h="Contratar un equipo" data-en-h="Hire a team" data-en-html="<b class=&quot;v-no&quot;>Nobody</b>your team is asleep"><b class="v-no">Nadie</b>tu equipo duerme</span>
+        <span role="cell" data-h="Fábrica de horas" data-en-h="Hours factory" data-en-html="<b class=&quot;v-no&quot;>Nobody</b>unless you pay for on-call"><b class="v-no">Nadie</b>salvo que pagues guardia</span>
+        <span role="cell" class="cmp-us" data-h="Maremoto" data-en-h="Maremoto" data-en-html="<b class=&quot;v-mid&quot;>On-call if you hire it</b>we say so upfront, not after"><b class="v-mid">Guardia si la contratas</b>te lo decimos antes, no después</span>
       </div>
     </div>
 
-    <p class="pullquote reveal">
+    <p class="pullquote reveal" data-en="The usual alternative is a software factory that sells you junior hours and leaves you the job of supervising them. That is not a department: it is a cost with homework attached.">
       La alternativa habitual es una fábrica de software que te vende horas junior y te deja
       a ti el trabajo de supervisarlas. Eso no es un departamento: es un costo con tarea para ti.
     </p>
@@ -203,31 +207,31 @@
 <!-- ─────────────── EL DEPARTAMENTO ─────────────── -->
 <section class="section alt" id="departamento">
   <div class="wrap">
-    <p class="kicker reveal">Qué recibes</p>
-    <h2 class="reveal">El departamento completo, no una persona.</h2>
-    <p class="section-lede reveal">
+    <p class="kicker reveal" data-en="What you get">Qué recibes</p>
+    <h2 class="reveal" data-en="The whole department, not one person.">El departamento completo, no una persona.</h2>
+    <p class="section-lede reveal" data-en="These are the areas covered from month one. They are not hired separately, nor coordinated between vendors: they are one accountable party.">
       Estos son los dominios que quedan cubiertos desde el primer mes. No se contratan por
       separado ni se coordinan entre proveedores: son un solo responsable.
     </p>
     <div class="grid grid-3 domains">
       <article class="card reveal"><span class="idx">01</span>
         <span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8v8l9 5 9-5V8z"/><path d="M12 12 3 8M12 12l9-4M12 12v9"/></svg></span>
-        <h3>Arquitectura</h3><p>Las decisiones que abren o cierran opciones comerciales dos años después.</p></article>
+        <h3 data-en="Architecture">Arquitectura</h3><p data-en="The decisions that open or close commercial options two years from now.">Las decisiones que abren o cierran opciones comerciales dos años después.</p></article>
       <article class="card reveal"><span class="idx">02</span>
         <span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg></span>
-        <h3>Desarrollo de producto</h3><p>La lógica de negocio, las pantallas, el producto que tus clientes usan.</p></article>
+        <h3 data-en="Product development">Desarrollo de producto</h3><p data-en="The business logic, the screens, the product your customers actually use.">La lógica de negocio, las pantallas, el producto que tus clientes usan.</p></article>
       <article class="card reveal"><span class="idx">03</span>
         <span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l2.6-2.6a4.5 4.5 0 0 0-6.4-6.4L11 6.6"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0L5 12.6a4.5 4.5 0 0 0 6.4 6.4L13 17.4"/></svg></span>
-        <h3>Integraciones</h3><p>ERPs, pasarelas, servicios tributarios, APIs de terceros. Y mantenerlas cuando cambian.</p></article>
+        <h3 data-en="Integrations">Integraciones</h3><p data-en="ERPs, payment gateways, tax authorities, third-party APIs. And maintaining them when they change.">ERPs, pasarelas, servicios tributarios, APIs de terceros. Y mantenerlas cuando cambian.</p></article>
       <article class="card reveal"><span class="idx">04</span>
         <span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.4 3.4 8.2 8 9 4.6-.8 8-4.6 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
-        <h3>Infraestructura y seguridad</h3><p>Hosting, despliegues, respaldos, monitoreo, actualizaciones de seguridad.</p></article>
+        <h3 data-en="Infrastructure and security">Infraestructura y seguridad</h3><p data-en="Hosting, deployments, backups, monitoring, security updates.">Hosting, despliegues, respaldos, monitoreo, actualizaciones de seguridad.</p></article>
       <article class="card reveal"><span class="idx">05</span>
         <span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"/><path d="M9 9h7M9 12.5h4"/></svg></span>
-        <h3>Soporte</h3><p>Incidentes de tus clientes, resueltos con plazo comprometido por escrito.</p></article>
+        <h3 data-en="Support">Soporte</h3><p data-en="Your customers' incidents, resolved within a response time committed in writing.">Incidentes de tus clientes, resueltos con plazo comprometido por escrito.</p></article>
       <article class="card reveal"><span class="idx">06</span>
         <span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20v-1a5 5 0 0 1 5-5h1"/><circle cx="9.5" cy="7.5" r="3.5"/><path d="M15 15h6M18 12v6"/></svg></span>
-        <h3>Onboarding técnico</h3><p>Que el cliente número veinte no cueste lo mismo que el primero.</p></article>
+        <h3 data-en="Technical onboarding">Onboarding técnico</h3><p data-en="So that customer number twenty does not cost the same as the first one.">Que el cliente número veinte no cueste lo mismo que el primero.</p></article>
     </div>
   </div>
 </section>
@@ -235,9 +239,9 @@
 <!-- ─────────────── CÓMO FUNCIONA ─────────────── -->
 <section class="section" id="como">
   <div class="wrap">
-    <p class="kicker reveal">Cómo funciona</p>
-    <h2 class="reveal">Un líder senior. Una flota de agentes.<br>Tu tablero, siempre a la vista.</h2>
-    <p class="section-lede reveal">
+    <p class="kicker reveal" data-en="How it works">Cómo funciona</p>
+    <h2 class="reveal" data-en-html="One software engineer. A fleet of agents.<br>Your board, always in the open.">Un ingeniero de software. Una flota de agentes.<br>Tu tablero, siempre a la vista.</h2>
+    <p class="section-lede reveal" data-en="We can cover a whole department for a fraction of its cost because the repetitive work is not done by people. We say it plainly, because it is the reason the numbers work.">
       Podemos cubrir un departamento entero por el costo de una fracción de él porque el trabajo
       repetible no lo hacen personas. Lo decimos de frente, porque es la razón por la que los
       números funcionan.
@@ -247,70 +251,73 @@
     <figure class="shell reveal" id="shell">
       <div class="shell-bar">
         <span class="shell-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span class="shell-title">GhostShell · tablero de Acme SpA</span>
-        <span class="shell-live" id="shellLive"><i aria-hidden="true"></i>en vivo</span>
+        <span class="shell-title" data-en="GhostShell · Andina Logística board">GhostShell · tablero de Andina Logística</span>
+        <span class="shell-live" id="shellLive"><i aria-hidden="true"></i><span data-en="live">en vivo</span></span>
       </div>
 
       <div class="kb" id="kb" aria-hidden="true">
-        <div class="kb-col">
-          <p class="kb-h">Pedido <span class="kb-n">0</span></p>
+        <div class="kb-col" data-state="backlog">
+          <p class="kb-h"><i class="kb-dot"></i><span data-en="Backlog">Backlog</span><span class="kb-n">0</span></p>
           <div class="kb-cards"></div>
         </div>
-        <div class="kb-col">
-          <p class="kb-h">Los agentes lo hacen <span class="kb-n">0</span></p>
+        <div class="kb-col" data-state="doing">
+          <p class="kb-h"><i class="kb-dot"></i><span data-en="In progress">En progreso</span><span class="kb-n">0</span></p>
           <div class="kb-cards"></div>
         </div>
-        <div class="kb-col">
-          <p class="kb-h">El líder revisa <span class="kb-n">0</span></p>
+        <div class="kb-col" data-state="review">
+          <p class="kb-h"><i class="kb-dot"></i><span data-en="In review">En revisión</span><span class="kb-n">0</span></p>
           <div class="kb-cards"></div>
         </div>
-        <div class="kb-col kb-done">
-          <p class="kb-h">Listo <span class="kb-n">0</span></p>
+        <div class="kb-col kb-done" data-state="done">
+          <p class="kb-h"><i class="kb-dot"></i><span data-en="Done">Finalizado</span><span class="kb-n">0</span></p>
           <div class="kb-cards"></div>
         </div>
       </div>
 
-      <p class="sr-only">
-        Vista simplificada del tablero: las tareas avanzan de tu pedido, a los agentes que la ejecutan,
-        a la revisión del líder humano, y sólo entonces a Listo. El pie muestra la actividad en curso.
+      <p class="sr-only" data-en="Simplified view of the board: tasks move from the backlog, to the agents building and testing them, to the human engineer's review, and only then to done. The footer shows what is happening right now.">
+        Vista simplificada del tablero: las tareas avanzan del backlog, a los agentes que las
+        construyen y prueban, a la revisión del ingeniero humano, y sólo entonces a finalizado.
+        El pie muestra lo que está pasando ahora mismo.
       </p>
 
       <div class="shell-foot">
-        <span class="shell-act" id="shellAct">agente 2 · escribiendo pruebas</span>
+        <span class="shell-act" id="shellAct"></span>
         <span class="shell-metrics">
-          <b>268</b> pruebas en verde
+          <b id="mTests">268</b> <span data-en="tests green">pruebas en verde</span>
           <i aria-hidden="true"></i>
-          <b>3</b> agentes trabajando
+          <b id="mBots">4</b> <span data-en="agents working">agentes trabajando</span>
         </span>
       </div>
-      <figcaption class="shell-cap">
-        El mismo tablero que miramos nosotros. Sin informes de avance: el estado real, cuando se te ocurra abrirlo.
+      <figcaption class="shell-cap" data-en-html="The same board we look at. No progress reports written to reassure you — the real state, whenever you feel like opening it. <strong>Nothing reaches Done without the engineer's review.</strong>">
+        El mismo tablero que miramos nosotros. Sin informes de avance escritos para tranquilizarte:
+        el estado real, cuando se te ocurra abrirlo. <strong>Nada llega a Finalizado sin pasar por
+        la revisión del ingeniero.</strong>
       </figcaption>
     </figure>
 
-    <!-- flujo visual: de tu pedido a tu tablero -->
-    <div class="flow reveal" id="flow" aria-label="Flujo: tú pides, el líder decide, los agentes ejecutan, tú lo ves en el tablero">
+    <!-- flujo visual -->
+    <div class="flow reveal" id="flow" aria-label="Flujo: tú pides, el ingeniero decide, los agentes ejecutan, tú lo ves en el tablero" data-en-aria="Flow: you ask, the engineer decides, the agents execute, you see it on the board">
       <div class="flow-track" aria-hidden="true"><span class="flow-dot"></span></div>
       <ol class="flow-steps">
         <li>
           <span class="flow-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"/></svg></span>
-          <h3>Tú pides</h3>
-          <p>En la reunión semanal o cuando surja. En tus palabras, no en formato de ticket.</p>
+          <h3 data-en="You ask">Tú pides</h3>
+          <p data-en="In the weekly meeting or whenever it comes up. In your words, not in ticket format.">En la reunión semanal o cuando surja. En tus palabras, no en formato de ticket.</p>
         </li>
         <li>
           <span class="flow-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a5 5 0 0 1 5 5c0 2-1 3-2 4.2-.7.9-1 1.8-1 2.8H10c0-1-.3-1.9-1-2.8C8 11 7 10 7 8a5 5 0 0 1 5-5z"/><path d="M10 19h4M10.5 21.5h3"/></svg></span>
-          <h3>El líder decide</h3>
-          <p>Arquitectura, alcance y prioridad. Lo que no conviene hacer, se dice.</p>
+          <h3 data-en="The engineer decides">El ingeniero decide</h3>
+          <p data-en="Architecture, scope and priority. What is not worth doing gets said out loud.">Arquitectura, alcance y prioridad. Lo que no conviene hacer, se dice.</p>
         </li>
         <li>
           <span class="flow-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 10h.01M8 14h.01M11.5 10H16M11.5 14H16"/></svg></span>
-          <h3>Los agentes ejecutan</h3>
-          <p>Código, pruebas y documentación en paralelo, día y noche. Nada llega sin revisión.</p>
+          <h3 data-en="The agents execute">Los agentes ejecutan</h3>
+          <p data-en="Code, tests and documentation in parallel, day and night. Nothing ships unreviewed.">Código, pruebas y documentación en paralelo, día y noche. Nada llega sin revisión.</p>
         </li>
         <li>
           <span class="flow-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18v12H3z"/><path d="M7 9v4M12 8v5M17 11v2M3 21h18"/></svg></span>
-          <h3>Tú lo ves</h3>
-          <p>Tablero abierto: cada tarea, su estado y lo que se hizo. Cuando se te ocurra abrirlo.</p>
+          <h3 data-en="You watch">Tú lo ves</h3>
+          <p data-en="Open board: every task, its state and what was done. Whenever you feel like opening it.">Tablero abierto: cada tarea, su estado y lo que se hizo. Cuando se te ocurra abrirlo.</p>
         </li>
       </ol>
     </div>
@@ -319,8 +326,8 @@
       <article class="how-item reveal">
         <span class="how-n">01</span>
         <div>
-          <h3>Un ingeniero líder, senior, a cargo</h3>
-          <p>
+          <h3 data-en="One software engineer, in charge">Un ingeniero de software a cargo</h3>
+          <p data-en="A person with a name who knows your business, makes the technical calls and answers for the result. No rotation, no swapping, and no re-explaining the project every month.">
             Una persona con nombre que conoce tu negocio, toma las decisiones técnicas y responde
             por el resultado. No rota, no te lo cambian, y no hay que explicarle el proyecto de
             nuevo cada mes.
@@ -330,10 +337,10 @@
       <article class="how-item reveal">
         <span class="how-n">02</span>
         <div>
-          <h3>Agentes de IA haciendo el trabajo repetible, 24/7</h3>
-          <p>
+          <h3 data-en="AI agents doing the repetitive work, 24/7">Agentes de IA haciendo el trabajo repetible, 24/7</h3>
+          <p data-en-html="On <strong>GhostWare</strong>, our own orchestration platform. The agents write, test and document under supervision; the engineer reviews and decides. That is what replaces the junior team — without the cost of managing one.">
             Sobre <strong>GhostWare</strong>, nuestra propia plataforma de orquestación. Los agentes
-            escriben, prueban y documentan bajo supervisión; el líder revisa y decide. Es lo que
+            escriben, prueban y documentan bajo supervisión; el ingeniero revisa y decide. Es lo que
             reemplaza al equipo junior — sin el costo de gestionarlo.
           </p>
         </div>
@@ -341,8 +348,8 @@
       <article class="how-item reveal">
         <span class="how-n">03</span>
         <div>
-          <h3>Una reunión semanal contigo</h3>
-          <p>
+          <h3 data-en="A weekly meeting with you">Una reunión semanal contigo</h3>
+          <p data-en="At first to capture what you need; later to review progress. It is written into the contract, not a courtesy. It is what makes this feel like your own department and not a vendor you have to chase.">
             Al principio para levantar lo que necesitas; después para revisar avances. Va escrita
             en el contrato, no es cortesía. Es lo que hace que se sienta un departamento propio y
             no un proveedor al que hay que perseguir.
@@ -352,8 +359,8 @@
       <article class="how-item reveal">
         <span class="how-n">04</span>
         <div>
-          <h3>Un tablero que puedes mirar cuando quieras</h3>
-          <p>
+          <h3 data-en="A board you can open whenever you want">Un tablero que puedes mirar cuando quieras</h3>
+          <p data-en="Every task, its state and what was done. No progress reports written to reassure you: the real, verifiable state, whenever you feel like opening it.">
             Cada tarea, su estado y lo que se hizo. Sin informes de avance escritos para
             tranquilizarte: el estado real, verificable, cuando se te ocurra abrirlo.
           </p>
@@ -362,11 +369,11 @@
     </div>
 
     <div class="callout reveal">
-      <h3>Sin impuesto de gestión</h3>
-      <p>
+      <h3 data-en="No management tax">Sin impuesto de gestión</h3>
+      <p data-en="A cheap, junior team carries a cost that never shows up in the quote: someone on your side has to review it, correct it and coordinate it. That someone is usually you. With a software engineer in charge, that cost does not exist.">
         Un equipo barato y junior tiene un costo que no aparece en la cotización: alguien de tu
         lado tiene que revisarlo, corregirlo y coordinarlo. Ese alguien normalmente eres tú.
-        Con un líder senior a cargo, ese costo no existe.
+        Con un ingeniero de software a cargo, ese costo no existe.
       </p>
     </div>
   </div>
@@ -375,42 +382,42 @@
 <!-- ─────────────── LÍNEAS ─────────────── -->
 <section class="section alt" id="lineas">
   <div class="wrap">
-    <p class="kicker reveal">Qué se contrata</p>
-    <h2 class="reveal">Tres líneas. Por separado.</h2>
-    <p class="section-lede reveal">
+    <p class="kicker reveal" data-en="What you hire">Qué se contrata</p>
+    <h2 class="reveal" data-en="Three lines. Separately.">Tres líneas. Por separado.</h2>
+    <p class="section-lede reveal" data-en="They are hired and cancelled independently. You start where it makes sense and scale up when the business asks for it — against objective milestones, not promises.">
       Se contratan y se cancelan de forma independiente. Empiezas por donde te haga sentido y
       subes cuando el negocio lo pida — con hitos objetivos, no con promesas.
     </p>
 
     <div class="grid grid-3 lines">
       <article class="card line reveal">
-        <p class="line-tag">Línea 01</p>
-        <h3>Desarrollo</h3>
-        <p class="line-desc">Construimos tu producto. Se contrata por capacidad reservada al mes, no por alcance cerrado — para que un cambio de idea no sea una renegociación.</p>
+        <p class="line-tag" data-en="Line 01">Línea 01</p>
+        <h3 data-en="Development">Desarrollo</h3>
+        <p class="line-desc" data-en="We build your product. Hired as reserved monthly capacity, not as a closed scope — so that changing your mind is not a renegotiation.">Construimos tu producto. Se contrata por capacidad reservada al mes, no por alcance cerrado — para que un cambio de idea no sea una renegociación.</p>
         <ul class="ticks">
-          <li>Arquitectura y desarrollo</li>
-          <li>Integraciones</li>
-          <li>Capacidad garantizada al mes</li>
+          <li data-en="Architecture and development">Arquitectura y desarrollo</li>
+          <li data-en="Integrations">Integraciones</li>
+          <li data-en="Guaranteed monthly capacity">Capacidad garantizada al mes</li>
         </ul>
       </article>
       <article class="card line reveal">
-        <p class="line-tag">Línea 02</p>
-        <h3>Soporte</h3>
-        <p class="line-desc">Una vez que hay clientes usando el producto. Incidentes, corrección de defectos y consultas, con tiempo de respuesta comprometido por escrito.</p>
+        <p class="line-tag" data-en="Line 02">Línea 02</p>
+        <h3 data-en="Support">Soporte</h3>
+        <p class="line-desc" data-en="Once there are customers using the product. Incidents, defect fixes and questions, with response times committed in writing.">Una vez que hay clientes usando el producto. Incidentes, corrección de defectos y consultas, con tiempo de respuesta comprometido por escrito.</p>
         <ul class="ticks">
-          <li>Horario hábil por defecto</li>
-          <li>Tiempos de respuesta por tramo</li>
-          <li>Guardia extendida, si la contratas</li>
+          <li data-en="Business hours by default">Horario hábil por defecto</li>
+          <li data-en="Response times per tier">Tiempos de respuesta por tramo</li>
+          <li data-en="Extended on-call, if you hire it">Guardia extendida, si la contratas</li>
         </ul>
       </article>
       <article class="card line reveal">
-        <p class="line-tag">Línea 03 · opcional</p>
-        <h3>Operación</h3>
-        <p class="line-desc">Si prefieres no preocuparte de servidores: los operamos nosotros. También puedes quedarte con tu infraestructura y usar sólo las otras dos líneas.</p>
+        <p class="line-tag" data-en="Line 03 · optional">Línea 03 · opcional</p>
+        <h3 data-en="Operations">Operación</h3>
+        <p class="line-desc" data-en="If you would rather not think about servers: we run them. You can also keep your own infrastructure and use only the other two lines.">Si prefieres no preocuparte de servidores: los operamos nosotros. También puedes quedarte con tu infraestructura y usar sólo las otras dos líneas.</p>
         <ul class="ticks">
-          <li>Hosting y despliegues</li>
-          <li>Respaldos y monitoreo</li>
-          <li>Actualizaciones de seguridad</li>
+          <li data-en="Hosting and deployments">Hosting y despliegues</li>
+          <li data-en="Backups and monitoring">Respaldos y monitoreo</li>
+          <li data-en="Security updates">Actualizaciones de seguridad</li>
         </ul>
       </article>
     </div>
@@ -418,50 +425,50 @@
     <!-- rampa visual -->
     <div class="ramp reveal">
       <div class="ramp-head">
-        <h3>La rampa: partes abajo y subes cuando el negocio sube</h3>
-        <p>El tramo cambia con un hito objetivo y verificable —tu facturación recurrente—, no con una conversación incómoda. <strong>Y baja solo si el negocio baja.</strong></p>
+        <h3 data-en="The ramp: you start low and climb as the business climbs">La rampa: partes abajo y subes cuando el negocio sube</h3>
+        <p data-en-html="The tier changes on an objective, verifiable milestone — your own recurring revenue — not on an awkward conversation. <strong>And it goes down if the business goes down.</strong>">El tramo cambia con un hito objetivo y verificable —tu facturación recurrente—, no con una conversación incómoda. <strong>Y baja solo si el negocio baja.</strong></p>
       </div>
       <ol class="ramp-track">
-        <li style="--h:26%">
+        <li style="--h:30%">
           <span class="ramp-bar" aria-hidden="true"></span>
-          <span class="ramp-n">Fase 0</span>
-          <b>Arranque</b>
-          <em>Precio fijo, plazo fijo, alcance escrito. De cero a algo que se puede mostrar y vender.</em>
+          <span class="ramp-n" data-en="Phase 0">Fase 0</span>
+          <b data-en="Kick-off">Arranque</b>
+          <em data-en="Fixed price, fixed deadline, written scope. From zero to something you can show and sell.">Precio fijo, plazo fijo, alcance escrito. De cero a algo que se puede mostrar y vender.</em>
         </li>
-        <li style="--h:46%">
+        <li style="--h:52%">
           <span class="ramp-bar" aria-hidden="true"></span>
-          <span class="ramp-n">Fase 1</span>
-          <b>Entrada</b>
-          <em>Ya hay producto en producción. Capacidad mínima de desarrollo + soporte básico.</em>
+          <span class="ramp-n" data-en="Phase 1">Fase 1</span>
+          <b data-en="Entry">Entrada</b>
+          <em data-en="There is a product in production. Minimum development capacity plus basic support.">Ya hay producto en producción. Capacidad mínima de desarrollo + soporte básico.</em>
         </li>
-        <li style="--h:72%">
+        <li style="--h:76%">
           <span class="ramp-bar" aria-hidden="true"></span>
-          <span class="ramp-n">Fase 2</span>
-          <b>Crecimiento</b>
-          <em>Cuando tu facturación recurrente cruza el hito acordado, sube la capacidad.</em>
+          <span class="ramp-n" data-en="Phase 2">Fase 2</span>
+          <b data-en="Growth">Crecimiento</b>
+          <em data-en="When your recurring revenue crosses the agreed milestone, capacity goes up.">Cuando tu facturación recurrente cruza el hito acordado, sube la capacidad.</em>
         </li>
         <li style="--h:100%">
           <span class="ramp-bar" aria-hidden="true"></span>
-          <span class="ramp-n">Fase 3</span>
-          <b>Operación</b>
-          <em>El producto es crítico para tu negocio: respuesta más rápida y operación incluida.</em>
+          <span class="ramp-n" data-en="Phase 3">Fase 3</span>
+          <b data-en="Operations">Operación</b>
+          <em data-en="The product is critical to your business: faster response and operations included.">El producto es crítico para tu negocio: respuesta más rápida y operación incluida.</em>
         </li>
       </ol>
       <p class="ramp-foot">
         <span class="ramp-shield" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.4 3.4 8.2 8 9 4.6-.8 8-4.6 8-9V6z"/></svg>
         </span>
-        <span><b>Tope de proporción.</b> Desde la Fase 2, lo que pagas nunca supera una proporción acordada de tu propia facturación del trimestre anterior. Si la supera, bajas de tramo automáticamente — sin pedirlo y sin renegociar.</span>
+        <span data-en-html="<b>Proportion cap.</b> From Phase 2 on, what you pay never exceeds an agreed proportion of your own revenue for the previous quarter. If it does, you drop a tier automatically — without asking and without renegotiating."><b>Tope de proporción.</b> Desde la Fase 2, lo que pagas nunca supera una proporción acordada de tu propia facturación del trimestre anterior. Si la supera, bajas de tramo automáticamente — sin pedirlo y sin renegociar.</span>
       </p>
     </div>
 
     <div class="notnegotiable reveal">
-      <h3>Lo que decimos de entrada</h3>
+      <h3 data-en="What we say upfront">Lo que decimos de entrada</h3>
       <div class="nn-grid">
-        <p><span class="nn-k">Sin exclusividad</span> Trabajamos con otros clientes, y tú puedes trabajar con otros proveedores.</p>
-        <p><span class="nn-k">Sin guardia por defecto</span> Si necesitas respuesta de madrugada, se contrata y se paga. No es una expectativa gratis.</p>
-        <p><span class="nn-k">Salida a 60 días</span> Cualquiera de los dos, sin causa y sin explicaciones. Simétrico.</p>
-        <p><span class="nn-k">Precio antes de empezar</span> El presupuesto formal incluye desarrollo, soporte y las condiciones de salida. Nada aparece después.</p>
+        <p data-en-html="<span class=&quot;nn-k&quot;>No exclusivity</span> We work with other clients, and you can work with other vendors."><span class="nn-k">Sin exclusividad</span> Trabajamos con otros clientes, y tú puedes trabajar con otros proveedores.</p>
+        <p data-en-html="<span class=&quot;nn-k&quot;>No on-call by default</span> If you need an answer at 4 a.m., it is hired and paid for. It is not a free expectation."><span class="nn-k">Sin guardia por defecto</span> Si necesitas respuesta de madrugada, se contrata y se paga. No es una expectativa gratis.</p>
+        <p data-en-html="<span class=&quot;nn-k&quot;>60-day exit</span> Either side, no cause and no explanations. Symmetric."><span class="nn-k">Salida a 60 días</span> Cualquiera de los dos, sin causa y sin explicaciones. Simétrico.</p>
+        <p data-en-html="<span class=&quot;nn-k&quot;>Price before we start</span> The formal quote covers development, support and the exit terms. Nothing shows up later."><span class="nn-k">Precio antes de empezar</span> El presupuesto formal incluye desarrollo, soporte y las condiciones de salida. Nada aparece después.</p>
       </div>
     </div>
   </div>
@@ -472,9 +479,9 @@
   <div class="wrap">
     <div class="split">
       <div class="split-a reveal">
-        <p class="kicker">Sin amarres</p>
-        <h2>Tu código es tuyo.<br>Escrito antes de empezar.</h2>
-        <p class="section-lede">
+        <p class="kicker" data-en="No lock-in">Sin amarres</p>
+        <h2 data-en-html="Your code is yours.<br>Written down before we start.">Tu código es tuyo.<br>Escrito antes de empezar.</h2>
+        <p class="section-lede" data-en="The biggest objection to outsourcing engineering is getting trapped. We settle it in the contract, before the first line of code, and not in the fine print.">
           La mayor objeción para externalizar ingeniería es quedar atrapado. Lo resolvemos en el
           contrato, antes de la primera línea de código, y no en la letra chica.
         </p>
@@ -482,20 +489,20 @@
       <div class="split-b">
         <ul class="facts">
           <li class="reveal">
-            <h3>El producto pasa a tu nombre a medida que lo pagas</h3>
-            <p>La cesión se perfecciona con el pago: cada entregable es tuyo cuando su factura está pagada. Las dependencias de terceros conservan sus propias licencias, como en cualquier software.</p>
+            <h3 data-en="The product becomes yours as you pay for it">El producto pasa a tu nombre a medida que lo pagas</h3>
+            <p data-en="The assignment is perfected on payment: each deliverable is yours once its invoice is paid. Third-party dependencies keep their own licences, as in any software.">La cesión se perfecciona con el pago: cada entregable es tuyo cuando su factura está pagada. Las dependencias de terceros conservan sus propias licencias, como en cualquier software.</p>
           </li>
           <li class="reveal">
-            <h3>Si te vas, te lo llevas</h3>
-            <p>Código, infraestructura como código, datos y credenciales. Con un período de transición pactado para que el traspaso no sea un salto al vacío.</p>
+            <h3 data-en="If you leave, you take it with you">Si te vas, te lo llevas</h3>
+            <p data-en="Code, infrastructure as code, data and credentials. With an agreed transition period so the handover is not a leap into the void.">Código, infraestructura como código, datos y credenciales. Con un período de transición pactado para que el traspaso no sea un salto al vacío.</p>
           </li>
           <li class="reveal">
-            <h3>Puedes operarlo tú</h3>
-            <p>Levantas tu propio servicio y pagas menos por tus servidores. A cambio asumes tú el soporte: infraestructura, errores y nuevas funcionalidades.</p>
+            <h3 data-en="You can run it yourself">Puedes operarlo tú</h3>
+            <p data-en="You stand up your own service and pay less for your servers. In exchange you take on support: infrastructure, bugs and new features.">Levantas tu propio servicio y pagas menos por tus servidores. A cambio asumes tú el soporte: infraestructura, errores y nuevas funcionalidades.</p>
           </li>
           <li class="reveal">
-            <h3>La plataforma se licencia, no se regala</h3>
-            <p>GhostWare — el motor que ejecuta tu producto — no es parte de la cesión: te queda una licencia comercial perpetua para seguir operando. Está escrito así desde la propuesta, sin sorpresas al final.</p>
+            <h3 data-en="The platform is licensed, not given away">La plataforma se licencia, no se regala</h3>
+            <p data-en="GhostWare — the engine that runs your product — is not part of the assignment: you get a perpetual commercial licence to keep operating. It is written that way from the proposal, with no surprises at the end.">GhostWare — el motor que ejecuta tu producto — no es parte de la cesión: te queda una licencia comercial perpetua para seguir operando. Está escrito así desde la propuesta, sin sorpresas al final.</p>
           </li>
         </ul>
       </div>
@@ -507,36 +514,21 @@
         <span class="repo-ico" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v14H6.5A2.5 2.5 0 0 0 4 19.5z"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20v4H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg>
         </span>
-        <span class="repo-name">acme-portal</span>
-        <span class="repo-owner">propiedad de Acme SpA</span>
+        <span class="repo-name">andina-portal</span>
+        <span class="repo-owner" data-en="owned by Andina Logística">propiedad de Andina Logística</span>
       </div>
       <div class="repo-body">
         <ul class="repo-tree">
           <li class="dir">src/</li>
-          <li class="dir">infra/<span>como código</span></li>
+          <li class="dir">infra/<span data-en="as code">como código</span></li>
           <li class="dir">tests/<span>268</span></li>
-          <li class="dir">docs/<span>decisiones</span></li>
+          <li class="dir">docs/<span data-en="decisions">decisiones</span></li>
           <li>README.md</li>
           <li class="on">LICENSE.md</li>
         </ul>
-        <pre class="repo-file"><span class="c">## 1 · El producto</span>
-Titular: <b>Acme SpA</b>.
-Cada entregable se cede al pagarse su factura.
-Incluye código, infraestructura como código,
-datos, credenciales y documentación.
-
-<span class="c">## 2 · La plataforma</span>
-GhostWare <b>no</b> entra en la cesión.
-Licencia comercial <b>perpetua</b>, no exclusiva,
-para seguir operando el producto — también
-si te vas.
-
-<span class="c">## 3 · Terceros</span>
-Cada dependencia conserva su licencia
-(MIT, Apache-2.0, PostgreSQL…), como en
-cualquier software del mundo.</pre>
+        <pre class="repo-file" id="repoFile"></pre>
       </div>
-      <figcaption class="repo-cap">
+      <figcaption class="repo-cap" data-en-html="Example with a fictional name. What matters is that those three sections exist and are written <strong>before</strong> the first line of code, not when you decide to leave.">
         Ejemplo con nombre ficticio. Lo importante es que esas tres secciones existen y están escritas
         <strong>antes</strong> de la primera línea de código, no cuando decides irte.
       </figcaption>
@@ -547,9 +539,9 @@ cualquier software del mundo.</pre>
 <!-- ─────────────── CÓMO TRABAJAMOS ─────────────── -->
 <section class="section alt" id="metodo">
   <div class="wrap">
-    <p class="kicker reveal">Cómo trabajamos</p>
-    <h2 class="reveal">Verificable, no prometido.</h2>
-    <p class="section-lede reveal">
+    <p class="kicker reveal" data-en="How we work">Cómo trabajamos</p>
+    <h2 class="reveal" data-en="Verifiable, not promised.">Verificable, no prometido.</h2>
+    <p class="section-lede reveal" data-en="Everything delivered arrives with tests that run on their own and the decision written next to it. It is not a quality promise: it is a record you can review. On the right, a real working day on GhostWare — from the state of all your projects to what keeps running at 3 a.m. on a Saturday.">
       Todo lo que se entrega llega con pruebas que corren solas y con la decisión escrita al lado.
       No es una promesa de calidad: es un registro que puedes revisar. A la derecha, un día de trabajo
       real sobre GhostWare — del estado de todos tus proyectos a lo que sigue corriendo un sábado a las
@@ -559,43 +551,47 @@ cualquier software del mundo.</pre>
     <div class="method-grid">
       <div class="grid grid-1 method-cards">
         <article class="card reveal">
-          <h3>Pruebas automatizadas</h3>
-          <p>Cada cosa que se construye llega con pruebas que corren solas. Si algo se rompe más adelante, se sabe el mismo día y no cuando lo reporta un cliente.</p>
+          <h3 data-en="Automated tests">Pruebas automatizadas</h3>
+          <p data-en="Everything built ships with tests that run on their own. If something breaks later, we know the same day and not when a customer reports it.">Cada cosa que se construye llega con pruebas que corren solas. Si algo se rompe más adelante, se sabe el mismo día y no cuando lo reporta un cliente.</p>
         </article>
         <article class="card reveal">
-          <h3>Documentación viva</h3>
-          <p>Las decisiones quedan escritas mientras se toman, con su motivo. Si mañana cambias de proveedor —o de opinión— el porqué está registrado.</p>
+          <h3 data-en="Living documentation">Documentación viva</h3>
+          <p data-en="Decisions get written down as they are made, with their reasoning. If tomorrow you change vendors — or your mind — the why is on record.">Las decisiones quedan escritas mientras se toman, con su motivo. Si mañana cambias de proveedor —o de opinión— el porqué está registrado.</p>
         </article>
         <article class="card reveal">
-          <h3>Todo queda trazado</h3>
-          <p>Cada cambio queda ligado a la tarea que lo pidió. Se puede auditar hacia atrás sin depender de la memoria de nadie.</p>
+          <h3 data-en="Everything is traced">Todo queda trazado</h3>
+          <p data-en="Every change is tied to the task that asked for it. It can be audited backwards without relying on anyone's memory.">Cada cambio queda ligado a la tarea que lo pidió. Se puede auditar hacia atrás sin depender de la memoria de nadie.</p>
         </article>
       </div>
 
-      <!-- terminal: cómo se ve una tarea por dentro -->
+      <!-- terminal: cómo se ve por dentro -->
       <figure class="term reveal" id="term">
         <div class="term-bar">
           <span class="term-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="term-title">ghostware · un día cualquiera</span>
+          <span class="term-title" data-en="ghostware · an ordinary day">ghostware · un día cualquiera</span>
         </div>
         <pre class="term-body" id="termBody" aria-hidden="true"></pre>
-        <p class="sr-only">Ejemplo de una tarea: el líder la asigna, los agentes implementan y prueban, el líder revisa y se despliega, y todo queda en el tablero.</p>
-        <figcaption class="term-cap">Comandos reales de GhostWare, con datos de ejemplo. Tú no escribes ninguno: los ves reflejados en el tablero.</figcaption>
+        <p class="sr-only" data-en="Example of a working day: the state of every project, a task picked up by four agents in parallel, tests, the engineer's review, the release, and the monitoring that keeps running unattended.">
+          Ejemplo de un día de trabajo: el estado de cada proyecto, una tarea tomada por cuatro
+          agentes en paralelo, pruebas, la revisión del ingeniero, la entrega, y la vigilancia
+          que sigue corriendo sola.
+        </p>
+        <figcaption class="term-cap" data-en="Real GhostWare commands, with example data. You type none of them: you see them reflected on the board.">Comandos reales de GhostWare, con datos de ejemplo. Tú no escribes ninguno: los ves reflejados en el tablero.</figcaption>
       </figure>
     </div>
 
     <div class="proof reveal">
-      <p class="proof-k">Un proyecto real, sin nombre por acuerdo de confidencialidad</p>
+      <p class="proof-k" data-en="A real project, unnamed under an NDA">Un proyecto real, sin nombre por acuerdo de confidencialidad</p>
       <p class="proof-line">
-        <span class="proof-n">3</span><span class="proof-u">meses</span>
+        <span class="proof-n">3</span><span class="proof-u" data-en="months">meses</span>
         <span class="proof-sep" aria-hidden="true"></span>
-        <span class="proof-n">16</span><span class="proof-u">módulos</span>
+        <span class="proof-n">16</span><span class="proof-u" data-en="modules">módulos</span>
         <span class="proof-sep" aria-hidden="true"></span>
-        <span class="proof-n">3</span><span class="proof-u">capas de seguridad verificadas</span>
+        <span class="proof-n">3</span><span class="proof-u" data-en="security layers verified">capas de seguridad verificadas</span>
         <span class="proof-sep" aria-hidden="true"></span>
-        <span class="proof-n">268</span><span class="proof-u">pruebas en verde</span>
+        <span class="proof-n">268</span><span class="proof-u" data-en="tests green">pruebas en verde</span>
       </p>
-      <p class="proof-note">De cero a producción. No publicamos el nombre del cliente sin su permiso por escrito — es la misma discreción que tendrías tú.</p>
+      <p class="proof-note" data-en="From zero to production. We do not publish a client's name without their written permission — the same discretion you would get.">De cero a producción. No publicamos el nombre del cliente sin su permiso por escrito — es la misma discreción que tendrías tú.</p>
     </div>
   </div>
 </section>
@@ -603,29 +599,29 @@ cualquier software del mundo.</pre>
 <!-- ─────────────── PARA QUIÉN ─────────────── -->
 <section class="section" id="paraquien">
   <div class="wrap">
-    <p class="kicker reveal">Antes de escribirnos</p>
-    <h2 class="reveal">Para quién sí, y para quién no.</h2>
-    <p class="section-lede reveal">
+    <p class="kicker reveal" data-en="Before you write to us">Antes de escribirnos</p>
+    <h2 class="reveal" data-en="Who this is for, and who it is not.">Para quién sí, y para quién no.</h2>
+    <p class="section-lede reveal" data-en="We would rather say it now than in month three. If you are in the right-hand column, we will tell you in the first conversation and we will not charge you for finding out.">
       Preferimos decirlo ahora y no en el mes tres. Si estás en la columna derecha, te lo vamos a
       decir en la primera conversación y no te vamos a cobrar por descubrirlo.
     </p>
     <div class="fit">
       <div class="fit-col yes reveal">
-        <h3>Tiene sentido si…</h3>
+        <h3 data-en="It makes sense if…">Tiene sentido si…</h3>
         <ul>
-          <li>Tienes clientes, o los tienes a la vista, y necesitas un producto real para atenderlos.</li>
-          <li>No puedes —o no quieres— armar y gestionar un equipo interno todavía.</li>
-          <li>Prefieres un responsable con nombre antes que una bolsa de horas.</li>
-          <li>Quieres saber desde el principio cómo termina la relación si decides terminarla.</li>
+          <li data-en="You have customers, or you can see them, and you need a real product to serve them.">Tienes clientes, o los tienes a la vista, y necesitas un producto real para atenderlos.</li>
+          <li data-en="You cannot — or do not want to — build and manage an internal team yet.">No puedes —o no quieres— armar y gestionar un equipo interno todavía.</li>
+          <li data-en="You would rather have one accountable name than a bag of hours.">Prefieres un responsable con nombre antes que una bolsa de horas.</li>
+          <li data-en="You want to know from the start how the relationship ends if you decide to end it.">Quieres saber desde el principio cómo termina la relación si decides terminarla.</li>
         </ul>
       </div>
       <div class="fit-col no reveal">
-        <h3>No tiene sentido si…</h3>
+        <h3 data-en="It does not make sense if…">No tiene sentido si…</h3>
         <ul>
-          <li>Estás buscando la hora más barata del mercado. No competimos ahí.</li>
-          <li>Necesitas respuesta 24/7 desde el primer día pero no quieres pagar por esa guardia.</li>
-          <li>El alcance no se puede acotar ni siquiera para el primer mes.</li>
-          <li>Esperas equity en vez de una relación comercial. Trabajamos con contrato y factura.</li>
+          <li data-en="You are shopping for the cheapest hourly rate. We do not compete there.">Estás buscando la hora más barata del mercado. No competimos ahí.</li>
+          <li data-en="You need a 24/7 response from day one but do not want to pay for that on-call.">Necesitas respuesta 24/7 desde el primer día pero no quieres pagar por esa guardia.</li>
+          <li data-en="The scope cannot be bounded even for the first month.">El alcance no se puede acotar ni siquiera para el primer mes.</li>
+          <li data-en="You expect equity instead of a commercial relationship. We work with a contract and an invoice.">Esperas equity en vez de una relación comercial. Trabajamos con contrato y factura.</li>
         </ul>
       </div>
     </div>
@@ -635,28 +631,28 @@ cualquier software del mundo.</pre>
 <!-- ─────────────── PROCESO ─────────────── -->
 <section class="section alt" id="proceso">
   <div class="wrap">
-    <p class="kicker reveal">El proceso</p>
-    <h2 class="reveal">De la primera conversación al primer sprint.</h2>
+    <p class="kicker reveal" data-en="The process">El proceso</p>
+    <h2 class="reveal" data-en="From the first conversation to the first sprint.">De la primera conversación al primer sprint.</h2>
     <ol class="steps">
       <li class="reveal">
         <span class="step-n">01</span>
-        <h3>Conversación de levantamiento</h3>
-        <p>Una hora. Qué quieres construir, para quién, con qué plazo y con qué presupuesto real. Sin costo y sin compromiso.</p>
+        <h3 data-en="Discovery conversation">Conversación de levantamiento</h3>
+        <p data-en="One hour. What you want to build, for whom, on what timeline and with what real budget. No cost and no commitment.">Una hora. Qué quieres construir, para quién, con qué plazo y con qué presupuesto real. Sin costo y sin compromiso.</p>
       </li>
       <li class="reveal">
         <span class="step-n">02</span>
-        <h3>Presupuesto formal</h3>
-        <p>Por escrito: alternativas con sus implicancias, costo de desarrollo, costo de soporte mensual y las condiciones de salida. Todo por adelantado.</p>
+        <h3 data-en="Formal quote">Presupuesto formal</h3>
+        <p data-en="In writing: alternatives with their implications, development cost, monthly support cost and the exit terms. All upfront.">Por escrito: alternativas con sus implicancias, costo de desarrollo, costo de soporte mensual y las condiciones de salida. Todo por adelantado.</p>
       </li>
       <li class="reveal">
         <span class="step-n">03</span>
-        <h3>Contrato entre empresas</h3>
-        <p>Empresa a empresa, con propiedad intelectual, plazos y responsabilidades definidas. Revisable por tu abogado antes de firmar.</p>
+        <h3 data-en="Company-to-company contract">Contrato entre empresas</h3>
+        <p data-en="Company to company, with intellectual property, deadlines and responsibilities defined. Reviewable by your lawyer before signing.">Empresa a empresa, con propiedad intelectual, plazos y responsabilidades definidas. Revisable por tu abogado antes de firmar.</p>
       </li>
       <li class="reveal">
         <span class="step-n">04</span>
-        <h3>Primer sprint</h3>
-        <p>Arrancamos. Tablero disponible desde el día uno y primera reunión de avance a la semana.</p>
+        <h3 data-en="First sprint">Primer sprint</h3>
+        <p data-en="We start. Board available from day one and the first progress meeting a week in.">Arrancamos. Tablero disponible desde el día uno y primera reunión de avance a la semana.</p>
       </li>
     </ol>
   </div>
@@ -667,60 +663,59 @@ cualquier software del mundo.</pre>
   <div class="wrap">
     <div class="contact-grid">
       <div class="contact-copy reveal">
-        <p class="kicker">Conversemos</p>
-        <h2>Cuéntanos qué quieres construir.</h2>
-        <p class="section-lede">
+        <p class="kicker" data-en="Let's talk">Conversemos</p>
+        <h2 data-en="Tell us what you want to build.">Cuéntanos qué quieres construir.</h2>
+        <p class="section-lede" data-en="Four fields. With that we prepare the first conversation before it starts — and if we are not what you need, we say so right there, at no cost.">
           Cuatro campos. Con eso preparamos la primera conversación antes de que empiece —
           y si no somos lo que necesitas, te lo decimos ahí mismo, sin costo.
         </p>
         <ul class="contact-facts">
-          <li>Respondemos en un día hábil.</li>
-          <li>La primera conversación no se cobra ni compromete a nada.</li>
-          <li>Si prefieres escribir directo: <a href="mailto:julio@maremoto.dev?subject=Departamento%20de%20ingenier%C3%ADa%20—%20consulta">julio@maremoto.dev</a></li>
+          <li data-en="We reply within one business day.">Respondemos en un día hábil.</li>
+          <li data-en="The first conversation is free and commits you to nothing.">La primera conversación no se cobra ni compromete a nada.</li>
+          <li data-en-html="If you would rather write directly: <a href=&quot;mailto:julio@maremoto.dev?subject=Software%20engineering%20department%20—%20enquiry&quot;>julio@maremoto.dev</a>">Si prefieres escribir directo: <a href="mailto:julio@maremoto.dev?subject=Departamento%20de%20ingenier%C3%ADa%20—%20consulta">julio@maremoto.dev</a></li>
         </ul>
-        <!-- Agenda: se activa poniendo la URL en AGENDA_URL (script.js). Oculto mientras esté vacía. -->
         <p class="agenda" id="agendaWrap" hidden>
-          <a class="btn btn-ghost" id="agendaLink" href="#">Reservar hora directamente</a>
+          <a class="btn btn-ghost" id="agendaLink" href="#" data-en="Book a time directly">Reservar hora directamente</a>
         </p>
       </div>
 
       <form class="cform reveal" id="cform" novalidate>
         <div class="f-row">
-          <label for="f-nombre">Tu nombre y empresa</label>
-          <input id="f-nombre" name="nombre" type="text" required autocomplete="organization" placeholder="Ana Pérez · Acme SpA">
+          <label for="f-nombre" data-en="Your name and company">Tu nombre y empresa</label>
+          <input id="f-nombre" name="nombre" type="text" required autocomplete="organization" placeholder="Ana Pérez · Andina Logística">
         </div>
         <div class="f-row">
-          <label for="f-mail">Correo</label>
-          <input id="f-mail" name="mail" type="email" required autocomplete="email" placeholder="ana@acme.cl">
+          <label for="f-mail" data-en="Email">Correo</label>
+          <input id="f-mail" name="mail" type="email" required autocomplete="email" placeholder="ana@andina.cl">
         </div>
         <div class="f-row">
-          <span class="f-label">¿En qué está hoy tu producto?</span>
-          <div class="f-chips" role="radiogroup" aria-label="Estado del producto">
-            <label><input type="radio" name="estado" value="Todavía no existe"><span>Todavía no existe</span></label>
-            <label><input type="radio" name="estado" value="A medias"><span>A medias</span></label>
-            <label><input type="radio" name="estado" value="En producción con clientes"><span>En producción</span></label>
+          <span class="f-label" data-en="Where is your product today?">¿En qué está hoy tu producto?</span>
+          <div class="f-chips" role="radiogroup" aria-label="Estado del producto" data-en-aria="Product state">
+            <label><input type="radio" name="estado" value="Todavía no existe" data-en-val="It does not exist yet"><span data-en="Does not exist yet">Todavía no existe</span></label>
+            <label><input type="radio" name="estado" value="A medias" data-en-val="Half built"><span data-en="Half built">A medias</span></label>
+            <label><input type="radio" name="estado" value="En producción con clientes" data-en-val="In production with customers"><span data-en="In production">En producción</span></label>
           </div>
         </div>
         <div class="f-row">
-          <label for="f-que">¿Qué necesitas construir o arreglar?</label>
-          <textarea id="f-que" name="que" rows="4" required placeholder="En tus palabras. Una frase basta para empezar."></textarea>
+          <label for="f-que" data-en="What do you need to build or fix?">¿Qué necesitas construir o arreglar?</label>
+          <textarea id="f-que" name="que" rows="4" required placeholder="En tus palabras. Una frase basta para empezar." data-en-ph="In your own words. One sentence is enough to start."></textarea>
         </div>
         <div class="f-row">
-          <span class="f-label">¿Para cuándo?</span>
-          <div class="f-chips" role="radiogroup" aria-label="Plazo">
-            <label><input type="radio" name="plazo" value="Urgente (este mes)"><span>Este mes</span></label>
-            <label><input type="radio" name="plazo" value="Este trimestre"><span>Este trimestre</span></label>
-            <label><input type="radio" name="plazo" value="Explorando todavía"><span>Explorando</span></label>
+          <span class="f-label" data-en="By when?">¿Para cuándo?</span>
+          <div class="f-chips" role="radiogroup" aria-label="Plazo" data-en-aria="Timeline">
+            <label><input type="radio" name="plazo" value="Urgente (este mes)" data-en-val="Urgent (this month)"><span data-en="This month">Este mes</span></label>
+            <label><input type="radio" name="plazo" value="Este trimestre" data-en-val="This quarter"><span data-en="This quarter">Este trimestre</span></label>
+            <label><input type="radio" name="plazo" value="Explorando todavía" data-en-val="Still exploring"><span data-en="Exploring">Explorando</span></label>
           </div>
         </div>
-        <button class="btn btn-primary f-submit" type="submit">Enviar y agendar la conversación</button>
-        <p class="f-note" id="fNote">
+        <button class="btn btn-primary f-submit" type="submit" data-en="Send and book the conversation">Enviar y agendar la conversación</button>
+        <p class="f-note" id="fNote" data-en="Your email client opens with the message already written — so a copy stays in your sent folder. We do not use forms that vanish into a server.">
           Se abre tu correo con el mensaje ya escrito — así queda la copia en tu bandeja de enviados.
           No usamos formularios que se pierden en un servidor.
         </p>
       </form>
     </div>
-    <p class="contact-note reveal">Trabajamos con empresas en Chile y la región.</p>
+    <p class="contact-note reveal" data-en="We work with companies in Chile and across the region.">Trabajamos con empresas en Chile y la región.</p>
   </div>
 </section>
 
@@ -729,17 +724,16 @@ cualquier software del mundo.</pre>
 <footer class="footer">
   <div class="wrap footer-inner">
     <div>
-      <p class="footer-brand">Maremoto SpA</p>
-      <p class="footer-meta">RUT 78.426.196-4 · Santiago de Chile</p>
+      <p class="footer-brand">Maremoto</p>
+      <p class="footer-meta" data-en="Santiago, Chile">Santiago de Chile</p>
     </div>
-    <p class="footer-meta">© <span id="year">2026</span> Maremoto SpA</p>
+    <p class="footer-meta">© <span id="year">2026</span> Maremoto</p>
   </div>
 </footer>
 
 <script src="./script.js"></script>
 
-<!-- Cloudflare Web Analytics: sin cookies, sin datos personales, sin seguimiento entre sitios.
-     Explicito y no inyectado en el edge: la inyeccion automatica no era fiable sobre GitHub Pages. -->
+<!-- Cloudflare Web Analytics: sin cookies, sin datos personales, sin seguimiento entre sitios. -->
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "ea4905f5ae3748b18bb84ced86f5c814"}'></script>
 </body>
 </html>
