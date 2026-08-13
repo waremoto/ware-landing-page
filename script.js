@@ -140,61 +140,135 @@
     Array.prototype.forEach.call(items, function (el) { io.observe(el); });
   }
 
-  /* ---------- diagrama: un ingeniero, una flota ---------- */
-  (function swarm() {
-    var linksG = document.getElementById('swarmLinks');
-    var nodesG = document.getElementById('swarmNodes');
-    if (!linksG || !nodesG) return;
+  /* ---------- diagrama: varios clientes, cada uno aislado ----------
+     Cuatro celdas dentro de un mismo viewBox. Todo lo de un cliente vive
+     dentro de su celda: si ninguna linea la cruza, el aislamiento se ve
+     en vez de leerse. */
+  (function fleet() {
+    var svg = document.getElementById('fleet');
+    var host = document.getElementById('fleetCells');
+    if (!svg || !host) return;
 
     var NS = 'http://www.w3.org/2000/svg';
-    var CX = 210, CY = 210, R = 152;
-    var LABELS = [
-      ['CODIGO', 'CODE'], ['PRUEBAS', 'TESTS'], ['DOCS', 'DOCS'],
-      ['DESPLIEGUE', 'DEPLOY'], ['MONITOREO', 'MONITOR'], ['SOPORTE', 'SUPPORT']
+
+    var SECTORS = [
+      ['RETAIL', 'RETAIL'], ['LOGISTICA', 'LOGISTICS'],
+      ['SALUD', 'HEALTHCARE'], ['FINTECH', 'FINTECH']
     ];
-    var groups = [], texts = [];
+    var ISOLATED = ['AISLADO', 'ISOLATED'];
+    var ENGINEER = ['INGENIERO', 'ENGINEER'];
+    var FLEET = ['6 AGENTES', '6 AGENTS'];
 
-    LABELS.forEach(function (pair, i) {
-      var a = (-90 + i * (360 / LABELS.length)) * Math.PI / 180;
-      var x = CX + R * Math.cos(a);
-      var y = CY + R * Math.sin(a);
+    var ORIGINS = [[6, 6], [215, 6], [6, 215], [215, 215]];  // 2x2 con 10 de calle
+    var HX = 46, HY = 106;                                    // el humano, a la izquierda
+    var COLS = [102, 140, 178], ROWS = [84, 128];             // la flota, a la derecha
 
-      [false, true].forEach(function (isBeam) {
-        var ln = document.createElementNS(NS, 'line');
-        ln.setAttribute('x1', CX); ln.setAttribute('y1', CY);
-        ln.setAttribute('x2', x.toFixed(1)); ln.setAttribute('y2', y.toFixed(1));
-        if (isBeam) {
-          ln.setAttribute('class', 'beam');
-          ln.style.animationDelay = (i * 0.46).toFixed(2) + 's';
-        }
-        linksG.appendChild(ln);
+    function el(name, attrs) {
+      var n = document.createElementNS(NS, name);
+      for (var k in attrs) n.setAttribute(k, attrs[k]);
+      return n;
+    }
+
+    var cells = [];
+
+    ORIGINS.forEach(function (o, ci) {
+      var cell = el('g', { transform: 'translate(' + o[0] + ',' + o[1] + ')' });
+      cell.appendChild(el('rect', { x: .5, y: .5, width: 198, height: 198, rx: 12, 'class': 'cl-box' }));
+
+      var label = el('text', { x: 14, y: 24, 'class': 'cl-label' });
+      label.textContent = t(SECTORS[ci]);
+      cell.appendChild(label);
+
+      // el candado: la respuesta visual a "?mis datos se mezclan con los de otro?"
+      var lock = el('g', { transform: 'translate(13,170)', 'class': 'cl-lock' });
+      lock.appendChild(el('path', { d: 'M2.6 4.6V3.3a2.4 2.4 0 0 1 4.8 0v1.3' }));
+      lock.appendChild(el('rect', { x: 1.3, y: 4.6, width: 7.4, height: 5.6, rx: 1.4 }));
+      cell.appendChild(lock);
+      var lockT = el('text', { x: 26, y: 179, 'class': 'cl-lock-t' });
+      lockT.textContent = t(ISOLATED);
+      cell.appendChild(lockT);
+
+      // enlaces + agentes: siempre del humano de ESTA celda a un agente de ESTA celda
+      var bots = [];
+      ROWS.forEach(function (by) {
+        COLS.forEach(function (bx) {
+          var g = el('g', { 'class': 'cl-bot-g' });
+          g.appendChild(el('line', { x1: HX, y1: HY, x2: bx, y2: by, 'class': 'cl-link' }));
+          g.appendChild(el('line', { x1: HX, y1: HY, x2: bx, y2: by, 'class': 'cl-beam' }));
+          g.appendChild(el('circle', { cx: bx, cy: by, r: 12, 'class': 'cl-bot' }));
+          g.appendChild(el('circle', { cx: bx, cy: by, r: 15, 'class': 'cl-ring' }));
+          cell.appendChild(g);
+          bots.push(g);
+        });
       });
 
-      var g = document.createElementNS(NS, 'g');
-      var ring = document.createElementNS(NS, 'circle');
-      ring.setAttribute('cx', x.toFixed(1)); ring.setAttribute('cy', y.toFixed(1));
-      ring.setAttribute('r', 30); ring.setAttribute('class', 'node-ring');
-      var tx = document.createElementNS(NS, 'text');
-      tx.setAttribute('x', x.toFixed(1)); tx.setAttribute('y', (y + 3.5).toFixed(1));
-      tx.textContent = t(pair);
-      g.appendChild(ring); g.appendChild(tx);
-      nodesG.appendChild(g);
-      groups.push(g); texts.push([tx, pair]);
+      // el ingeniero, encima de los enlaces
+      cell.appendChild(el('circle', { cx: HX, cy: HY, r: 25, 'class': 'cl-human-halo' }));
+      cell.appendChild(el('circle', { cx: HX, cy: HY, r: 17, 'class': 'cl-human-disc' }));
+      var glyph = el('g', { transform: 'translate(' + HX + ',' + HY + ')', 'class': 'cl-human-glyph' });
+      glyph.appendChild(el('circle', { cx: 0, cy: -4.2, r: 3.6 }));
+      glyph.appendChild(el('path', { d: 'M-6.6 7.4a6.6 6.6 0 0 1 13.2 0' }));
+      cell.appendChild(glyph);
+
+      var cap = el('text', { x: HX, y: 146, 'class': 'cl-human-cap' });
+      cap.textContent = t(ENGINEER);
+      cell.appendChild(cap);
+
+      // la proporcion, escrita: 1 humano por celda, seis agentes por celda
+      var count = el('text', { x: 185, y: 179, 'class': 'cl-count' });
+      count.textContent = t(FLEET);
+      cell.appendChild(count);
+
+      host.appendChild(cell);
+      cells.push({
+        bots: bots,
+        texts: [[label, SECTORS[ci]], [lockT, ISOLATED], [cap, ENGINEER], [count, FLEET]]
+      });
     });
 
     document.addEventListener('maremoto:lang', function () {
-      texts.forEach(function (pair) { pair[0].textContent = t(pair[1]); });
+      cells.forEach(function (c) {
+        c.texts.forEach(function (pair) { pair[0].textContent = t(pair[1]); });
+      });
     });
 
-    if (reduced) { groups[0].setAttribute('class', 'node-live'); return; }
+    // cada cliente avanza en su propio compas: flotas separadas, no un reloj comun
+    var PHASE = [0, 1, 3, 4];   // cuatro desfases distintos: ninguna celda late igual que otra
 
-    var live = 0;
-    setInterval(function () {
-      groups.forEach(function (g) { g.setAttribute('class', ''); });
-      groups[live].setAttribute('class', 'node-live');
-      groups[(live + 3) % groups.length].setAttribute('class', 'node-live');
-      live = (live + 1) % groups.length;
-    }, 1400);
+    function light(tick) {
+      cells.forEach(function (c, ci) {
+        var n = c.bots.length;
+        var base = (tick + PHASE[ci]) % n;
+        var on = [base, (base + 1) % n, (base + 3) % n];
+        c.bots.forEach(function (g, i) {
+          g.setAttribute('class', on.indexOf(i) >= 0 ? 'cl-bot-g cl-on' : 'cl-bot-g');
+        });
+      });
+    }
+
+    if (reduced) { light(0); return; }
+
+    var tick = 0, timer = null;
+    function start() {
+      if (timer) return;
+      light(tick);
+      timer = setInterval(function () { light(++tick); }, 1500);
+    }
+    function stop() {
+      if (!timer) return;
+      clearInterval(timer);
+      timer = null;
+    }
+
+    if (!('IntersectionObserver' in window)) { start(); return; }
+
+    var fio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { svg.classList.remove('paused'); start(); }
+        else { stop(); svg.classList.add('paused'); }
+      });
+    }, { threshold: 0.05 });
+    fio.observe(svg);
   })();
 
   /* ============================================================

@@ -51,7 +51,13 @@
 <header class="nav" id="nav">
   <div class="wrap nav-inner">
     <a class="brand" href="#top">
-      <span class="brand-mark" aria-hidden="true"></span>
+      <svg class="brand-mark" viewBox="4 8 58 48" aria-hidden="true" focusable="false">
+        <path class="bm-w1" d="M8 40c6 0 6-8 12-8s6 8 12 8 6-8 12-8 6 8 12 8"/>
+        <path class="bm-w2" d="M8 51c6 0 6-5 12-5s6 5 12 5 6-5 12-5 6 5 12 5"/>
+        <circle class="bm-d" cx="20" cy="18" r="3.4"/>
+        <circle class="bm-d bm-d2" cx="32" cy="14" r="3.4"/>
+        <circle class="bm-d" cx="44" cy="18" r="3.4"/>
+      </svg>
       <span class="brand-name">Maremoto</span>
     </a>
     <nav class="nav-links" aria-label="Principal">
@@ -91,25 +97,21 @@
       </div>
     </div>
 
-    <!-- diagrama: un ingeniero, una flota -->
+    <!-- diagrama: varios clientes a la vez, cada uno aislado, con su ingeniero y su flota -->
     <figure class="hero-viz reveal" aria-labelledby="vizcap">
       <div class="viz-frame">
-        <svg class="swarm" viewBox="0 0 420 420" role="img" aria-label="Diagrama: un ingeniero de software al centro y seis agentes alrededor trabajando en tareas repetibles." data-en-aria="Diagram: one software engineer at the centre, six agents around it working on repetitive tasks.">
-          <g class="swarm-links" id="swarmLinks"></g>
-          <g class="swarm-nodes" id="swarmNodes"></g>
-          <g class="swarm-core">
-            <circle class="core-halo" cx="210" cy="210" r="62"></circle>
-            <circle class="core-disc" cx="210" cy="210" r="44"></circle>
-            <text class="core-t1" x="210" y="205" data-en="ENGINEER">INGENIERO</text>
-            <text class="core-t2" x="210" y="222" data-en="human">humano</text>
-          </g>
+        <svg class="fleet" id="fleet" viewBox="0 0 420 420" role="img"
+             aria-label="Diagrama: cuatro empresas cliente, cada una en su propio entorno aislado, cada una con su ingeniero de software y su flota de agentes trabajando. Nada conecta un cliente con otro."
+             data-en-aria="Diagram: four client companies, each in its own isolated environment, each with its software engineer and its fleet of agents at work. Nothing connects one client to another.">
+          <g id="fleetCells"></g>
         </svg>
         <div class="viz-legend">
-          <span><i class="dot dot-core"></i><span data-en="1 engineer answers for your product">1 ingeniero responde por tu producto</span></span>
-          <span><i class="dot dot-agent"></i><span data-en="agents on the repetitive work, 24/7">agentes en lo repetible, 24/7</span></span>
+          <span><i class="dot dot-human"></i><span data-en="1 human engineer per client">1 ingeniero humano por cliente</span></span>
+          <span><i class="dot dot-fleet"></i><span data-en="its own fleet of agents, 24/7">su propia flota de agentes, 24/7</span></span>
+          <span><i class="dot dot-cell"></i><span data-en="isolated environment: nothing crosses over">entorno aislado: nada cruza</span></span>
         </div>
       </div>
-      <figcaption id="vizcap" class="viz-cap" data-en="That is how a whole department gets covered without the cost of a whole department.">Así se cubre un departamento entero sin el costo de un departamento entero.</figcaption>
+      <figcaption id="vizcap" class="viz-cap" data-en="Every client gets the whole department: its own engineer, its own fleet, its own environment. Nothing is shared between clients.">Cada cliente recibe el departamento completo: su ingeniero, su flota, su entorno. Nada se comparte entre clientes.</figcaption>
     </figure>
   </div>
 
@@ -251,8 +253,8 @@
     <figure class="shell reveal" id="shell">
       <div class="shell-bar">
         <span class="shell-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span class="shell-title" data-en="GhostShell · Andina Logística board">GhostShell · tablero de Andina Logística</span>
-        <span class="shell-live" id="shellLive"><i aria-hidden="true"></i><span data-en="live">en vivo</span></span>
+        <span class="shell-title" data-en="GhostShell · Andina Logística board">Andina Logística - Live Kanban </span>
+        <span class="shell-live" id="shellLive"><i aria-hidden="true"></i><span data-en="live">Live</span></span>
       </div>
 
       <div class="kb" id="kb" aria-hidden="true">

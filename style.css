@@ -217,11 +217,13 @@ h3 { font-size: 1.0625rem; letter-spacing: -.012em; line-height: 1.3; }
 .nav-inner { display: flex; align-items: center; gap: 2rem; height: 68px; }
 
 .brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; font-family: var(--font-display); font-weight: 700; letter-spacing: -.02em; font-size: 1.06rem; }
-.brand-mark {
-  width: 15px; height: 15px; border-radius: 4px;
-  background: linear-gradient(140deg, var(--accent), var(--accent-2));
-  flex: none;
-}
+/* la marca: el mismo trazo del favicon.svg, en linea y en currentColor */
+.brand-mark { width: 26px; height: 22px; flex: none; color: var(--accent); overflow: visible; }
+.brand-mark path { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+.brand-mark .bm-w1 { stroke-width: 6; }
+.brand-mark .bm-w2 { stroke-width: 4; opacity: .45; }
+.brand-mark .bm-d { fill: currentColor; opacity: .85; }
+.brand-mark .bm-d2 { opacity: .55; }
 
 .nav-links { margin-left: auto; display: flex; align-items: center; gap: 1.9rem; }
 .nav-links a { text-decoration: none; font-size: .9rem; color: var(--fg-2); transition: color .2s var(--ease); }
@@ -495,49 +497,51 @@ h3 { font-size: 1.0625rem; letter-spacing: -.012em; line-height: 1.3; }
     var(--ink-2);
   padding: .75rem .75rem .25rem;
 }
-.swarm { width: 100%; height: auto; display: block; }
+/* El zoom out: cuatro clientes a la vez. Cada celda es un entorno cerrado --
+   ninguna linea sale de su celda, y esa es justamente la afirmacion. */
+.fleet { width: 100%; height: auto; display: block; }
 
-.swarm-links line {
-  stroke: var(--line);
-  stroke-width: 1;
+.cl-box { fill: var(--ink-3); stroke: var(--line); stroke-width: 1; }
+.cl-label {
+  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .1em;
+  fill: var(--fg-2); text-transform: uppercase;
 }
-.swarm-links .beam {
-  stroke: var(--accent);
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  stroke-dasharray: 18 200;
-  opacity: .85;
-  animation: beam 2.8s linear infinite;
-}
-@keyframes beam {
-  from { stroke-dashoffset: 218; }
-  to   { stroke-dashoffset: 0; }
+.cl-lock { fill: none; stroke: var(--fg-3); stroke-width: 1.1; stroke-linejoin: round; }
+.cl-lock-t {
+  font-family: var(--font-mono); font-size: 8.5px; letter-spacing: .1em;
+  fill: var(--fg-3); text-transform: uppercase;
 }
 
-.swarm-nodes .node-ring {
-  fill: var(--ink-3);
-  stroke: var(--line);
-  stroke-width: 1;
+.cl-count {
+  font-family: var(--font-mono); font-size: 8.5px; letter-spacing: .1em;
+  fill: var(--fg-3); text-anchor: end; text-transform: uppercase;
 }
-.swarm-nodes .node-live .node-ring {
-  stroke: color-mix(in srgb, var(--accent) 70%, transparent);
-  fill: color-mix(in srgb, var(--accent) 12%, var(--ink-3));
-}
-.swarm-nodes text {
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  letter-spacing: .06em;
-  fill: var(--fg-3);
-  text-anchor: middle;
-  text-transform: uppercase;
-}
-.swarm-nodes .node-live text { fill: var(--accent); }
 
-.core-halo { fill: color-mix(in srgb, var(--accent) 10%, transparent); }
-.core-disc { fill: var(--accent); }
-.core-t1, .core-t2 { text-anchor: middle; font-family: var(--font-mono); fill: var(--accent-ink); }
-.core-t1 { font-size: 12px; font-weight: 500; letter-spacing: .08em; }
-.core-t2 { font-size: 9px; letter-spacing: .12em; opacity: .8; }
+.cl-link { stroke: var(--line); stroke-width: .9; opacity: .55; }
+.cl-beam {
+  stroke: var(--accent); stroke-width: 1.5; stroke-linecap: round;
+  stroke-dasharray: 12 150; opacity: 0;
+}
+.cl-on .cl-beam { opacity: .9; animation: clbeam 1.9s linear infinite; }
+@keyframes clbeam { from { stroke-dashoffset: 162; } to { stroke-dashoffset: 0; } }
+
+.cl-bot { fill: var(--ink-2); stroke: var(--line); stroke-width: 1; }
+.cl-on .cl-bot {
+  fill: color-mix(in srgb, var(--accent) 12%, var(--ink-2));
+  stroke: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+.cl-ring { fill: none; stroke: var(--accent); stroke-width: 1.8; stroke-linecap: round; opacity: 0; }
+.cl-on .cl-ring { opacity: .95; stroke-dasharray: 24 70; animation: clring 1.5s linear infinite; }
+@keyframes clring { to { stroke-dashoffset: -94; } }
+
+.cl-human-halo { fill: color-mix(in srgb, var(--accent) 12%, transparent); }
+.cl-human-disc { fill: var(--accent); }
+.cl-human-glyph circle { fill: var(--accent-ink); }
+.cl-human-glyph path { fill: none; stroke: var(--accent-ink); stroke-width: 2; stroke-linecap: round; }
+.cl-human-cap {
+  font-family: var(--font-mono); font-size: 8px; letter-spacing: .08em;
+  fill: var(--fg-3); text-anchor: middle; text-transform: uppercase;
+}
 
 .viz-legend {
   display: flex; flex-wrap: wrap; gap: .35rem 1.1rem;
@@ -548,12 +552,26 @@ h3 { font-size: 1.0625rem; letter-spacing: -.012em; line-height: 1.3; }
 }
 .viz-legend span { display: inline-flex; align-items: center; gap: .45rem; }
 .dot { width: 8px; height: 8px; border-radius: 100px; flex: none; }
-.dot-core { background: var(--accent); }
-.dot-agent { background: transparent; border: 1px solid var(--line); }
-.viz-cap { margin-top: .9rem; font-size: .82rem; color: var(--fg-3); max-width: 42ch; }
+.dot-human { background: var(--accent); }
+.dot-fleet { background: transparent; border: 1.5px solid var(--accent); }
+.dot-cell { width: 10px; height: 10px; border-radius: 3px; background: var(--ink-3); border: 1px solid var(--line); }
+.viz-cap { margin-top: .9rem; font-size: .82rem; color: var(--fg-3); max-width: 46ch; }
 
+/* la microtipografia del diagrama se cae en pantallas chicas: se compensa en unidades de viewBox */
+@media (max-width: 560px) {
+  .cl-label { font-size: 12px; }
+  .cl-lock-t, .cl-count { font-size: 10.5px; }
+  .cl-human-cap { font-size: 10px; }
+}
+
+/* fuera de pantalla no gasta cuadros */
+.fleet.paused .cl-beam, .fleet.paused .cl-ring { animation-play-state: paused; }
+
+/* sin movimiento: el enlace se dibuja entero y el anillo queda como arco fijo */
 @media (prefers-reduced-motion: reduce) {
-  .swarm-links .beam { animation: none; stroke-dasharray: none; opacity: .35; }
+  .cl-beam { animation: none; stroke-dasharray: none; }
+  .cl-on .cl-beam { opacity: .5; }
+  .cl-ring { animation: none; }
 }
 
 /* ---------- iconos de tarjeta ---------- */
