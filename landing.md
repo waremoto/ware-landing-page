@@ -73,8 +73,9 @@ navegador: para probar, recarga dura.
 
 | Qué | Estado |
 |---|---|
-| **`contacto@` y `contact@` tienen que existir** en Google Workspace | **Bloquea el contacto.** Son el único CTA del sitio |
-| Envío de correo real, sin depender del cliente de correo del visitante | Propuesto, no hecho. Necesita un Worker con Email Sending y una protección anti-spam |
+| **Onboard de `send.maremoto.dev`** en Email Sending (panel de Cloudflare) | **Bloquea el formulario nuevo.** Ver `d:/ware/maremoto-api/README.md` |
+| **Verificar `contacto@maremoto.dev`** como destino (Cloudflare ya mandó el correo) | **Bloquea el formulario nuevo** |
+| Envío de correo real, sin depender del cliente de correo del visitante | Construido y desplegado en `api.maremoto.dev`. La rama `endpoint` de este repo lo conecta; no se mezcla hasta que los dos pasos de arriba estén |
 | El H1 y el H2 dicen "un ingeniero" y la cifra dice "1-2" | Decisión de copy pendiente |
 | Caso de cliente con nombre | Bloqueado por NDA |
 | Modo demo con el tablero real, sólo lectura | En backlog por decisión del operador |
