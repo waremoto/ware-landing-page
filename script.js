@@ -8,6 +8,9 @@
   /* Agenda publica. Vacio = el boton no existe. */
   var AGENDA_URL = 'https://cal.com/maremoto';
 
+  /* Buzon por idioma: quien escribe en espanol recibe respuesta en espanol. */
+  var MAILBOX = { es: 'contacto@maremoto.dev', en: 'contact@maremoto.dev' };
+
   /* ============================================================
      IDIOMA
      El espanol vive en el HTML; el ingles viaja en data-en*.
@@ -18,11 +21,11 @@
   var META = {
     es: {
       title: 'Maremoto — Somos tu departamento de ingeniería de software',
-      desc: 'Desarrollo de software a medida en Chile — SaaS o sistema interno —, con infraestructura y soporte incluidos y un ingeniero de software a cargo. Tu empresa necesita software, no necesita contratar a tres personas para construirlo.'
+      desc: 'Desarrollo de software a medida en Chile — SaaS o sistema interno —, con arquitectura, infraestructura y soporte incluidos. Un ingeniero de software a cargo y una flota de agentes en lo repetible: el departamento completo, listo para trabajar.'
     },
     en: {
       title: 'Maremoto — We are your software engineering department',
-      desc: 'Custom software development in Chile — SaaS or internal systems — with infrastructure and support included and a software engineer in charge. Your company needs software; it does not need to hire three people to build it.'
+      desc: 'Custom software development in Chile — SaaS or internal systems — with architecture, infrastructure and support included. A software engineer in charge and a fleet of agents on the repetitive work: the whole department, ready to go.'
     }
   };
 
@@ -752,9 +755,9 @@
       ['## 1 · El producto', 'c'],
       ['\nTitular: ', ''], ['Andina Logística SpA', 'b'], ['.\n', ''],
       ['Cada entregable se cede al pagarse su factura.\nIncluye código, infraestructura como código,\ndatos, credenciales y documentación.\n\n', ''],
-      ['## 2 · La plataforma', 'c'],
-      ['\nEl sistema de orquestación ', ''], ['no', 'b'], [' entra\nen la cesión. Licencia comercial ', ''], ['perpetua', 'b'],
-      [',\nno exclusiva, para seguir operando el\nproducto — también si te vas.\n\n', ''],
+      ['## 2 · Garantía multi-proveedor', 'c'],
+      ['\n', ''], ['Ningún', 'b'], [' software propietario de\nMaremoto es necesario para desarrollar\nni para operar este producto. Stack\nestándar y auditable. Si alguna\nherramienta nuestra quedara embebida,\nva con licencia ', ''], ['perpetua y gratuita', 'b'],
+      ['.\n\n', ''],
       ['## 3 · Terceros', 'c'],
       ['\nCada dependencia conserva su licencia\n(MIT, Apache-2.0, PostgreSQL…), como en\ncualquier software del mundo.', '']
     ];
@@ -762,9 +765,9 @@
       ['## 1 · The product', 'c'],
       ['\nOwner: ', ''], ['Andina Logística SpA', 'b'], ['.\n', ''],
       ['Each deliverable is assigned once its invoice\nis paid. Code, infrastructure as code, data,\ncredentials and documentation included.\n\n', ''],
-      ['## 2 · The platform', 'c'],
-      ['\nThe orchestration system is ', ''], ['not', 'b'], [' part\nof the assignment. A ', ''], ['perpetual', 'b'],
-      [',\nnon-exclusive commercial licence to keep\noperating the product — including after\nyou leave.\n\n', ''],
+      ['## 2 · Multi-vendor guarantee', 'c'],
+      ['\n', ''], ['No', 'b'], [' proprietary Maremoto software\nis required to develop or to run this\nproduct. Standard, auditable stack. If\nany tool of ours ends up embedded, it\nships with a ', ''], ['perpetual, free', 'b'],
+      [' licence.\n\n', ''],
       ['## 3 · Third parties', 'c'],
       ['\nEvery dependency keeps its own licence\n(MIT, Apache-2.0, PostgreSQL…), as in any\nsoftware in the world.', '']
     ];
@@ -957,13 +960,15 @@
     var COPY = {
       es: {
         missing: 'Falta tu nombre, un correo valido y una linea sobre lo que necesitas.',
-        opening: 'Abriendo tu correo con el mensaje escrito. Si no se abre, escribenos a julio@maremoto.dev.',
+        opening: 'Abrimos tu correo con el mensaje escrito y la agenda en otra pestana. Solo queda apretar enviar y elegir hora.',
+        blocked: 'Abrimos tu correo con el mensaje escrito. El navegador bloqueo la agenda: usa el boton "Reservar hora directamente".',
         subject: 'Departamento de ingenieria - ',
         labels: ['Nombre y empresa', 'Correo', 'Estado del producto', 'Plazo', 'Que necesita construir o arreglar', 'no indicado', 'Enviado desde maremoto.dev']
       },
       en: {
         missing: 'We need your name, a valid email and one line about what you need.',
-        opening: 'Opening your email client with the message written. If it does not open, write to julio@maremoto.dev.',
+        opening: 'We opened your email with the message written and the booking page in another tab. Just hit send and pick a time.',
+        blocked: 'We opened your email with the message written. Your browser blocked the booking page: use the "Book a time directly" button.',
         subject: 'Software engineering department - ',
         labels: ['Name and company', 'Email', 'Product state', 'Timeline', 'What they need built or fixed', 'not given', 'Sent from maremoto.dev']
       }
@@ -1007,11 +1012,22 @@
         c.labels[6]
       ].join('\n');
 
-      var href = 'mailto:julio@maremoto.dev'
+      var href = 'mailto:' + (MAILBOX[lang] || MAILBOX.es)
         + '?subject=' + encodeURIComponent(c.subject + nombre)
         + '&body=' + encodeURIComponent(body);
 
-      if (note) { note.className = 'f-note ok'; note.textContent = c.opening; }
+      // El boton hace las dos cosas que promete. La pestana de la agenda va
+      // primero: abrirla despues del mailto la deja fuera del gesto del
+      // usuario y el navegador la bloquea.
+      var booked = null;
+      if (AGENDA_URL) {
+        try { booked = window.open(AGENDA_URL, '_blank', 'noopener'); } catch (e) { booked = null; }
+      }
+
+      if (note) {
+        note.className = 'f-note ok';
+        note.textContent = booked || !AGENDA_URL ? c.opening : c.blocked;
+      }
       window.location.href = href;
 
       setTimeout(function () {
