@@ -18,7 +18,7 @@ endpoint que proteger, que pagar, ni donde se pierdan mensajes en silencio.
 |---|---|
 | `index.html` | Todo el contenido, en secciones. El español vive aquí; el inglés viaja en atributos `data-en*` |
 | `style.css` | Fuentes propias, tokens de color (claro y oscuro), y el diseño completo |
-| `script.js` | Idioma, tema, revelado, el diagrama del hero, el tablero, la terminal y el formulario |
+| `script.js` | Idioma, tema, revelado, el diagrama del hero, el tablero, la terminal, el formulario y la medición |
 | `fonts/` | Tres familias variables, subconjuntos `latin` y `latin-ext`, servidas desde el propio dominio |
 | `favicon.svg` · `og.png` · `icon-180.png` | La marca. Los tres se regeneran juntos o divergen |
 
@@ -69,12 +69,36 @@ navegador: para probar, recarga dura.
 | 6 | Que el titular en español quepa mejor | Tamaño propio para `[data-lang="es"]` en `h1`, `h2` y la barra, más `text-wrap: balance` |
 | 7 | Revisar que el tema arranque según el sistema | Ya lo hacía. Se verificó en ambos sentidos y se agregó el `theme-color` claro que faltaba |
 
-## 6 · Pendiente
+## 6 · La medición
+
+Cuatro números, y ninguno más: **cuántos llegaron** (`visita`), **cuántos bajaron al formulario**
+(`contacto_visto`), **cuántos lo enviaron** (`formulario_enviado`), **cuántos abrieron la agenda**
+(`agenda_abierta`). Van a `POST api.maremoto.dev/v1/event` por `sendBeacon`. Sin eso, cualquier cambio a
+esta página por "conversión" es superstición.
+
+**Sin cookies y sin terceros.** Lo único que viaja es un `sid` al azar que genera este mismo archivo, vive
+en `sessionStorage` y muere al cerrar la pestaña: sirve para saber si el que bajó al formulario es el mismo
+que lo envió, y no sirve para nada más. Cada hito cuenta una vez por sesión.
+
+Tres reglas que se rompen fácil:
+
+1. **Medir nunca puede romper la página.** Todo va en `try`, y `sendBeacon` es fuego y olvido.
+2. **Lo que no se puede medir bien no se inventa.** Sin `IntersectionObserver`, `contacto_visto` se deja sin
+   contar en vez de darlo por visto.
+3. **Un hito nuevo hay que agregarlo también en el backend** (`HITOS` en `src/lib/store.ts`). La lista es
+   cerrada a propósito: el endpoint es público.
+
+> **Decisión pendiente:** hoy la medición **no honra `Do Not Track`**. Lo que se guarda no es personal (un
+> id de sesión al azar, el país, cero IP), pero para una empresa que vende confianza puede valer la pena
+> respetarlo igual. Es una línea de código; queda a criterio del operador.
+
+## 7 · Pendiente
 
 | Qué | Estado |
 |---|---|
-| **Onboard de `send.maremoto.dev`** en Email Sending (panel de Cloudflare) | **Bloquea el formulario nuevo.** Ver `d:/ware/maremoto-api/README.md` |
-| **Verificar `contacto@maremoto.dev`** como destino (Cloudflare ya mandó el correo) | **Bloquea el formulario nuevo** |
+| **Onboard de `send.maremoto.dev`** en Email Sending (panel de Cloudflare) | **Bloquea el formulario nuevo.** Al 2026-08-14 la zona no tiene ni un registro bajo `send.`. Ver `d:/ware/maremoto-api/README.md` |
+| **`wrangler deploy` del backend** — la medición escribe en rutas que el Worker desplegado todavía no tiene | **Bloquea la medición.** Un `deploy` desde una terminal con sesión |
+| ~~Verificar `contacto@maremoto.dev` como destino~~ | Hecho el 2026-08-14 |
 | Envío de correo real, sin depender del cliente de correo del visitante | Construido y desplegado en `api.maremoto.dev`. La rama `endpoint` de este repo lo conecta; no se mezcla hasta que los dos pasos de arriba estén |
 | El H1 y el H2 dicen "un ingeniero" y la cifra dice "1-2" | Decisión de copy pendiente |
 | Caso de cliente con nombre | Bloqueado por NDA |

@@ -12,6 +12,88 @@
   var MAILBOX = { es: 'contacto@maremoto.dev', en: 'contact@maremoto.dev' };
 
   /* ============================================================
+     MEDICION
+     Cuatro numeros: cuantos llegaron, cuantos bajaron al formulario,
+     cuantos lo enviaron, cuantos abrieron la agenda. Sin eso, cualquier
+     cambio a esta pagina es supersticion.
+
+     Sin cookies y sin terceros. Lo unico que viaja es un identificador
+     al azar que se genera aca, vive en sessionStorage y muere al cerrar
+     la pestana: sirve para saber si el que bajo al formulario es el
+     mismo que lo envio, y no sirve para nada mas.
+     ============================================================ */
+  var API = 'https://api.maremoto.dev';
+  var SID_STORE = 'maremoto-sid';
+  var UTM_STORE = 'maremoto-utm';
+  var HITO_STORE = 'maremoto-hitos';
+
+  function guardado(k) {
+    try { return sessionStorage.getItem(k); } catch (e) { return null; }
+  }
+  function guardar(k, v) {
+    try { sessionStorage.setItem(k, v); } catch (e) { /* modo privado: se mide igual, sin memoria */ }
+  }
+
+  function sid() {
+    var s = guardado(SID_STORE);
+    if (s) return s;
+    var abc = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    var buf = new Uint8Array(16);
+    if (window.crypto && window.crypto.getRandomValues) window.crypto.getRandomValues(buf);
+    else for (var i = 0; i < 16; i++) buf[i] = Math.floor(Math.random() * 256);
+    s = '';
+    for (var j = 0; j < 16; j++) s += abc[buf[j] % abc.length];
+    guardar(SID_STORE, s);
+    return s;
+  }
+
+  /* Las UTM del enlace por el que se llego. Se guardan al entrar porque
+     el envio del formulario ocurre mucho despues, y para entonces la URL
+     puede haber perdido la query. */
+  function utm() {
+    var previo = guardado(UTM_STORE);
+    var q = new URLSearchParams(window.location.search);
+    var out = {};
+    ['source', 'medium', 'campaign', 'term', 'content'].forEach(function (k) {
+      var v = q.get('utm_' + k);
+      if (v) out[k] = v.slice(0, 80);
+    });
+    if (Object.keys(out).length) {
+      guardar(UTM_STORE, JSON.stringify(out));
+      return out;
+    }
+    if (previo) { try { return JSON.parse(previo); } catch (e) { return {}; } }
+    return {};
+  }
+
+  /* Cada hito cuenta una vez por sesion: el observador del formulario se
+     dispara cada vez que la seccion entra en pantalla, y tres subidas y
+     bajadas no son tres visitantes. */
+  function yaContado(hito) {
+    var raw = guardado(HITO_STORE) || '';
+    if (raw.split(',').indexOf(hito) !== -1) return true;
+    guardar(HITO_STORE, raw ? raw + ',' + hito : hito);
+    return false;
+  }
+
+  function medir(hito) {
+    if (yaContado(hito)) return;
+    var cuerpo = JSON.stringify({ hito: hito, sid: sid(), lang: lang, utm: utm() });
+    try {
+      // sendBeacon sobrevive a la navegacion: el hito de la agenda se
+      // dispara justo cuando la pestana se va.
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(API + '/v1/event', new Blob([cuerpo], { type: 'text/plain' }));
+        return;
+      }
+      fetch(API + '/v1/event', {
+        method: 'POST', body: cuerpo, keepalive: true,
+        headers: { 'Content-Type': 'text/plain' }
+      }).catch(function () {});
+    } catch (e) { /* medir nunca puede romper la pagina */ }
+  }
+
+  /* ============================================================
      IDIOMA
      El espanol vive en el HTML; el ingles viaja en data-en*.
      ============================================================ */
@@ -1019,9 +1101,12 @@
       // El boton hace las dos cosas que promete. La pestana de la agenda va
       // primero: abrirla despues del mailto la deja fuera del gesto del
       // usuario y el navegador la bloquea.
+      medir('formulario_enviado');
+
       var booked = null;
       if (AGENDA_URL) {
         try { booked = window.open(AGENDA_URL, '_blank', 'noopener'); } catch (e) { booked = null; }
+        if (booked) medir('agenda_abierta');
       }
 
       if (note) {
@@ -1050,10 +1135,35 @@
     link.href = AGENDA_URL;
     link.target = '_blank';
     link.rel = 'noopener';
+    link.addEventListener('click', function () { medir('agenda_abierta'); });
     wrap.hidden = false;
   })();
 
   /* ---------- año ---------- */
   var year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
+
+  /* ---------- los hitos del embudo ---------- */
+  (function embudo() {
+    medir('visita');
+
+    var contacto = document.getElementById('contacto');
+    if (!contacto) return;
+
+    if (!('IntersectionObserver' in window)) {
+      // Sin observador no se inventa el numero: se deja sin contar, que es
+      // honesto, en vez de contarlo como si hubiera bajado.
+      return;
+    }
+    // Un tercio de la seccion a la vista: pasar de largo con el scroll no
+    // es haber llegado al formulario.
+    var cio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        medir('contacto_visto');
+        cio.disconnect();
+      });
+    }, { threshold: 0.33 });
+    cio.observe(contacto);
+  })();
 })();
