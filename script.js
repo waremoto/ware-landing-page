@@ -1143,6 +1143,29 @@
   var year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 
+  /* ---------- secciones plegadas ----------
+     El plegado lo hace <details> nativo, sin JS. Lo unico que falta es que un
+     enlace directo a una seccion cerrada la abra: si alguien comparte
+     maremoto.dev/#financiamiento, tiene que ver el precio, no un titular. */
+  (function plegado() {
+    function abrirPorHash() {
+      var id = (window.location.hash || '').slice(1);
+      if (!id) return;
+      var el = document.getElementById(id);
+      if (!el) return;
+      var box = el.querySelector('.foldbox') || el.closest('.foldbox');
+      if (!box || box.open) return;
+      box.open = true;
+      // El navegador ya salto antes de que esto abriera, asi que el destino
+      // quedo desplazado: hay que volver a apuntarle.
+      requestAnimationFrame(function () {
+        el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+      });
+    }
+    abrirPorHash();
+    window.addEventListener('hashchange', abrirPorHash);
+  })();
+
   /* ---------- los hitos del embudo ---------- */
   (function embudo() {
     medir('visita');

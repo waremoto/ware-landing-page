@@ -174,12 +174,12 @@
       </svg>
       <span class="brand-name">Maremoto</span>
     </a>
+    <!-- Solo lo que esta abierto por defecto. Las secciones plegadas no se
+         enlazan desde aca: un enlace que salta a un titular cerrado promete
+         una pagina que no aparece. -->
     <nav class="nav-links" aria-label="Principal">
       <a href="#departamento" data-en="The department">El departamento</a>
       <a href="#como" data-en="How it works">Cómo funciona</a>
-      <a href="#lineas" data-en="What you hire">Qué se contrata</a>
-      <a href="#codigo" data-en="Your code">Tu código</a>
-      <a href="#financiamiento" data-en="Pricing">Financiamiento</a>
       <a class="nav-cta" href="#contacto" data-en="Let's talk">Conversemos</a>
     </nav>
     <div class="nav-tools">
@@ -200,11 +200,10 @@
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <h1 class="reveal" data-en-html="We are your<br><span class=&quot;accent&quot;>software engineering department.</span>">Somos tu<br><span class="accent">departamento de ingeniería de software.</span></h1>
-      <p class="lede reveal" data-en-html="Your company needs software. We bring the whole department — architecture, development, infrastructure and support — <strong>run by a software engineer</strong>, with a fleet of AI agents doing the repetitive work around the clock. One accountable name, one monthly invoice, work that arrives already reviewed.">
-        Tu empresa necesita software. Nosotros ponemos el departamento completo — arquitectura,
-        desarrollo, infraestructura y soporte — <strong>a cargo de un ingeniero de software</strong>,
-        con una flota de agentes de IA haciendo el trabajo repetible a toda hora. Un responsable con
-        nombre, una factura al mes, y trabajo que llega ya revisado.
+      <p class="lede reveal" data-en-html="Architecture, development, infrastructure and support — <strong>run by a software engineer</strong>, with a fleet of AI agents on the repetitive work around the clock. One accountable name, one monthly invoice, work that arrives already reviewed.">
+        Arquitectura, desarrollo, infraestructura y soporte — <strong>a cargo de un ingeniero de
+        software</strong>, con una flota de agentes de IA en lo repetible a toda hora. Un responsable
+        con nombre, una factura al mes, y trabajo que llega ya revisado.
       </p>
       <div class="cta-row reveal">
         <a class="btn btn-primary" href="#contacto" data-en="Let's talk">Conversemos</a>
@@ -221,16 +220,16 @@
           <g id="fleetCells"></g>
         </svg>
       </div>
-      <figcaption id="vizcap" class="viz-cap" data-en="Every client gets the whole department: its own board, its own engineers, its own fleet. Nothing is shared between clients.">Cada cliente recibe el departamento completo: su tablero, sus ingenieros, su flota. Nada se comparte entre clientes.</figcaption>
+      <figcaption id="vizcap" class="viz-cap" data-en="Each client: its own board, its own engineers, its own fleet. Nothing shared.">Cada cliente: su tablero, sus ingenieros, su flota. Nada se comparte.</figcaption>
     </figure>
   </div>
 
   <div class="wrap">
     <ul class="stat-strip reveal" aria-label="Cifras" data-en-aria="Key numbers">
-      <li><span class="stat-n">1-2</span><span class="stat-l" data-en="software engineers in charge of your product">ingenieros de software a cargo de tu producto</span></li>
-      <li><span class="stat-n">24/7</span><span class="stat-l" data-en="agents working on the repetitive part">agentes trabajando en lo repetible</span></li>
-      <li><span class="stat-n">60</span><span class="stat-l" data-en="days' notice to walk away, no cause needed">días de aviso para salir, sin causa.</span></li>
-      <li><span class="stat-n">1</span><span class="stat-l" data-en="monthly invoice: everything included, priced upfront">factura al mes: todo incluido, precio acordado antes</span></li>
+      <li><span class="stat-n">1-2</span><span class="stat-l" data-en="software engineers in charge">ingenieros de software a cargo</span></li>
+      <li><span class="stat-n">24/7</span><span class="stat-l" data-en="agents on the repetitive part">agentes en lo repetible</span></li>
+      <li><span class="stat-n">60</span><span class="stat-l" data-en="days' notice to leave, no cause">días de aviso para salir, sin causa</span></li>
+      <li><span class="stat-n">1</span><span class="stat-l" data-en="monthly invoice, everything included">factura al mes, todo incluido</span></li>
     </ul>
   </div>
 </section>
@@ -240,11 +239,9 @@
   <div class="wrap">
     <p class="kicker reveal" data-en="The starting point">El punto de partida</p>
     <h2 class="reveal" data-en="Three jobs, covered every day.">Tres oficios, cubiertos todos los días.</h2>
-    <p class="section-lede reveal" data-en="A software product needs three things at once: someone to build it, someone to keep it standing, and someone to decide what is worth building. Most companies need all three covered every day — and none of them full-time. That is exactly what a department gives you and a single hire does not.">
-      Un producto de software necesita tres cosas al mismo tiempo: alguien que lo construya,
-      alguien que lo mantenga en pie y alguien que decida qué vale la pena construir. La mayoría
-      de las empresas necesita los tres cubiertos todos los días — y ninguno a tiempo completo.
-      Eso es justamente lo que da un departamento.
+    <p class="section-lede reveal" data-en="Someone to build it, someone to keep it standing, someone to decide what is worth building. Most companies need all three every day — and none of them full-time.">
+      Alguien que lo construya, alguien que lo mantenga en pie, alguien que decida qué vale la pena
+      construir. La mayoría de las empresas necesita los tres todos los días — y ninguno a tiempo completo.
     </p>
     <div class="grid grid-3">
       <article class="card reveal">
@@ -252,21 +249,21 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 17 3 12l5-5"/><path d="m16 7 5 5-5 5"/><path d="M13.5 4 10.5 20"/></svg>
         </span>
         <h3 data-en="Someone to build it">Alguien que construya</h3>
-        <p data-en="A developer with judgement, able to decide architecture and not just close tickets.">Un desarrollador con criterio, capaz de decidir arquitectura y no sólo de ejecutar tickets.</p>
+        <p data-en="A developer with judgement, who decides architecture and not just closes tickets.">Un desarrollador con criterio, que decide arquitectura y no sólo ejecuta tickets.</p>
       </article>
       <article class="card reveal">
         <span class="card-ico" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>
         </span>
         <h3 data-en="Someone to keep it standing">Alguien que lo mantenga en pie</h3>
-        <p data-en="Servers, deployments, backups, security, incidents. The work nobody notices until it fails.">Servidores, despliegues, respaldos, seguridad, incidentes. El trabajo que sólo se nota cuando falla.</p>
+        <p data-en="Servers, deployments, backups, security. The work nobody notices until it fails.">Servidores, despliegues, respaldos, seguridad. El trabajo que sólo se nota cuando falla.</p>
       </article>
       <article class="card reveal">
         <span class="card-ico" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3"/><circle cx="12" cy="12" r="6"/><path d="M12 9v3l2 2"/><path d="M3.5 12H6M18 12h2.5M5.6 5.6 7.4 7.4M16.6 16.6l1.8 1.8"/></svg>
         </span>
         <h3 data-en="Someone to decide what to build">Alguien que decida qué construir</h3>
-        <p data-en="Translating business into product, setting priorities, and saying no. The role almost nobody hires and everybody needs.">Traducir el negocio a producto, priorizar, y decir que no. El rol que casi nadie contrata y todos necesitan.</p>
+        <p data-en="Turning business into product, and saying no. The role almost nobody hires and everybody needs.">Traducir el negocio a producto, y decir que no. El rol que casi nadie contrata y todos necesitan.</p>
       </article>
     </div>
 
@@ -310,9 +307,8 @@
       </div>
     </div>
 
-    <p class="pullquote reveal" data-en="A department is measured by what it resolves without you having to supervise it: decisions made, work reviewed, one accountable name. That is what we put in place.">
-      Un departamento se mide por lo que resuelve sin que tengas que supervisarlo: decisiones
-      tomadas, trabajo revisado, un solo responsable. Eso es lo que ponemos.
+    <p class="pullquote reveal" data-en="A department is measured by what it resolves without you having to supervise it.">
+      Un departamento se mide por lo que resuelve sin que tengas que supervisarlo.
     </p>
   </div>
 </section>
@@ -322,26 +318,26 @@
   <div class="wrap">
     <p class="kicker reveal" data-en="What you get">Qué recibes</p>
     <h2 class="reveal" data-en="The whole department, not one person.">El departamento completo, no una persona.</h2>
-    <p class="section-lede reveal" data-en="These are the areas covered from month one. They are not hired separately, nor coordinated between vendors: they are one accountable party.">
-      Estos son los dominios que quedan cubiertos desde el primer mes. No se contratan por
-      separado ni se coordinan entre proveedores: son un solo responsable.
+    <p class="section-lede reveal" data-en="Covered from month one. Not hired separately, not coordinated between vendors: one accountable party.">
+      Cubiertos desde el primer mes. No se contratan por separado ni se coordinan entre
+      proveedores: son un solo responsable.
     </p>
     <div class="grid grid-3 domains">
       <article class="card reveal"><span class="idx">01</span>
         <span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8v8l9 5 9-5V8z"/><path d="M12 12 3 8M12 12l9-4M12 12v9"/></svg></span>
-        <h3 data-en="Architecture">Arquitectura</h3><p data-en="The decisions that open or close commercial options two years from now.">Las decisiones que abren o cierran opciones comerciales dos años después.</p></article>
+        <h3 data-en="Architecture">Arquitectura</h3><p data-en="The decisions that open or close options two years from now.">Las decisiones que abren o cierran opciones dos años después.</p></article>
       <article class="card reveal"><span class="idx">02</span>
         <span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg></span>
-        <h3 data-en="Product development">Desarrollo de producto</h3><p data-en="The business logic, the screens, the product your customers actually use.">La lógica de negocio, las pantallas, el producto que tus clientes usan.</p></article>
+        <h3 data-en="Product development">Desarrollo de producto</h3><p data-en="The logic, the screens, the product your customers use.">La lógica, las pantallas, el producto que tus clientes usan.</p></article>
       <article class="card reveal"><span class="idx">03</span>
         <span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l2.6-2.6a4.5 4.5 0 0 0-6.4-6.4L11 6.6"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0L5 12.6a4.5 4.5 0 0 0 6.4 6.4L13 17.4"/></svg></span>
-        <h3 data-en="Integrations">Integraciones</h3><p data-en="ERPs, payment gateways, tax authorities, third-party APIs. And maintaining them when they change.">ERPs, pasarelas, servicios tributarios, APIs de terceros. Y mantenerlas cuando cambian.</p></article>
+        <h3 data-en="Integrations">Integraciones</h3><p data-en="ERPs, payment gateways, tax authorities. And maintaining them when they change.">ERPs, pasarelas, servicios tributarios. Y mantenerlas cuando cambian.</p></article>
       <article class="card reveal"><span class="idx">04</span>
         <span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.4 3.4 8.2 8 9 4.6-.8 8-4.6 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
         <h3 data-en="Infrastructure and security">Infraestructura y seguridad</h3><p data-en="Hosting, deployments, backups, monitoring, security updates.">Hosting, despliegues, respaldos, monitoreo, actualizaciones de seguridad.</p></article>
       <article class="card reveal"><span class="idx">05</span>
         <span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"/><path d="M9 9h7M9 12.5h4"/></svg></span>
-        <h3 data-en="Support">Soporte</h3><p data-en="Your customers' incidents, resolved within a response time committed in writing.">Incidentes de tus clientes, resueltos con plazo comprometido por escrito.</p></article>
+        <h3 data-en="Support">Soporte</h3><p data-en="Your customers' incidents, with a response time committed in writing.">Incidentes de tus clientes, con plazo comprometido por escrito.</p></article>
       <article class="card reveal"><span class="idx">06</span>
         <span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20v-1a5 5 0 0 1 5-5h1"/><circle cx="9.5" cy="7.5" r="3.5"/><path d="M15 15h6M18 12v6"/></svg></span>
         <h3 data-en="Technical onboarding">Onboarding técnico</h3><p data-en="So that customer number twenty does not cost the same as the first one.">Que el cliente número veinte no cueste lo mismo que el primero.</p></article>
@@ -354,10 +350,9 @@
   <div class="wrap">
     <p class="kicker reveal" data-en="How it works">Cómo funciona</p>
     <h2 class="reveal" data-en-html="One software engineer. A fleet of agents.<br>Your board, always in the open.">Un ingeniero de software. Una flota de agentes.<br>Tu tablero, siempre a la vista.</h2>
-    <p class="section-lede reveal" data-en="We gather requirements and build in sprints, like any software team. Every week there is a meeting with you to show what moved — and in between, the board stays open.">
-      Levantamos requerimientos y desarrollamos en sprints, como cualquier equipo de software.
-      Cada semana hay una reunión contigo para mostrar los avances — y entre medio, el tablero
-      queda abierto.
+    <p class="section-lede reveal" data-en="Requirements and sprints, like any software team. A weekly meeting to show what moved — and in between, the board stays open.">
+      Requerimientos y sprints, como cualquier equipo de software. Una reunión semanal para
+      mostrar los avances — y entre medio, el tablero queda abierto.
     </p>
 
     <!-- el tablero que ves tú -->
@@ -422,50 +417,20 @@
           <b id="mBots">4</b> <span data-en="agents working">agentes trabajando</span>
         </span>
       </div>
-      <figcaption class="shell-cap" data-en-html="The same board we look at. No progress reports written to reassure you — the real state, whenever you feel like opening it. After hours the fleet keeps going on scheduled work — tests, backups, documentation — but the review column waits. <strong>Nothing reaches Done without the engineer's review.</strong>">
-        El mismo tablero que miramos nosotros. Sin informes de avance escritos para tranquilizarte:
-        el estado real, cuando se te ocurra abrirlo. Fuera de horario la flota sigue con el trabajo
-        programado — pruebas, respaldos, documentación — pero la columna de revisión espera.
-        <strong>Nada llega a Finalizado sin pasar por la revisión del ingeniero.</strong>
+      <figcaption class="shell-cap" data-en-html="The same board we look at, not a progress report written to reassure you. After hours the fleet keeps going; the review column waits. <strong>Nothing reaches Done without the engineer's review.</strong>">
+        El mismo tablero que miramos nosotros, no un informe escrito para tranquilizarte. Fuera de
+        horario la flota sigue; la columna de revisión espera.
+        <strong>Nada llega a Finalizado sin pasar por el ingeniero.</strong>
       </figcaption>
     </figure>
-
-    <!-- flujo visual -->
-    <div class="flow reveal" id="flow" aria-label="Flujo: tú pides, el ingeniero decide, los agentes ejecutan, tú lo ves en el tablero" data-en-aria="Flow: you ask, the engineer decides, the agents execute, you see it on the board">
-      <div class="flow-track" aria-hidden="true"><span class="flow-dot"></span></div>
-      <ol class="flow-steps">
-        <li>
-          <span class="flow-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"/></svg></span>
-          <h3 data-en="You ask">Tú pides</h3>
-          <p data-en="In the weekly meeting or whenever it comes up. In your words, not in ticket format.">En la reunión semanal o cuando surja. En tus palabras, no en formato de ticket.</p>
-        </li>
-        <li>
-          <span class="flow-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a5 5 0 0 1 5 5c0 2-1 3-2 4.2-.7.9-1 1.8-1 2.8H10c0-1-.3-1.9-1-2.8C8 11 7 10 7 8a5 5 0 0 1 5-5z"/><path d="M10 19h4M10.5 21.5h3"/></svg></span>
-          <h3 data-en="The engineer decides">El ingeniero decide</h3>
-          <p data-en="Architecture, scope and priority. What is not worth doing gets said out loud.">Arquitectura, alcance y prioridad. Lo que no conviene hacer, se dice.</p>
-        </li>
-        <li>
-          <span class="flow-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 10h.01M8 14h.01M11.5 10H16M11.5 14H16"/></svg></span>
-          <h3 data-en="The agents execute">Los agentes ejecutan</h3>
-          <p data-en="Code, tests and documentation in parallel, day and night. Nothing ships unreviewed.">Código, pruebas y documentación en paralelo, día y noche. Nada llega sin revisión.</p>
-        </li>
-        <li>
-          <span class="flow-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18v12H3z"/><path d="M7 9v4M12 8v5M17 11v2M3 21h18"/></svg></span>
-          <h3 data-en="You watch">Tú lo ves</h3>
-          <p data-en="Open board: every task, its state and what was done. Whenever you feel like opening it.">Tablero abierto: cada tarea, su estado y lo que se hizo. Cuando se te ocurra abrirlo.</p>
-        </li>
-      </ol>
-    </div>
 
     <div class="how">
       <article class="how-item reveal">
         <span class="how-n">01</span>
         <div>
           <h3 data-en="One software engineer, in charge">Un ingeniero de software a cargo</h3>
-          <p data-en="A person with a name who knows your business, makes the technical calls and answers for the result. No rotation, no swapping, and no re-explaining the project every month.">
-            Una persona con nombre que conoce tu negocio, toma las decisiones técnicas y responde
-            por el resultado. No rota, no te lo cambian, y no hay que explicarle el proyecto de
-            nuevo cada mes.
+          <p data-en="Knows your business, answers for the result, and does not rotate.">
+            Conoce tu negocio, responde por el resultado, y no rota.
           </p>
         </div>
       </article>
@@ -473,10 +438,8 @@
         <span class="how-n">02</span>
         <div>
           <h3 data-en="AI agents doing the repetitive work, 24/7">Agentes de IA haciendo el trabajo repetible, 24/7</h3>
-          <p data-en-html="On our own modular orchestration platform. The agents write, test and document under supervision; the engineer reviews and decides. That is where the leverage comes from: the volume sits with the fleet, the judgement sits with the person.">
-            Sobre nuestra propia plataforma de orquestación modular. Los agentes escriben, prueban
-            y documentan bajo supervisión; el ingeniero revisa y decide. De ahí sale la eficiencia:
-            el volumen lo pone la flota, el criterio lo pone la persona.
+          <p data-en-html="The volume sits with the fleet, the judgement sits with the person. That is where the leverage comes from.">
+            El volumen lo pone la flota, el criterio lo pone la persona. De ahí sale la eficiencia.
           </p>
         </div>
       </article>
@@ -484,10 +447,8 @@
         <span class="how-n">03</span>
         <div>
           <h3 data-en="A weekly meeting with you">Una reunión semanal contigo</h3>
-          <p data-en="At first to capture what you need; later to review progress. It is written into the contract, not a courtesy. It is what makes this feel like your own department and not a vendor you have to chase.">
-            Al principio para levantar lo que necesitas; después para revisar avances. Va escrita
-            en el contrato, no es cortesía. Es lo que hace que se sienta un departamento propio y
-            no un proveedor al que hay que perseguir.
+          <p data-en="Written into the contract, not offered as a courtesy.">
+            Va escrita en el contrato, no es cortesía.
           </p>
         </div>
       </article>
@@ -495,34 +456,31 @@
         <span class="how-n">04</span>
         <div>
           <h3 data-en="A board you can open whenever you want">Un tablero que puedes mirar cuando quieras</h3>
-          <p data-en="Every task, its state and what was done. No progress reports written to reassure you: the real, verifiable state, whenever you feel like opening it.">
-            Cada tarea, su estado y lo que se hizo. Sin informes de avance escritos para
-            tranquilizarte: el estado real, verificable, cuando se te ocurra abrirlo.
+          <p data-en="Your time goes into deciding what to build, not into supervising how it gets built.">
+            Tu tiempo se ocupa en decidir qué construir, no en supervisar cómo se construye.
           </p>
         </div>
       </article>
-    </div>
-
-    <div class="callout reveal">
-      <h3 data-en="It arrives already reviewed">Llega ya revisado</h3>
-      <p data-en="What reaches you has already been through review: the engineer decides, checks and answers for the result. Nobody on your side has to coordinate or correct it. Your time goes into deciding what to build, not into supervising how it gets built.">
-        Lo que te llega ya pasó por revisión: el ingeniero decide, comprueba y responde por el
-        resultado. Nadie de tu lado tiene que coordinar ni corregir. Tu tiempo se ocupa en decidir
-        qué construir, no en supervisar cómo se construye.
-      </p>
     </div>
   </div>
 </section>
 
 <!-- ─────────────── LÍNEAS ─────────────── -->
-<section class="section alt" id="lineas">
+<section class="section alt fold" id="lineas">
   <div class="wrap">
-    <p class="kicker reveal" data-en="What you hire">Qué se contrata</p>
-    <h2 class="reveal" data-en="Three lines. Separately.">Tres líneas. Por separado.</h2>
-    <p class="section-lede reveal" data-en="They are hired and cancelled independently. You start where it makes sense and scale up when the business asks for it — against objective milestones, not promises.">
-      Se contratan y se cancelan de forma independiente. Empiezas por donde te haga sentido y
-      subes cuando el negocio lo pida — con hitos objetivos, no con promesas.
-    </p>
+    <details class="foldbox">
+      <summary>
+        <div class="fold-txt">
+          <span class="kicker" data-en="What you hire">Qué se contrata</span>
+          <h2 data-en="Three lines. Separately.">Tres líneas. Por separado.</h2>
+          <span class="fold-tease" data-en="Development, support and operations — hired and cancelled independently. Plus the ramp: the tier goes up when your revenue does, and back down if it drops.">
+            Desarrollo, soporte y operación — se contratan y se cancelan por separado. Más la rampa:
+            el tramo sube cuando sube tu facturación, y baja si baja.
+          </span>
+        </div>
+        <span class="fold-ico" aria-hidden="true"></span>
+      </summary>
+      <div class="fold-body">
 
     <div class="grid grid-3 lines">
       <article class="card line reveal">
@@ -606,24 +564,29 @@
         <p data-en-html="<span class=&quot;nn-k&quot;>Price before we start</span> The formal quote covers development, support and the exit terms. Nothing shows up later."><span class="nn-k">Precio antes de empezar</span> El presupuesto formal incluye desarrollo, soporte y las condiciones de salida. Nada aparece después.</p>
       </div>
     </div>
+
+      </div>
+    </details>
   </div>
 </section>
 
 <!-- ─────────────── TU CÓDIGO ─────────────── -->
-<section class="section" id="codigo">
+<section class="section fold" id="codigo">
   <div class="wrap">
-    <div class="split">
-      <div class="split-a reveal">
-        <p class="kicker" data-en="Multi-vendor guarantee">Garantía multi-proveedor</p>
-        <h2 data-en-html="Your code is yours.<br>And anyone can carry it on.">Tu código es tuyo.<br>Y cualquiera puede continuarlo.</h2>
-        <p class="section-lede" data-en="We guarantee it in writing, before the first line of code: no proprietary Maremoto software is ever needed to develop or to run your product. A standard, open stack, everything in your own repositories from day one — and an agreed transition period included if one day you carry on with someone else.">
-          Lo garantizamos por escrito, antes de la primera línea de código: ningún software
-          propietario de Maremoto es necesario para desarrollar ni para operar tu producto. Stack
-          estándar y abierto, todo en tus repositorios desde el día uno — y un período de transición
-          incluido si algún día sigues con otro.
-        </p>
-      </div>
-      <div class="split-b">
+    <details class="foldbox">
+      <summary>
+        <div class="fold-txt">
+          <span class="kicker" data-en="Multi-vendor guarantee">Garantía multi-proveedor</span>
+          <h2 data-en="Your code is yours. And anyone can carry it on.">Tu código es tuyo. Y cualquiera puede continuarlo.</h2>
+          <span class="fold-tease" data-en="In writing, before the first line: no proprietary Maremoto software is needed to develop or run your product. Standard stack, your repositories, transition included.">
+            Por escrito y antes de la primera línea: ningún software propietario nuestro hace falta
+            para desarrollar ni operar tu producto. Stack estándar, tus repositorios, transición incluida.
+          </span>
+        </div>
+        <span class="fold-ico" aria-hidden="true"></span>
+      </summary>
+      <div class="fold-body">
+
         <ul class="facts">
           <li class="reveal">
             <h3 data-en="The product becomes yours as you pay for it">El producto pasa a tu nombre a medida que lo pagas</h3>
@@ -642,8 +605,6 @@
             <p data-en="You stand up your own service and pay less for your servers. In exchange you take on support: infrastructure, bugs and new features.">Levantas tu propio servicio y pagas menos por tus servidores. A cambio asumes tú el soporte: infraestructura, errores y nuevas funcionalidades.</p>
           </li>
         </ul>
-      </div>
-    </div>
 
     <!-- el repositorio, tal cual queda -->
     <figure class="repo reveal">
@@ -670,18 +631,28 @@
         <strong>antes</strong> de la primera línea de código, no cuando decides irte.
       </figcaption>
     </figure>
+
+      </div>
+    </details>
   </div>
 </section>
 
 <!-- ─────────────── FINANCIAMIENTO ─────────────── -->
-<section class="section alt" id="financiamiento">
+<section class="section alt fold" id="financiamiento">
   <div class="wrap">
-    <p class="kicker reveal" data-en="Pricing">Financiamiento</p>
-    <h2 class="reveal" data-en="The numbers, before the first meeting.">Los números, antes de la primera reunión.</h2>
-    <p class="section-lede reveal" data-en="Net amounts in Chilean pesos; invoiced with 19% VAT — a tax credit for your company, so it is not a cost. Two ways to buy development, several ways to finance it.">
-      Montos netos en pesos chilenos; se factura con IVA 19% — crédito fiscal para tu empresa,
-      así que no es costo. Dos formas de comprar desarrollo, varias de financiarlo.
-    </p>
+    <details class="foldbox">
+      <summary>
+        <div class="fold-txt">
+          <span class="kicker" data-en="Pricing">Financiamiento</span>
+          <h2 data-en="The numbers, before the first meeting.">Los números, antes de la primera reunión.</h2>
+          <span class="fold-tease" data-en-html="Two ways to start at <b>$350,000</b>, one week, credited in full. Then from <b>$1M</b> a month. Net amounts, and the ways to finance it if the cash is not there yet.">
+            Dos formas de empezar en <b>$350.000</b>, una semana, descontables íntegras. Después,
+            desde <b>$1M</b> al mes. Montos netos, y las formas de financiarlo si todavía no hay caja.
+          </span>
+        </div>
+        <span class="fold-ico" aria-hidden="true"></span>
+      </summary>
+      <div class="fold-body">
 
     <div class="startw reveal">
       <div class="start-head">
@@ -759,20 +730,28 @@
       recargo del 35%, y te decimos exactamente por qué antes de cotizar. Hora fuera de plan: $60.000, con tope
       mensual acordado. El presupuesto formal es gratis y por escrito.
     </p>
+
+      </div>
+    </details>
   </div>
 </section>
 
 <!-- ─────────────── CÓMO TRABAJAMOS ─────────────── -->
-<section class="section" id="metodo">
+<section class="section fold" id="metodo">
   <div class="wrap">
-    <p class="kicker reveal" data-en="How we work">Cómo trabajamos</p>
-    <h2 class="reveal" data-en="Verifiable, not promised.">Verificable, no prometido.</h2>
-    <p class="section-lede reveal" data-en="Everything delivered arrives with tests that run on their own and the decision written next to it. It is not a quality promise: it is a record you can review. On the right, a real working day on our own orchestration system — from the state of all your projects to what keeps running at 3 a.m. on a Saturday.">
-      Todo lo que se entrega llega con pruebas que corren solas y con la decisión escrita al lado.
-      No es una promesa de calidad: es un registro que puedes revisar. A la derecha, un día de trabajo
-      real sobre nuestro sistema propio de orquestación — del estado de todos tus proyectos a lo que
-      sigue corriendo un sábado a las tres de la mañana.
-    </p>
+    <details class="foldbox">
+      <summary>
+        <div class="fold-txt">
+          <span class="kicker" data-en="How we work">Cómo trabajamos</span>
+          <h2 data-en="Verifiable, not promised.">Verificable, no prometido.</h2>
+          <span class="fold-tease" data-en="Tests that run on their own, decisions written down, every change traced back to the task that asked for it. Inside: a real working day, and the numbers from a real project.">
+            Pruebas que corren solas, decisiones escritas, cada cambio ligado a la tarea que lo pidió.
+            Adentro: un día de trabajo real, y las cifras de un proyecto real.
+          </span>
+        </div>
+        <span class="fold-ico" aria-hidden="true"></span>
+      </summary>
+      <div class="fold-body">
 
     <div class="method-grid">
       <div class="grid grid-1 method-cards">
@@ -819,18 +798,29 @@
       </p>
       <p class="proof-note" data-en="From zero to production. We do not publish a client's name without their written permission — the same discretion you would get.">De cero a producción. No publicamos el nombre del cliente sin su permiso por escrito — es la misma discreción que tendrías tú.</p>
     </div>
+
+      </div>
+    </details>
   </div>
 </section>
 
 <!-- ─────────────── PARA QUIÉN ─────────────── -->
-<section class="section alt" id="paraquien">
+<section class="section alt fold" id="paraquien">
   <div class="wrap">
-    <p class="kicker reveal" data-en="Before you write to us">Antes de escribirnos</p>
-    <h2 class="reveal" data-en="Who this is for, and who it is not.">Para quién sí, y para quién no.</h2>
-    <p class="section-lede reveal" data-en="We would rather say it now than in month three. If you are in the right-hand column, we will tell you in the first conversation and we will not charge you for finding out.">
-      Preferimos decirlo ahora y no en el mes tres. Si estás en la columna derecha, te lo vamos a
-      decir en la primera conversación y no te vamos a cobrar por descubrirlo.
-    </p>
+    <details class="foldbox">
+      <summary>
+        <div class="fold-txt">
+          <span class="kicker" data-en="Before you write to us">Antes de escribirnos</span>
+          <h2 data-en="Who this is for, and who it is not.">Para quién sí, y para quién no.</h2>
+          <span class="fold-tease" data-en="We would rather say it now than in month three. If it does not fit, we tell you in the first conversation and we do not charge you for finding out.">
+            Preferimos decirlo ahora y no en el mes tres. Si no calza, te lo decimos en la primera
+            conversación y no te cobramos por descubrirlo.
+          </span>
+        </div>
+        <span class="fold-ico" aria-hidden="true"></span>
+      </summary>
+      <div class="fold-body">
+
     <div class="fit">
       <div class="fit-col yes reveal">
         <h3 data-en="It makes sense if…">Tiene sentido si…</h3>
@@ -851,14 +841,29 @@
         </ul>
       </div>
     </div>
+
+      </div>
+    </details>
   </div>
 </section>
 
 <!-- ─────────────── PROCESO ─────────────── -->
-<section class="section" id="proceso">
+<section class="section fold" id="proceso">
   <div class="wrap">
-    <p class="kicker reveal" data-en="The process">El proceso</p>
-    <h2 class="reveal" data-en="From the first conversation to the first sprint.">De la primera conversación al primer sprint.</h2>
+    <details class="foldbox">
+      <summary>
+        <div class="fold-txt">
+          <span class="kicker" data-en="The process">El proceso</span>
+          <h2 data-en="From the first conversation to the first sprint.">De la primera conversación al primer sprint.</h2>
+          <span class="fold-tease" data-en="Four steps: a one-hour conversation at no cost, a written quote, a company-to-company contract, and the first sprint.">
+            Cuatro pasos: una conversación de una hora sin costo, un presupuesto por escrito,
+            un contrato entre empresas, y el primer sprint.
+          </span>
+        </div>
+        <span class="fold-ico" aria-hidden="true"></span>
+      </summary>
+      <div class="fold-body">
+
     <ol class="steps">
       <li class="reveal">
         <span class="step-n">01</span>
@@ -881,6 +886,9 @@
         <p data-en="We start. Board available from day one and the first progress meeting a week in.">Arrancamos. Tablero disponible desde el día uno y primera reunión de avance a la semana.</p>
       </li>
     </ol>
+
+      </div>
+    </details>
   </div>
 </section>
 

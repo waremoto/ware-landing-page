@@ -22,7 +22,31 @@ endpoint que proteger, que pagar, ni donde se pierdan mensajes en silencio.
 | `fonts/` | Tres familias variables, subconjuntos `latin` y `latin-ext`, servidas desde el propio dominio |
 | `favicon.svg` · `og.png` · `icon-180.png` | La marca. Los tres se regeneran juntos o divergen |
 
-## 2 · Las secciones, en orden
+## 2 · Qué está abierto y qué está plegado
+
+El sitio explicaba bien pero era largo: 13.589 px y 17.182 caracteres de texto. Ahora lo importante
+está abierto y el detalle espera a que lo pidan — **7.159 px y 6.704 caracteres a la carga**.
+
+| Abierto por defecto | Plegado (sólo el titular) |
+|---|---|
+| Hero · El problema · El departamento · **Cómo funciona (el tablero)** · Contacto | Qué se contrata · Tu código · Financiamiento · Cómo trabajamos · Para quién · El proceso |
+
+Reglas del plegado:
+
+1. **Es `<details>` nativo.** Sin JS: funciona con el teclado, y el buscador indexa lo de adentro
+   igual que si estuviera abierto. Ésa es la diferencia entre acortar la página y esconder medio sitio.
+2. **Cada plegable lleva su `fold-tease`**: una línea que dice de qué se trata. Un titular solo obliga
+   a abrir para saber si vale la pena — justo el clic que queremos ahorrar.
+3. **Las secciones plegadas no se enlazan desde el header.** Un enlace que salta a un titular cerrado
+   promete una página que no aparece.
+4. **Un enlace directo abre su sección** (`maremoto.dev/#financiamiento` muestra el precio). Lo hace
+   `plegado()` en `script.js`.
+5. **El tablero se queda abierto** a propósito: es el mejor material de venta del sitio.
+
+> **Pendiente de decisión:** hoy no hay ningún enlace a Financiamiento en el header, por la regla 3.
+> Quien venga buscando el precio tiene que bajar hasta encontrarlo. Es reversible en una línea.
+
+## 3 · Las secciones, en orden
 
 | # | Sección | Qué tiene que lograr |
 |---|---|---|
@@ -35,7 +59,7 @@ endpoint que proteger, que pagar, ni donde se pierdan mensajes en silencio.
 | 7 | **Financiamiento** | Cómo se paga |
 | 8 | **Contacto** | Cuatro campos. El botón escribe el correo y abre la agenda |
 
-## 3 · Las reglas que no se rompen
+## 4 · Las reglas que no se rompen
 
 1. **Todo texto nuevo lleva su `data-en`.** Sin él se queda en español dentro de la versión en inglés, y
    nadie avisa. Vale para `data-en-html`, `-aria`, `-ph`, `-val` y `-h` según el caso.
@@ -46,7 +70,7 @@ endpoint que proteger, que pagar, ni donde se pierdan mensajes en silencio.
    orquestación modular"*. Los nombres internos se quedan puertas adentro.
 6. **Tras cada `git push`, purgar la caché de la zona.** El HTML se cachea 5 minutos en el edge.
 
-## 4 · Desplegar
+## 5 · Desplegar
 
 ```bash
 git push origin main                       # 1 · GitHub Pages publica en ~30-60 s
@@ -57,7 +81,7 @@ curl -s "https://maremoto.dev/?cb=$RANDOM" | grep "lo que acabas de escribir"   
 Purgar antes de que Pages termine vuelve a cachear la versión vieja. La purga no toca la caché del
 navegador: para probar, recarga dura.
 
-## 5 · Cambios del 2026-08-14
+## 6 · Cambios del 2026-08-14
 
 | # | Qué se pidió | Qué se hizo |
 |---|---|---|
@@ -69,7 +93,7 @@ navegador: para probar, recarga dura.
 | 6 | Que el titular en español quepa mejor | Tamaño propio para `[data-lang="es"]` en `h1`, `h2` y la barra, más `text-wrap: balance` |
 | 7 | Revisar que el tema arranque según el sistema | Ya lo hacía. Se verificó en ambos sentidos y se agregó el `theme-color` claro que faltaba |
 
-## 6 · La medición
+## 7 · La medición
 
 Cuatro números, y ninguno más: **cuántos llegaron** (`visita`), **cuántos bajaron al formulario**
 (`contacto_visto`), **cuántos lo enviaron** (`formulario_enviado`), **cuántos abrieron la agenda**
@@ -92,7 +116,7 @@ Tres reglas que se rompen fácil:
 > id de sesión al azar, el país, cero IP), pero para una empresa que vende confianza puede valer la pena
 > respetarlo igual. Es una línea de código; queda a criterio del operador.
 
-## 7 · Pendiente
+## 8 · Pendiente
 
 | Qué | Estado |
 |---|---|
