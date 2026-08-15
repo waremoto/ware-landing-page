@@ -82,6 +82,37 @@ Cambios aplicados vía API de Cloudflare:
 - **No publicar ningún caso de cliente identificable** sin permiso escrito del cliente y sin
   revisar el NDA vigente. La prueba actual está deliberadamente anonimizada.
 
+## El inglés está CONGELADO (S1, decisión 2026-08-15)
+
+Google sólo ve el español: el inglés vive en atributos `data-en*` sobre la MISMA URL, y así
+se queda **a propósito**. La decisión (MAREMOTO-FUNNEL OQ-2) es congelar, no elegir:
+
+- **No se indexa.** Sin `/en/`, sin `hreflang` — un `hreflang` sobre una traducción por JS
+  sería mentirle al robot.
+- **No se borra nada.** Los ~277 `data-en*` y `applyLang` quedan como comodidad del visitante.
+- **Nada nuevo nace en inglés.** Toda página nueva es ES-only (ver la sección siguiente).
+  El conteo `grep -o 'data-en' index.html | wc -l` no puede BAJAR (gate 3 de SEO-ADS); tampoco
+  tiene por qué subir.
+
+**Disparadores de reapertura** (escritos para no re-litigar): construir `/en/` con HTML propio +
+`hreflang` cruzado cuando aparezca un prospecto nearshore no hispanohablante o EE.UU./LatAm
+angloparlante entre al plan de adquisición; retirar el inglés sólo si el sitio adquiere build o
+los `data-en` empiezan a frenar cambios de copy.
+
+## Páginas nuevas: el patrón ES-only (S2/S3)
+
+Toda página nueva del sitio (páginas por intención, artículos) se instancia así — precedente
+`404.html`:
+
+- `<html lang="es">`, **sin** conmutador de idioma ni de tema, **sin** atributos `data-en*`.
+- `<title>` + `meta description` + `<link rel="canonical">` propios de la página.
+- Un solo bloque JSON-LD `@graph` por página, según las convenciones de SEO-ADS: sin `vatID`,
+  sin `priceRange`, cero cifras en `Offer`.
+- El formulario (si lleva) apunta al mismo Worker (`api.maremoto.dev/v1/contact`).
+- Declarada en `sitemap.xml` con su `lastmod` a mano (no hay build ni CI, y eso no cambia);
+  enlazada desde el inicio y enlazando de vuelta, sin canibalizar el `<h1>` de la portada.
+- Cero librerías JS; Lighthouse Performance ≥ 90 contra producción o se revierte.
+
 ## Cifras de prueba social (L4)
 
 La `proof-strip` del hero publica cifras de la operación real. Regla: **si una cifra no se
