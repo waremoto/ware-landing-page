@@ -120,7 +120,7 @@ Tres reglas que se rompen fácil:
 
 | Qué | Estado |
 |---|---|
-| **Onboard de `send.maremoto.dev`** en Email Sending (panel de Cloudflare) | **Lo único que bloquea el formulario nuevo.** Al 2026-08-15 la zona no tiene ni un registro bajo `send.`. Ver `d:/ware/maremoto-api/README.md` |
+| **Habilitar Email Sending en la cuenta** y onboardear `send.maremoto.dev` | **Lo único que bloquea el formulario nuevo.** No es permiso: la API da `2036` incluso para leer, con el scope puesto. El producto no está activo en la cuenta. Ver `d:/ware/maremoto-api/README.md` |
 | ~~Verificar `contacto@maremoto.dev` como destino~~ | Hecho el 2026-08-14 |
 | ~~Desplegar el backend con la medición~~ | Hecho el 2026-08-15. `api.maremoto.dev` sirve `0.2.0` y los cuatro hitos escriben en D1 |
 | Envío de correo real, sin depender del cliente de correo del visitante | Construido y desplegado en `api.maremoto.dev`. La rama `endpoint` de este repo lo conecta; no se mezcla hasta que los dos pasos de arriba estén |
