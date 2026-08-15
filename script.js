@@ -1071,6 +1071,28 @@
       }
     };
 
+    /* ---- Las mismas reglas que el servidor ----
+       Espejo exacto de `validate`/`looksLikeEmail` en maremoto-api. Si el
+       cliente es mas permisivo que el servidor, el visitante recibe un 422 por
+       algo que la pagina le dijo que estaba bien -- que es exactamente como se
+       perdio el primer envio real: "que" con menos de 5 caracteres pasaba el
+       control de aca y lo rechazaba el de alla. */
+    function correoValido(v) {
+      if (v.length < 5 || v.length > 200 || /\s/.test(v)) return false;
+      var at = v.indexOf('@');
+      if (at < 1 || at !== v.lastIndexOf('@')) return false;
+      var dom = v.slice(at + 1);
+      return dom.length > 2 && dom.indexOf('.') > -1 &&
+             dom.charAt(0) !== '.' && dom.charAt(dom.length - 1) !== '.';
+    }
+
+    function valido(campo, v) {
+      if (campo === 'mail') return correoValido(v);
+      if (campo === 'nombre') return v.length >= 2;
+      if (campo === 'que') return v.length >= 5;
+      return true;
+    }
+
     /* ---- Turnstile, cargado tarde ----
        Es la unica peticion a un tercero fuera de la analitica, asi que no entra
        en la carga inicial: se pide cuando el contacto asoma en pantalla. */
@@ -1139,7 +1161,7 @@
       var missing = [];
       [['nombre', nombre], ['mail', mail], ['que', que]].forEach(function (f) {
         var el = form.elements[f[0]];
-        var bad = !f[1] || (f[0] === 'mail' && f[1].indexOf('@') < 1);
+        var bad = !valido(f[0], f[1]);
         el.classList.toggle('invalid', bad);
         if (bad) missing.push(f[0]);
       });
@@ -1209,6 +1231,18 @@
         var err = r.data && r.data.error;
         if (err === 'challenge_failed') { resetChallenge(); say('err', c.challenge); }
         else if (err === 'rate_limited') say('err', c.limited);
+        else if (err === 'invalid') {
+          // El servidor dice QUE campo rechazo. Mostrar "no pudimos enviarlo"
+          // ante un dato corregible deja al visitante sin nada que hacer.
+          var campos = (r.data && r.data.fields) || [];
+          campos.forEach(function (f) {
+            var el = form.elements[f];
+            if (el && el.classList) el.classList.add('invalid');
+          });
+          say('err', c.missing);
+          var primero = form.elements[campos[0]];
+          if (primero && primero.focus) primero.focus();
+        }
         else say('err', c.failed);
       }).catch(function () {
         say('err', c.failed);
