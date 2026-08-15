@@ -11,6 +11,11 @@
   /* Buzon por idioma: quien escribe en espanol recibe respuesta en espanol. */
   var MAILBOX = { es: 'contacto@maremoto.dev', en: 'contact@maremoto.dev' };
 
+  /* El backend de la empresa. El formulario le habla a el, no al cliente de
+     correo del visitante. Vacio = el formulario no se puede enviar. */
+  var API_CONTACT = 'https://api.maremoto.dev/v1/contact';
+  var TURNSTILE_KEY = '0x4AAAAAAEP-LnyHDbpB_jGn';
+
   /* ============================================================
      MEDICION
      Cuatro numeros: cuantos llegaron, cuantos bajaron al formulario,
@@ -1033,32 +1038,103 @@
     tio.observe(box);
   })();
 
-  /* ---------- formulario -> correo con la ficha ya escrita ---------- */
+  /* ---------- formulario -> endpoint propio ----------
+     La ficha se manda a api.maremoto.dev y el correo lo escribe el servidor.
+     Antes esto abria el cliente de correo del visitante: quedaba una copia en
+     su bandeja, pero dependia de que tuviera uno configurado y de que apretara
+     enviar. Ahora el envio no depende de nadie mas que de nosotros. */
   (function contactForm() {
     var form = document.getElementById('cform');
     var note = document.getElementById('fNote');
+    var check = document.getElementById('fCheck');
+    var submit = form ? form.querySelector('.f-submit') : null;
     if (!form) return;
 
     var COPY = {
       es: {
         missing: 'Falta tu nombre, un correo valido y una linea sobre lo que necesitas.',
-        opening: 'Abrimos tu correo con el mensaje escrito y la agenda en otra pestana. Solo queda apretar enviar y elegir hora.',
-        blocked: 'Abrimos tu correo con el mensaje escrito. El navegador bloqueo la agenda: usa el boton "Reservar hora directamente".',
-        subject: 'Departamento de ingenieria - ',
-        labels: ['Nombre y empresa', 'Correo', 'Estado del producto', 'Plazo', 'Que necesita construir o arreglar', 'no indicado', 'Enviado desde maremoto.dev']
+        sending: 'Enviando...',
+        sent: 'Listo: nos llego tu ficha y te abrimos la agenda en otra pestana. Respondemos en un dia habil.',
+        sentNoTab: 'Listo: nos llego tu ficha. Respondemos en un dia habil. Para agendar hora, usa el boton de mas arriba.',
+        challenge: 'Confirma que no eres un robot en el recuadro de arriba y vuelve a enviar.',
+        limited: 'Demasiados envios desde tu conexion. Escribenos directo a ' + MAILBOX.es + '.',
+        failed: 'No pudimos enviarlo. Escribenos directo a ' + MAILBOX.es + ' y lo vemos igual.'
       },
       en: {
         missing: 'We need your name, a valid email and one line about what you need.',
-        opening: 'We opened your email with the message written and the booking page in another tab. Just hit send and pick a time.',
-        blocked: 'We opened your email with the message written. Your browser blocked the booking page: use the "Book a time directly" button.',
-        subject: 'Software engineering department - ',
-        labels: ['Name and company', 'Email', 'Product state', 'Timeline', 'What they need built or fixed', 'not given', 'Sent from maremoto.dev']
+        sending: 'Sending...',
+        sent: 'Done: we got your details and opened the booking page in another tab. We reply within one business day.',
+        sentNoTab: 'Done: we got your details. We reply within one business day. To book a time, use the button above.',
+        challenge: 'Confirm you are not a robot in the box above, then send again.',
+        limited: 'Too many submissions from your connection. Write to us at ' + MAILBOX.en + '.',
+        failed: 'We could not send it. Write to us at ' + MAILBOX.en + ' and we will pick it up anyway.'
       }
     };
 
+    /* ---- Turnstile, cargado tarde ----
+       Es la unica peticion a un tercero fuera de la analitica, asi que no entra
+       en la carga inicial: se pide cuando el contacto asoma en pantalla. */
+    var widgetId = null, tsReady = false;
+
+    window.maremotoTurnstile = function () {
+      if (!check || widgetId !== null || !window.turnstile) return;
+      widgetId = window.turnstile.render(check, {
+        sitekey: TURNSTILE_KEY,
+        appearance: 'interaction-only',
+        theme: 'auto',
+        language: lang === 'en' ? 'en' : 'es'
+      });
+      tsReady = true;
+    };
+
+    function loadTurnstile() {
+      if (document.getElementById('tsScript')) return;
+      var s = document.createElement('script');
+      s.id = 'tsScript';
+      s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=maremotoTurnstile';
+      s.async = true;
+      s.defer = true;
+      document.head.appendChild(s);
+    }
+
+    if ('IntersectionObserver' in window) {
+      var cio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          loadTurnstile();
+          cio.disconnect();
+        });
+      }, { rootMargin: '400px' });
+      cio.observe(form);
+    } else {
+      loadTurnstile();
+    }
+
+    function token() {
+      if (!window.turnstile || widgetId === null) return '';
+      try { return window.turnstile.getResponse(widgetId) || ''; } catch (e) { return ''; }
+    }
+
+    function resetChallenge() {
+      if (!window.turnstile || widgetId === null) return;
+      try { window.turnstile.reset(widgetId); } catch (e) { /* ignore */ }
+    }
+
+    function say(kind, text) {
+      if (!note) return;
+      note.className = 'f-note' + (kind ? ' ' + kind : '');
+      note.textContent = text;
+    }
+
+    function restore() {
+      if (!note) return;
+      note.className = 'f-note';
+      note.textContent = lang === 'en' ? note.getAttribute('data-en') : note.getAttribute('data-es');
+    }
+
     form.addEventListener('submit', function (ev) {
       ev.preventDefault();
-      var c = COPY[lang];
+      var c = COPY[lang] || COPY.es;
 
       var nombre = form.elements['nombre'].value.trim();
       var mail = form.elements['mail'].value.trim();
@@ -1075,57 +1151,86 @@
       });
 
       if (missing.length) {
-        if (note) { note.className = 'f-note err'; note.textContent = c.missing; }
+        say('err', c.missing);
         var first = form.elements[missing[0]];
         if (first && first.focus) first.focus();
         return;
       }
 
-      var body = [
-        c.labels[0] + ': ' + nombre,
-        c.labels[1] + ': ' + mail,
-        c.labels[2] + ': ' + (estado ? estado.value : c.labels[5]),
-        c.labels[3] + ': ' + (plazo ? plazo.value : c.labels[5]),
-        '',
-        c.labels[4] + ':',
-        que,
-        '',
-        '--',
-        c.labels[6]
-      ].join('\n');
+      // Si el desafio esta cargado pero sin resolver, se avisa antes de gastar
+      // la pestana de la agenda.
+      var tok = token();
+      if (tsReady && !tok) {
+        say('err', c.challenge);
+        return;
+      }
 
-      var href = 'mailto:' + (MAILBOX[lang] || MAILBOX.es)
-        + '?subject=' + encodeURIComponent(c.subject + nombre)
-        + '&body=' + encodeURIComponent(body);
-
-      // El boton hace las dos cosas que promete. La pestana de la agenda va
-      // primero: abrirla despues del mailto la deja fuera del gesto del
-      // usuario y el navegador la bloquea.
       medir('formulario_enviado');
 
+      // La pestana se abre dentro del gesto del usuario: despues del await, el
+      // navegador la bloquea.
       var booked = null;
       if (AGENDA_URL) {
         try { booked = window.open(AGENDA_URL, '_blank', 'noopener'); } catch (e) { booked = null; }
         if (booked) medir('agenda_abierta');
       }
 
-      if (note) {
-        note.className = 'f-note ok';
-        note.textContent = booked || !AGENDA_URL ? c.opening : c.blocked;
-      }
-      window.location.href = href;
+      if (submit) submit.disabled = true;
+      say('', c.sending);
 
-      setTimeout(function () {
-        if (!note) return;
-        note.className = 'f-note';
-        note.textContent = lang === 'en' ? note.getAttribute('data-en') : note.getAttribute('data-es');
-      }, 9000);
+      fetch(API_CONTACT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nombre: nombre,
+          mail: mail,
+          que: que,
+          estado: estado ? estado.value : '',
+          plazo: plazo ? plazo.value : '',
+          lang: lang,
+          // Los mismos que los hitos: asi el lead guardado se puede unir con
+          // el recorrido que lo trajo, y "de donde vino" tiene respuesta.
+          sid: sid(),
+          utm: utm(),
+          web: form.elements['web'] ? form.elements['web'].value : '',
+          turnstile: tok
+        })
+      }).then(function (res) {
+        return res.json().then(function (data) { return { status: res.status, data: data }; });
+      }).then(function (r) {
+        if (r.data && r.data.ok) {
+          form.reset();
+          resetChallenge();
+          say('ok', booked ? c.sent : c.sentNoTab);
+          setTimeout(restore, 12000);
+          return;
+        }
+        var err = r.data && r.data.error;
+        if (err === 'challenge_failed') { resetChallenge(); say('err', c.challenge); }
+        else if (err === 'rate_limited') say('err', c.limited);
+        else say('err', c.failed);
+      }).catch(function () {
+        say('err', c.failed);
+      }).then(function () {
+        if (submit) submit.disabled = false;
+      });
     });
 
     form.addEventListener('input', function (ev) {
       if (ev.target.classList) ev.target.classList.remove('invalid');
     });
+
+    // el recuadro se vuelve a dibujar en el idioma nuevo
+    document.addEventListener('maremoto:lang', function () {
+      if (!window.turnstile || widgetId === null) return;
+      try {
+        window.turnstile.remove(widgetId);
+        widgetId = null;
+        window.maremotoTurnstile();
+      } catch (e) { /* ignore */ }
+    });
   })();
+
 
   /* ---------- agenda ---------- */
   (function agenda() {

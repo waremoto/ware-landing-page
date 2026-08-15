@@ -942,11 +942,16 @@
             <label><input type="radio" name="plazo" value="Explorando todavía" data-en-val="Still exploring"><span data-en="Exploring">Explorando</span></label>
           </div>
         </div>
+        <!-- trampa para robots: invisible y fuera del recorrido del teclado -->
+        <div class="f-hp" aria-hidden="true">
+          <label for="f-web">No llenar</label>
+          <input id="f-web" name="web" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="f-check" id="fCheck"></div>
         <button class="btn btn-primary f-submit" type="submit" data-en="Send and book the conversation">Enviar y agendar la conversación</button>
-        <p class="f-note" id="fNote" data-en="Two things at once: your email opens with the message already written — so a copy stays in your sent folder — and the booking page opens in another tab. We do not use forms that vanish into a server.">
-          Hace las dos cosas: se abre tu correo con el mensaje ya escrito — así queda la copia en tu
-          bandeja de enviados — y la agenda en otra pestaña. No usamos formularios que se pierden
-          en un servidor.
+        <p class="f-note" id="fNote" data-en="Two things at once: we send us your details and the booking page opens in another tab. Your email address only travels so we can reply to you.">
+          Hace las dos cosas: nos envía tus datos y abre la agenda en otra pestaña. Tu correo
+          viaja sólo para poder responderte.
         </p>
       </form>
     </div>
