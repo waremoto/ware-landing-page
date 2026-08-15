@@ -953,6 +953,16 @@
           Hace las dos cosas: nos envía tus datos y abre la agenda en otra pestaña. Tu correo
           viaja sólo para poder responderte.
         </p>
+        <!-- El estado de gracias de verdad (L1): que pasa ahora, sin ansiedad.
+             Oculto hasta que el envio vuelve con ok; no lo borra ningun timeout. -->
+        <div class="f-thanks" id="fThanks" hidden>
+          <p class="f-thanks-t" data-en="Your details arrived. What happens now:">Tu ficha llegó bien. Esto es lo que pasa ahora:</p>
+          <ul>
+            <li data-en="We read it and reply within one business day, to your email.">La leemos y te respondemos dentro de un día hábil, a tu correo.</li>
+            <li data-en="The first meeting is a conversation about what you need built or fixed: product state, scope and timeline.">La primera reunión es una conversación sobre lo que necesitas construir o arreglar: estado del producto, alcance y plazo.</li>
+          </ul>
+          <p class="f-thanks-a"><a id="fThanksAgenda" href="#" target="_blank" rel="noopener" hidden data-en="Prefer to pick a time directly? Book here.">¿Prefieres elegir hora directo? Agenda aquí.</a></p>
+        </div>
       </form>
     </div>
     <p class="contact-note reveal" data-en="We work with companies in Chile and across the region.">Trabajamos con empresas en Chile y la región.</p>

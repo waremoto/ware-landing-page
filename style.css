@@ -1238,6 +1238,11 @@ h3 { font-size: 1.02rem; letter-spacing: -.012em; line-height: 1.3; }
 .f-note { font-size: .78rem; color: var(--fg-3); line-height: 1.55; }
 .f-note.err { color: var(--no); }
 .f-note.ok { color: var(--ok); }
+.f-thanks { margin-top: .9rem; padding: .9rem 1rem; border: 1px solid var(--line); border-radius: 8px; font-size: .84rem; line-height: 1.6; }
+.f-thanks .f-thanks-t { margin: 0 0 .4rem; font-weight: 600; color: var(--ok); }
+.f-thanks ul { margin: 0 0 .5rem; padding-left: 1.1rem; }
+.f-thanks li { margin: 0 0 .25rem; }
+.f-thanks .f-thanks-a { margin: 0; }
 
 .contact-note { margin-top: 2.5rem; font-size: .875rem; color: var(--fg-3); text-align: center; }
 

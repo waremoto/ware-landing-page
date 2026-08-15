@@ -1126,12 +1126,6 @@
       note.textContent = text;
     }
 
-    function restore() {
-      if (!note) return;
-      note.className = 'f-note';
-      note.textContent = lang === 'en' ? note.getAttribute('data-en') : note.getAttribute('data-es');
-    }
-
     form.addEventListener('submit', function (ev) {
       ev.preventDefault();
       var c = COPY[lang] || COPY.es;
@@ -1202,7 +1196,14 @@
           form.reset();
           resetChallenge();
           say('ok', booked ? c.sent : c.sentNoTab);
-          setTimeout(restore, 12000);
+          // El estado de gracias de verdad (L1): se muestra y se queda. El que
+          // envio no tiene por que ver como su confirmacion desaparece sola.
+          var thanks = document.getElementById('fThanks');
+          if (thanks) {
+            var ta = document.getElementById('fThanksAgenda');
+            if (ta && AGENDA_URL) { ta.href = AGENDA_URL; ta.hidden = false; }
+            thanks.hidden = false;
+          }
           return;
         }
         var err = r.data && r.data.error;
