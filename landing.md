@@ -96,9 +96,9 @@ Tres reglas que se rompen fácil:
 
 | Qué | Estado |
 |---|---|
-| **Onboard de `send.maremoto.dev`** en Email Sending (panel de Cloudflare) | **Bloquea el formulario nuevo.** Al 2026-08-14 la zona no tiene ni un registro bajo `send.`. Ver `d:/ware/maremoto-api/README.md` |
-| **`wrangler deploy` del backend** — la medición escribe en rutas que el Worker desplegado todavía no tiene | **Bloquea la medición.** Un `deploy` desde una terminal con sesión |
+| **Onboard de `send.maremoto.dev`** en Email Sending (panel de Cloudflare) | **Lo único que bloquea el formulario nuevo.** Al 2026-08-15 la zona no tiene ni un registro bajo `send.`. Ver `d:/ware/maremoto-api/README.md` |
 | ~~Verificar `contacto@maremoto.dev` como destino~~ | Hecho el 2026-08-14 |
+| ~~Desplegar el backend con la medición~~ | Hecho el 2026-08-15. `api.maremoto.dev` sirve `0.2.0` y los cuatro hitos escriben en D1 |
 | Envío de correo real, sin depender del cliente de correo del visitante | Construido y desplegado en `api.maremoto.dev`. La rama `endpoint` de este repo lo conecta; no se mezcla hasta que los dos pasos de arriba estén |
 | El H1 y el H2 dicen "un ingeniero" y la cifra dice "1-2" | Decisión de copy pendiente |
 | Caso de cliente con nombre | Bloqueado por NDA |
