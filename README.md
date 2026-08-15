@@ -82,6 +82,35 @@ Cambios aplicados vía API de Cloudflare:
 - **No publicar ningún caso de cliente identificable** sin permiso escrito del cliente y sin
   revisar el NDA vigente. La prueba actual está deliberadamente anonimizada.
 
+## Cifras de prueba social (L4)
+
+La `proof-strip` del hero publica cifras de la operación real. Regla: **si una cifra no se
+puede verificar con el comando de su fila, se saca del sitio** — un número de prueba social
+que envejece en silencio es peor que no tenerlo. Refresco: mensual, a mano, con el push.
+
+| Cifra | Fuente | Comando de verificación |
+|---|---|---|
+| proyectos bajo gestión | `d:/ware/ware.json` `projects[]` | `python -c "import json; print(len(json.load(open('ware.json'))['projects']))"` (desde `d:/ware`) |
+| corridas automatizadas registradas | `d:/ware/.runs/*.jsonl` | `ls d:/ware/.runs/*.jsonl \| wc -l` |
+| pruebas automatizadas en verde | suite `ware` (293) + `maremoto-api` (75) | `python -m unittest bin.test_ware` (en `d:/ware`) + `npm test` (en `maremoto-api`) — sumar los totales en verde |
+
+Lo que NUNCA entra aquí: precios de tarifario (la carta se cotiza en reunión), nombres de
+cliente, testimonios, ni nada que no salga de datos propios (NDA Cognity: cláusula penal 150 UF).
+
+## GIF del tablero (L5) — receta de captura
+
+El tablero (`#day` + `.kb`, sección "la jornada") es DOM puro, así que `MediaRecorder` no
+sirve; la captura es por cuadros. El binario NO vive en el repo todavía — producirlo es paso
+del operador (idealmente **MP4 o WebP animado**, no GIF: un GIF de 15 s de esta fidelidad
+pesa 3–8 MB y rompe el presupuesto de Performance ≥ 90).
+
+1. Abrir el sitio local y fijar el slider: en consola, `for` sobre `#dayRange.value = 0…1435`
+   en ~150 pasos, con un screenshot del nodo `.shell` por paso (Playwright `locator.screenshot()`
+   o el navegador embebido de la sesión).
+2. Ensamblar: `ffmpeg -framerate 10 -i frame-%03d.png -vf "palettegen/paletteuse" tablero.gif`
+   (ffmpeg 4.4.1 ya está en esta máquina) — o mejor `-c:v libx264 -pix_fmt yuv420p tablero.mp4`.
+3. Publicar como asset del repo + el bloque que lo ofrece para compartir (pendiente con el asset).
+
 ## Historial
 
 El landing anterior (efecto blob + link a Spawn) está preservado en el tag `v1-blob-landing`
