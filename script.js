@@ -108,11 +108,11 @@
   var META = {
     es: {
       title: 'Maremoto — Somos tu departamento de ingeniería de software',
-      desc: 'Desarrollo de software a medida en Chile — SaaS o sistema interno —, con arquitectura, infraestructura y soporte incluidos. Un ingeniero de software a cargo y una flota de agentes en lo repetible: el departamento completo, listo para trabajar.'
+      desc: 'Desarrollo de software a medida en Chile — SaaS o sistema interno —, con arquitectura, infraestructura y soporte incluidos. Uno o dos ingenieros de software a cargo y una flota de agentes en lo repetible: el departamento completo, listo para trabajar.'
     },
     en: {
       title: 'Maremoto — We are your software engineering department',
-      desc: 'Custom software development in Chile — SaaS or internal systems — with architecture, infrastructure and support included. A software engineer in charge and a fleet of agents on the repetitive work: the whole department, ready to go.'
+      desc: 'Custom software development in Chile — SaaS or internal systems — with architecture, infrastructure and support included. One or two software engineers in charge and a fleet of agents on the repetitive work: the whole department, ready to go.'
     }
   };
 
