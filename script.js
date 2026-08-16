@@ -287,13 +287,13 @@
       cell.appendChild(label);
 
       // el candado: la respuesta visual a "?mis datos se mezclan con los de otro?"
-      var lock = el('g', { transform: 'translate(118,13)', 'class': 'cl-lock' });
-      lock.appendChild(el('path', { d: 'M2.6 4.6V3.3a2.4 2.4 0 0 1 4.8 0v1.3' }));
-      lock.appendChild(el('rect', { x: 1.3, y: 4.6, width: 7.4, height: 5.6, rx: 1.4 }));
-      cell.appendChild(lock);
-      var lockT = el('text', { x: 131, y: 21, 'class': 'cl-lock-t' });
-      lockT.textContent = t(ISOLATED);
-      cell.appendChild(lockT);
+      // var lock = el('g', { transform: 'translate(118,13)', 'class': 'cl-lock' });
+      // lock.appendChild(el('path', { d: 'M2.6 4.6V3.3a2.4 2.4 0 0 1 4.8 0v1.3' }));
+      // lock.appendChild(el('rect', { x: 1.3, y: 4.6, width: 7.4, height: 5.6, rx: 1.4 }));
+      // cell.appendChild(lock);
+      // var lockT = el('text', { x: 131, y: 21, 'class': 'cl-lock-t' });
+      // lockT.textContent = t(ISOLATED);
+      // cell.appendChild(lockT);
 
       // el tablero: cuatro columnas, los mismos estados que abajo
       for (var c = 0; c < 4; c++) {
