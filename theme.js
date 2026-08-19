@@ -369,6 +369,16 @@
       li2.appendChild(el('span', 'dbg-k', 'paradas'));
       li2.appendChild(el('span', 'dbg-v', r.count ? (r.index + 1) + ' / ' + r.count : 'sin riel'));
       list.appendChild(li2);
+
+      /* Cuantas secciones cedieron aire para no partirse. Cero es lo normal; un
+         numero alto en una pantalla ancha dice que el contenido crecio y hay que
+         mirar la seccion, no subir el limite. */
+      if (typeof r.squeezed === 'number') {
+        var li3 = el('li');
+        li3.appendChild(el('span', 'dbg-k', 'aire cedido'));
+        li3.appendChild(el('span', 'dbg-v', r.squeezed ? r.squeezed + ' secc.' : '—'));
+        list.appendChild(li3);
+      }
     }
   }
 

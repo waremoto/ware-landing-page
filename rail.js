@@ -37,14 +37,6 @@
      de style.css a proposito. */
   var MIN_H = 640;
 
-  /* Cuanto se solapan dos tramos consecutivos. Sin solape, una linea de texto
-     puede caer justo en el corte y no leerse completa en ninguno de los dos. */
-  var OVERLAP = 0.12;
-
-  /* Un bloque que se pasa por menos que esto NO se parte: partir por 20px
-     produce dos paradas casi identicas y un salto que parece un tiron. */
-  var SLACK = 1.06;
-
   var blocks = [];
   var stops = [];          /* offsets en coordenadas del documento */
   var marks = [];          /* los <i> del riel, uno por parada */
@@ -53,6 +45,7 @@
   var pending = -1;        /* destino en vuelo; -1 = ninguno */
   var pendingT = null;
   var measuredAt = '';     /* viewport con el que se midio lo que hay ahora */
+  var quietUntil = 0;      /* ver onBodyResize: ventana sorda tras remedir */
 
   function navH() {
     var v = parseFloat(getComputedStyle(root).getPropertyValue('--nav-h'));
@@ -81,52 +74,301 @@
     return y;
   }
 
-  /* ---------- medir ---------- */
+  /* ---------- medir ----------
 
-  function measure() {
-    var usable = usableH();
-    var out = [];
+     Tres reglas, en este orden:
 
+       1. ATOMOS. Hay cosas que no se parten: una animacion, una tabla
+          comparativa, una grilla de tarjetas, un formulario. Cortarlas al medio
+          es peor que gastar media pantalla en blanco. Se reconocen por selector
+          o con data-rail="atom" a mano. Un atomo MAS ALTO que la pantalla si se
+          abre — si no, quedaria una franja imposible de mirar entera.
+
+       2. COSTURAS. Las paradas no salen de una division: se eligen entre los
+          cortes que el contenido ya tiene (bordes de seccion, de hijo, de atomo)
+          y se empaqueta glotonamente, la costura mas lejana que entre. Eso junta
+          las secciones plegadas —seis teasers de 246px eran seis paradas casi
+          vacias, ahora entran de a tres— y vuelve imposible cortar adentro de un
+          atomo.
+
+       3. PRESUPUESTO DE AIRE. Cuando a un paso le falta poco (<= TOL) para
+          entrar, no se parte: se le baja --rail-squeeze a las secciones de ese
+          paso hasta que entra. Medido en `como`: titulo 157px + animacion 624px
+          = 876 contra 828 de pantalla. 48px. Antes eso eran dos paradas feas con
+          la animacion cortada; ahora se recortan 48px de aire y es UN paso con
+          la animacion entera.
+
+          El aire cede; la tipografia no se toca nunca. Achicar texto cambia
+          donde cortan las lineas, y entonces la altura no baja de forma
+          predecible: el mismo -4% saca 12px o 80px segun si un titular pasa de
+          tres lineas a dos. Un buscador iterando sobre eso oscila.
+     -------------------------------------------------------------------- */
+
+  var ATOM = 'figure, .compare, .shell, .how, .grid, .fit, .steps, .cform, .notnegotiable, [data-rail="atom"]';
+
+  /* Cuanto se le permite pasarse a un paso antes de partirlo, si el aire da. */
+  var TOL = 0.09;
+
+  /* Niveles de compresion. Discretos y pocos a proposito: dos secciones con el
+     mismo aprieto tienen que verse iguales, y un continuo daria cada una
+     distinta. El piso es 0.80 —maximo 20% menos de aire— porque lo que se nota
+     no es que una seccion este apretada sino que este apretada AL LADO de una
+     que no: mas abajo la diferencia entre vecinas se lee como un error de
+     maquetado. Lo que no se puede pagar con eso, se parte. */
+  var LEVELS = [0.92, 0.86, 0.80];
+
+  var squeezed = [];       /* secciones con el aire recortado, para el panel */
+
+  function isAtom(el) { return el.matches && el.matches(ATOM); }
+
+  /* Un <details> cerrado de esta landing NO borra su contenido: lo recorta. Los
+     hijos siguen teniendo caja y coordenadas —una grilla de 418px que nadie ve—
+     y si se los cuenta, bloquean costuras legitimas y ensucian el reparto. Lo
+     que no se ve no participa. */
+  function ghost(el) {
+    return !el.offsetParent || !!(el.closest && el.closest('details:not([open])'));
+  }
+
+  function clearSqueeze() {
+    squeezed.forEach(function (el) { el.style.removeProperty('--rail-squeeze'); });
+    squeezed = [];
+  }
+
+  /* Las costuras guardan ELEMENTO Y BORDE, no una coordenada: al recortar aire
+     todo se mueve, y una lista de numeros medidos antes del recorte apuntaria a
+     cualquier lado. La `y` se calcula cuando se necesita. */
+  function seamY(s) {
+    var r = s.el.getBoundingClientRect();
+    return Math.round((s.edge === 'top' ? r.top : r.bottom) + window.scrollY);
+  }
+
+  /* Los tramos verticales que ocupa cada atomo. Una costura que caiga ADENTRO de
+     uno no es un corte valido aunque sea el borde real de otro elemento: en la
+     seccion de contacto la columna izquierda termina a 6594 y el formulario de
+     al lado va de 6200 a 6912, asi que cortar en 6594 —borde legitimo del
+     vecino— parte el formulario por la mitad. Con una sola columna esto no
+     pasa; con cualquier grid, pasa siempre. */
+  function atomSpans() {
+    var spans = [];
     blocks.forEach(function (b) {
-      var top = docTop(b);
-      var h = b.offsetHeight;
-
-      if (h <= usable * SLACK) { out.push(top); return; }
-
-      /* Cuantos tramos hacen falta para que ninguno pase el alto util, contando
-         el solape. Luego se reparten PAREJOS: el ultimo cae en (top + h -
-         usable), o sea con el final del bloque calzado abajo. */
-      var span = h - usable;
-      var n = Math.max(2, Math.ceil(span / (usable * (1 - OVERLAP))) + 1);
-      var step = span / (n - 1);
-      for (var i = 0; i < n; i++) out.push(Math.round(top + i * step));
+      var list = b.querySelectorAll(ATOM);
+      for (var i = 0; i < list.length; i++) {
+        if (ghost(list[i])) continue;
+        var r = list[i].getBoundingClientRect();
+        if (r.height >= 8) spans.push([r.top + window.scrollY, r.bottom + window.scrollY]);
+      }
     });
+    return spans;
+  }
 
-    /* Ordenar y descartar paradas pegadas: dos marcas a 30px una de otra no son
-       dos destinos, son un destino con ruido. */
-    out.sort(function (a, b) { return a - b; });
-    var clean = [];
-    for (var j = 0; j < out.length; j++) {
-      if (!clean.length || out[j] - clean[clean.length - 1] > 80) clean.push(out[j]);
+  function crossesAtom(y, spans) {
+    for (var i = 0; i < spans.length; i++) {
+      if (y > spans[i][0] + 8 && y < spans[i][1] - 8) return true;
+    }
+    return false;
+  }
+
+  function collect() {
+    var usable = usableH();
+    var seams = [];
+    function add(el, edge, w) { seams.push({ el: el, edge: edge, w: w }); }
+
+    function walk(el, depth) {
+      var kids = el.children, i, c, h, atom;
+      for (i = 0; i < kids.length; i++) {
+        c = kids[i];
+        h = c.offsetHeight;
+        if (h < 8 || ghost(c)) continue;
+        atom = isAtom(c);
+        add(c, 'top', atom ? 2 : 1);
+        add(c, 'bottom', atom ? 2 : 1);
+        /* Se entra si NO es atomo, o si es un atomo que no cabe en pantalla: ahi
+           la integridad ya se perdio y lo unico util es poder recorrerlo. */
+        if (depth < 2 && (!atom || h > usable)) walk(c, depth + 1);
+      }
     }
 
-    /* Costura entre bloques. Cada bloque queda bien cubierto por si mismo, pero
-       el salto de la ultima parada de uno a la primera del siguiente puede pasar
-       el alto util —medido: 854px contra 832 de pantalla— y esa franja de 22px
-       no se ve entera en ninguna de las dos. Se rellena. Es la diferencia entre
-       "casi todo el mapa" y el mapa. */
+    blocks.forEach(function (b) {
+      add(b, 'top', 3);                    /* borde de seccion: costura fuerte */
+      add(b, 'bottom', 3);
+      walk(b.querySelector('.wrap') || b, 0);
+    });
+    return seams;
+  }
+
+  /* Empaquetado gloton. Devuelve pasos como PARES DE COSTURAS y no como numeros,
+     para poder remedirlos despues de recortar aire. */
+  function pack(seams, tolerate) {
+    var usable = usableH();
+    var spans = atomSpans();
+    var list = seams.map(function (s) { return { s: s, y: seamY(s), w: s.w }; })
+                    .filter(function (it) { return !crossesAtom(it.y, spans); })
+                    .sort(function (a, b) { return a.y - b.y || b.w - a.w; });
+
+    /* Dos costuras casi pegadas no son dos destinos. Gana la de mas peso. */
+    var uniq = [];
+    list.forEach(function (it) {
+      var last = uniq[uniq.length - 1];
+      if (last && it.y - last.y < 12) { last.w = Math.max(last.w, it.w); return; }
+      uniq.push(it);
+    });
+    if (!uniq.length) return [];
+
+    var docEnd = document.body.scrollHeight;
+    var steps = [];
+    var cur = uniq[0];
+    var guard = 0;
+
+    while (cur.y < docEnd - usable && guard++ < 400) {
+      var reach = cur.y + usable;
+      var reachTol = cur.y + usable * (1 + (tolerate ? TOL : 0));
+      var pick = null, over = null;
+      for (var i = 0; i < uniq.length; i++) {
+        var it = uniq[i];
+        if (it.y <= cur.y + 12) continue;
+        if (it.y <= reach) pick = it;
+        else if (it.y <= reachTol) {
+          /* Pasarse solo se justifica por una costura FUERTE: el final de un
+             atomo o de una seccion. Apretar la pagina para cerrar en un parrafo
+             cualquiera es pagar sin comprar nada. */
+          if (it.w >= 2 && !over) over = it;
+        } else break;
+      }
+      var next = over || pick;
+      if (!next) break;
+      steps.push({ from: cur.s, to: next.s, over: next === over });
+      cur = next;
+    }
+    steps.push({ from: cur.s, to: null, over: false });
+    return steps;
+  }
+
+  /* Regla 3: pagar el exceso con aire, seccion por seccion, y solo si alcanza. */
+  function payWithWhitespace(steps) {
+    var usable = usableH();
+    steps.forEach(function (st) {
+      if (!st.over || !st.to) return;
+
+      var y0 = seamY(st.from), y1 = seamY(st.to);
+      var secs = blocks.filter(function (b) {
+        var t = docTop(b);
+        return t < y1 && t + b.offsetHeight > y0;
+      });
+      if (!secs.length) return;
+
+      for (var l = 0; l < LEVELS.length; l++) {
+        secs.forEach(function (b) {
+          b.style.setProperty('--rail-squeeze', String(LEVELS[l]));
+          if (squeezed.indexOf(b) < 0) squeezed.push(b);
+        });
+        if (seamY(st.to) - seamY(st.from) <= usable) return;    /* entro */
+      }
+
+      /* No alcanzo ni con el piso: devolver el aire. Apretar una seccion y
+         ademas partirla es cobrar dos veces por el mismo paso. */
+      secs.forEach(function (b) {
+        b.style.removeProperty('--rail-squeeze');
+        var i = squeezed.indexOf(b);
+        if (i >= 0) squeezed.splice(i, 1);
+      });
+    });
+  }
+
+  /* Corre `y` fuera del atomo que lo contenga, al borde mas cercano, siempre que
+     el desvio no rompa la cobertura (no mas de un 40% de pantalla). */
+  function nudgeOffAtom(y, spans, usable) {
+    for (var i = 0; i < spans.length; i++) {
+      var a = spans[i];
+      if (y > a[0] + 8 && y < a[1] - 8) {
+        var up = a[0], down = a[1];
+        var pick = (y - up <= down - y) ? up : down;
+        if (Math.abs(pick - y) <= usable * 0.4) return Math.round(pick);
+        return y;
+      }
+    }
+    return y;
+  }
+
+  function measure() {
+    clearSqueeze();
+    payWithWhitespace(pack(collect(), true));
+
+    /* Segunda pasada sobre la geometria ya recortada. Sin tolerancia: lo que se
+       podia pagar con aire ya se pago; lo que sobra se parte y listo. */
+    var out = pack(collect(), false).map(function (st) { return seamY(st.from); });
+
+    var usable = usableH();
+    var docEnd = document.body.scrollHeight;
+    var spans = atomSpans();
+
+    /* Cobertura — la promesa del riel: ninguna franja puede quedar sin verse
+       entera en algun paso. Si dos paradas quedaron a mas de una pantalla se
+       rellena, y si la ultima no llega al final del documento se agrega. */
     var full = [];
-    for (var k = 0; k < clean.length; k++) {
-      full.push(clean[k]);
-      if (k + 1 < clean.length) {
-        var gap = clean[k + 1] - clean[k];
-        if (gap > usable) {
-          var extra = Math.ceil(gap / usable) - 1;
-          for (var e = 1; e <= extra; e++) full.push(Math.round(clean[k] + gap * e / (extra + 1)));
+    for (var k = 0; k < out.length; k++) {
+      full.push(out[k]);
+      var gap = (k + 1 < out.length ? out[k + 1] : docEnd) - out[k];
+      if (k + 1 < out.length && gap > usable) {
+        var extra = Math.ceil(gap / usable) - 1;
+        for (var e = 1; e <= extra; e++) {
+          var at = Math.round(out[k] + gap * e / (extra + 1));
+          /* El relleno existe para que no quede franja sin ver; si cae adentro
+             de un atomo se corre al borde mas cercano que no lo parta. Y si ni
+             asi, se deja igual: cubrir manda sobre no cortar — una franja
+             invisible es peor que un corte feo. */
+          full.push(nudgeOffAtom(at, spans, usable));
         }
       }
     }
-    return full;
+    /* La ultima parada: el fondo del documento. Ojo con el caso del formulario
+       de contacto — la parada de fondo cae 154px DENTRO de el, porque el form
+       mas el pie no entran juntos en una pantalla. Se agregan las dos: una en el
+       borde del atomo, donde se ve entero, y la del fondo, para llegar al final.
+       Quedan cerca, pero son dos destinos distintos y cada uno muestra algo que
+       el otro no. */
+    var lastTarget = docEnd - window.innerHeight + margin();
+    if (full.length && lastTarget - full[full.length - 1] > 40) {
+      var snapped = nudgeOffAtom(lastTarget, spans, usable);
+      if (snapped !== lastTarget) full.push(Math.round(snapped));
+      full.push(Math.round(lastTarget));
+    }
+
+    full.sort(function (a, b) { return a - b; });
+    var clean = [];
+    for (var j = 0; j < full.length; j++) {
+      if (!clean.length || full[j] - clean[clean.length - 1] > 80) clean.push(full[j]);
+    }
+
+    /* Ultimo pase, y el unico innegociable: DESPUES de correr paradas para no
+       partir atomos, verificar que no quedo ninguna franja sin verse entera.
+       Correr una parada al borde de un atomo puede abrir un hueco mas adelante
+       —aparecio a 1280x720— y la cobertura manda sobre la integridad: una franja
+       que nadie ve nunca es peor que un corte feo. Lo que se agrega aca es
+       aritmetico a proposito: es la red, no el criterio. */
+    var covered = [], bottom = 0;
+    for (var c = 0; c < clean.length; c++) {
+      var t = Math.max(0, clean[c] - margin());
+      var guard2 = 0;
+      while (t > bottom + 2 && guard2++ < 200) {
+        covered.push(Math.round(bottom + margin()));
+        bottom += usable;
+      }
+      covered.push(clean[c]);
+      bottom = Math.max(bottom, t + usable);
+    }
+
+    /* Nada mas alla del fondo real. Una parada cuyo destino pase del scroll
+       maximo es un destino fantasma: el navegador clampea, dos paradas terminan
+       en el mismo pixel y el contador del panel se queda trabado. Se recortan y
+       la ultima se fija exactamente en el fondo. */
+    var maxTop = Math.max(0, docEnd - window.innerHeight) + margin();
+    var outFinal = [];
+    for (var f2 = 0; f2 < covered.length; f2++) {
+      var v = Math.min(covered[f2], maxTop);
+      if (!outFinal.length || v - outFinal[outFinal.length - 1] > 40) outFinal.push(v);
+    }
+    if (outFinal.length && outFinal[outFinal.length - 1] < maxTop - 40) outFinal.push(maxTop);
+    return outFinal;
   }
 
   function render() {
@@ -152,6 +394,7 @@
     render();
     root.classList.toggle('has-rail', stops.length > 1);
     track();
+    quietUntil = Date.now() + 400;
   }
 
   /* ---------- navegacion ---------- */
@@ -278,7 +521,17 @@
     window.addEventListener('resize', later);
     document.addEventListener('maremoto:lang', later);           /* el idioma cambia las alturas */
     document.addEventListener('toggle', later, true);            /* <details> abierto o cerrado */
-    if (window.ResizeObserver) new ResizeObserver(later).observe(document.body);
+    /* El ResizeObserver del body NO puede llamar a later() derecho viejo: medir
+       recorta aire, recortar aire cambia la altura del body, y eso dispara al
+       observer otra vez — remedir para siempre. Tras cada medicion hay una
+       ventana sorda; los cambios de verdad (resize de ventana, <details>,
+       idioma) entran por sus propios eventos, que no la respetan. */
+    if (window.ResizeObserver) {
+      new ResizeObserver(function () {
+        if (Date.now() < quietUntil) return;
+        later();
+      }).observe(document.body);
+    }
 
     /* Las tres formas de medir mal, y su reparacion:
        - las tipografias propias entran con font-display:swap y mueven TODA la
@@ -324,6 +577,20 @@
     get stops() { return stops.slice(); },
     get index() { return index; },
     get count() { return stops.length; },
+    get squeezed() { return squeezed.length; },
+    /* Para afinar el reparto desde la consola o el panel: las costuras que se
+       encontraron y los pasos que salieron, con su altura real. */
+    inspect: function () {
+      var ss = collect();
+      return {
+        seams: ss.map(function (x) { return { y: seamY(x), w: x.w,
+          el: x.el.tagName.toLowerCase() + '.' + String(x.el.className || '').split(' ')[0] + ':' + x.edge }; }),
+        steps: pack(ss, true).map(function (st) {
+          return { from: seamY(st.from), to: st.to ? seamY(st.to) : null, over: st.over };
+        }),
+        usable: usableH()
+      };
+    },
     go: go,
     drop: drop,
     next: function () { step(1); },

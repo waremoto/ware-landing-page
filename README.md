@@ -16,7 +16,7 @@ Abrir `index.html` en el navegador. No hay paso de build.
 | `index.html` | El sitio completo — 10 secciones |
 | `style.css` | Paletas + alias de tokens + layout. Modo por `data-theme`, paleta por `data-palette` |
 | `theme.js` | Modo, paleta y panel de debug. Bloqueante en el `<head>` de cada página |
-| `rail.js` | Paradas de scroll magnéticas medidas contra el viewport + navegación por flechas |
+| `rail.js` | Paradas de scroll por costuras del contenido + navegación por flechas |
 | `script.js` | Idioma, reveal al hacer scroll, borde del nav, diagramas. Sin dependencias |
 | `tools/gen_palettes.py` | Genera el bloque de paletas de `style.css` desde una tabla |
 | `tools/gen_swatch.py` | Genera las muestras del panel desde la misma tabla |
@@ -185,13 +185,30 @@ funciona mientras la sección quepa en pantalla. Acá la mitad no cabe, y menos
 con un `<details>` abierto: la sección quedaba con una sola parada arriba y su
 final no lo veía nadie.
 
-`rail.js` mide cada bloque contra el alto útil (viewport − barra) y lo parte en
-tramos con 12% de solape, repartidos parejos entre el inicio del bloque y el
-punto donde su final calza abajo. **La última parada de una sección larga
-termina exactamente en su borde inferior**, así que se recorre entera. Después
-rellena las costuras entre bloques: un salto de sección a sección puede pasar el
-alto de la pantalla (medido: 854px contra 832) y dejar una franja que no se ve
-completa en ninguna de las dos paradas.
+`rail.js` no reparte con una división: elige entre los cortes que el contenido ya
+tiene. Tres reglas, en orden.
+
+**1. Átomos — lo que no se parte.** `figure`, `.compare`, `.shell`, `.how`,
+`.grid`, `.fit`, `.steps`, `.cform`, `.notnegotiable`, y `data-rail="atom"` para
+marcar a mano cualquier otra cosa. Un átomo más alto que la pantalla sí se abre:
+si no, quedaría una franja imposible de mirar entera.
+
+**2. Empaquetado por costuras.** Desde cada parada se toma la costura más lejana
+que entre en pantalla. Eso junta las seis secciones plegadas —eran seis paradas
+al 30% de pantalla, ahora entran de a tres— y vuelve imposible cortar dentro de
+un átomo.
+
+**3. Presupuesto de aire.** Si a un paso le falta ≤9% para entrar, no se parte:
+se le baja `--rail-squeeze` a sus secciones (0.92 → 0.86 → 0.80) hasta que entra.
+**El aire cede; la tipografía no se toca nunca** — achicar texto cambia dónde
+cortan las líneas, y entonces la altura no baja de forma predecible: el mismo −4%
+saca 12px o 80px según si un titular pasa de tres líneas a dos. Un buscador
+iterando sobre eso oscila. El piso es 0.80 porque lo que se nota no es que una
+sección esté apretada sino que lo esté *al lado* de una que no.
+
+Lo que no se pueda pagar con aire, se parte — y después de todo eso corre un pase
+de cobertura que es la única regla innegociable: **ninguna franja puede quedar sin
+verse entera en algún paso**, aunque para lograrlo haya que cortar feo.
 
 Las paradas son marcas de 1px, absolutas y `aria-hidden`, dentro de un riel sin
 `pointer-events`. Se hace así —y no moviendo el scroll a mano en cada rueda—
@@ -203,9 +220,15 @@ Se remide al cambiar el tamaño, al abrir o cerrar un `<details>`, al cambiar de
 idioma (el español corre 20-25% más largo), cuando cargan las tipografías y al
 volver a una pestaña que estuvo oculta. Bajo 640px de alto no se engancha nada.
 
-El panel de debug muestra `paradas 7 / 17` — si una sección larga aparece con
-una sola parada, algo se midió mal. `window.maremotoRail` expone
-`{ stops, index, count, go, next, prev, refresh }`.
+Medido a 1440×900: **17 paradas mecánicas → 11 con sentido**, ningún átomo
+cortado, cero franjas sin cubrir. A 1200 de alto son 7; a 720, 14.
+
+El panel de debug muestra `paradas 7 / 11` y `aire cedido 2 secc.` — si una
+sección larga aparece con una sola parada, o si el aire cedido sube en una
+pantalla grande, algo se midió mal. `window.maremotoRail` expone
+`{ stops, index, count, squeezed, go, next, prev, refresh, inspect }`;
+`inspect()` devuelve las costuras encontradas y los pasos con su altura real,
+que es lo que se mira al afinar.
 
 ## Antes de tocar el contenido
 
