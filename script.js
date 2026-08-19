@@ -155,7 +155,6 @@
       el.value = en ? el.getAttribute('data-en-val') : el.getAttribute('data-es-val');
     });
 
-    try { localStorage.setItem(LANG_STORE, lang); } catch (e) { /* ignore */ }
 
     // lo que se dibuja desde JS se vuelve a dibujar en el idioma nuevo
     document.dispatchEvent(new CustomEvent('maremoto:lang', { detail: lang }));
@@ -164,40 +163,45 @@
   function t(pair) { return lang === 'en' ? pair[1] : pair[0]; }
 
   (function initLang() {
-    var saved = null;
-    try { saved = localStorage.getItem(LANG_STORE); } catch (e) { /* ignore */ }
-    if (saved !== 'es' && saved !== 'en') {
+    /* La preferencia tiene tres estados — 'auto' es la AUSENCIA de la clave, no
+       un valor guardado. Guardar 'auto' seria mentir: al dia siguiente el
+       visitante cambia el idioma del navegador y la pagina lo ignoraria.
+       theme.js es el duenyo de la preferencia (el panel la expone en tres
+       estados); este archivo es el duenyo del cambio, que es lo que sabe hacer. */
+    function preferred() {
+      var saved = null;
+      try { saved = localStorage.getItem(LANG_STORE); } catch (e) { /* ignore */ }
+      if (saved === 'es' || saved === 'en') return saved;
       var nav = (navigator.language || 'es').toLowerCase();
-      saved = nav.indexOf('es') === 0 ? 'es' : 'en';
+      return nav.indexOf('es') === 0 ? 'es' : 'en';
     }
-    applyLang(saved);
+
+    /* Superficie publica minima para theme.js: aplicar y leer. Escribir la
+       preferencia NO esta aca — una sola fuente de verdad para eso. */
+    window.maremotoLang = {
+      apply: applyLang,
+      current: function () { return lang; }
+    };
+
+    applyLang(preferred());
 
     var btn = document.getElementById('langToggle');
     if (btn) {
       btn.addEventListener('click', function () {
-        applyLang(lang === 'es' ? 'en' : 'es');
+        var next = lang === 'es' ? 'en' : 'es';
+        /* El boton de la barra es explicito: elegir a mano fija el idioma.
+           'auto' se recupera desde el panel de debug. */
+        if (window.maremotoTheme) window.maremotoTheme.setLang(next);
+        else applyLang(next);
       });
     }
   })();
 
-  /* ---------- tema ---------- */
-  var STORE = 'maremoto-theme';
-
-  try {
-    var savedTheme = localStorage.getItem(STORE);
-    if (savedTheme === 'light' || savedTheme === 'dark') root.setAttribute('data-theme', savedTheme);
-  } catch (e) { /* storage bloqueado: manda la preferencia del sistema */ }
-
-  var toggle = document.getElementById('themeToggle');
-  if (toggle) {
-    toggle.addEventListener('click', function () {
-      var systemLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-      var current = root.getAttribute('data-theme') || (systemLight ? 'light' : 'dark');
-      var next = current === 'dark' ? 'light' : 'dark';
-      root.setAttribute('data-theme', next);
-      try { localStorage.setItem(STORE, next); } catch (e) { /* ignore */ }
-    });
-  }
+  /* ---------- tema ----------
+     Modo, paleta y panel de debug viven en theme.js, que se carga bloqueante en
+     el <head> para aplicar el tema antes del primer pintado. Aca no queda nada:
+     tener dos scripts escribiendo data-theme fue exactamente el bug que se
+     evito moviendolo. */
 
   /* ---------- borde del nav al hacer scroll ---------- */
   var nav = document.getElementById('nav');
@@ -333,7 +337,11 @@
       cells.push({
         cols: cols,
         texts: [
-          [label, [client[0], client[1]]], [lockT, ISOLATED],
+          /* [lockT, ISOLATED] salio de aca junto con el candado: quedo comentado
+             arriba pero seguia referenciado, y la constructora del diagrama
+             tiraba ReferenceError en cada carga (visible en la consola desde
+             que se saco el candado). */
+          [label, [client[0], client[1]]],
           [cap, ENGINEERS[engineers - 1]], [count, agentsPair(agents)]
         ]
       });

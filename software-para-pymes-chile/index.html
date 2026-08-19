@@ -5,11 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Software para pymes en Chile — Maremoto</title>
 <meta name="description" content="Software para pymes en Chile sin contratar un equipo entero: uno o dos ingenieros a cargo, agentes en lo repetible, rampa de entrada acorde a caja y salida a 60 días sin causa.">
-<meta name="theme-color" content="#0B0D10">
+<!-- Sigue a la paleta por defecto (DEFAULTS.palette en theme.js). Si cambia, cambia aca. -->
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <link rel="canonical" href="https://maremoto.dev/software-para-pymes-chile/">
 
 <link rel="preload" href="/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<!-- Bloqueante y antes del CSS a proposito: aplica modo+paleta guardados
+     antes del primer pintado. Con defer, la pagina parpadea. -->
+<script src="/theme.js"></script>
 <link rel="stylesheet" href="/style.css">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/icon-180.png">

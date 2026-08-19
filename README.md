@@ -14,8 +14,11 @@ Abrir `index.html` en el navegador. No hay paso de build.
 | Archivo | Rol |
 |---|---|
 | `index.html` | El sitio completo — 10 secciones |
-| `style.css` | Tokens de diseño + layout. Tema claro/oscuro por `data-theme` y `prefers-color-scheme` |
-| `script.js` | Toggle de tema, reveal al hacer scroll, borde del nav. Sin dependencias |
+| `style.css` | Paletas + alias de tokens + layout. Modo por `data-theme`, paleta por `data-palette` |
+| `theme.js` | Modo, paleta y panel de debug. Bloqueante en el `<head>` de cada página |
+| `script.js` | Idioma, reveal al hacer scroll, borde del nav, diagramas. Sin dependencias |
+| `tools/gen_palettes.py` | Genera el bloque de paletas de `style.css` desde una tabla |
+| `tools/gen_swatch.py` | Genera las muestras del panel desde la misma tabla |
 | `CNAME` | Dominio canónico de GitHub Pages |
 | `portfolio/` | Redirect legado al portafolio gamedev en Notion. No enlazado desde el landing |
 
@@ -73,6 +76,81 @@ Cambios aplicados vía API de Cloudflare:
 - **`always_use_https` está en `off`** en ambas zonas. Si se quiere forzar HTTP→HTTPS en el edge, hay que
   encenderlo; hoy lo cubre `automatic_https_rewrites`.
 - Tras cada push, si el contenido no aparece: purgar caché de la zona.
+
+## Temas y panel de debug
+
+Dos ejes independientes en `<html>`, ambos aplicados por `theme.js` antes del
+primer pintado:
+
+| Atributo | Valores | Ausente significa |
+|---|---|---|
+| `data-theme` | `light` \| `dark` | manda `prefers-color-scheme` |
+| `data-palette` | `maremoto` \| `default` \| `monochrome` \| `ocean` \| `warm` \| `rose` \| `lowcontrast` | `DEFAULTS.palette` (hoy `default`) |
+
+`maremoto` es la paleta de marca. Las otras seis son las de GhostShell
+(`Ghost/docs/reference/ghostshell-style.md` §3.1), para poder mirar la landing y
+el cockpit lado a lado sin que parezcan dos productos.
+
+### Lo que ve un visitante nuevo
+
+Lo define **`DEFAULTS` en `theme.js`** y nada más:
+
+```js
+var DEFAULTS = {
+  palette: 'default',   // Ghost — mono, máximo contraste
+  mode: 'auto',         // sigue a prefers-color-scheme
+  lang: 'auto',         // sigue a navigator.language
+  calm: false
+};
+```
+
+Cualquier preferencia guardada gana sobre esto; vaciar `localStorage` vuelve
+acá. `window.maremotoTheme.get()` incluye `siteDefaults`, así que al leer un
+estado copiado se distingue de un vistazo qué es el sitio y qué es la
+preferencia de quien lo copió.
+
+Tres cosas hay que mover **juntas** al cambiar la paleta por defecto —el CSS es
+el camino sin JS y las metas las lee el navegador antes de todo:
+
+1. `DEFAULTS.palette` en `theme.js`
+2. `DEFAULT` en `tools/gen_palettes.py`, y regenerar (abajo)
+3. `<meta name="theme-color">` en las 6 páginas — el color de la barra del
+   navegador en móvil
+
+`mode: 'auto'` no escribe `data-theme`: "auto" es la *ausencia* del atributo, y
+así lo resuelve el CSS con `prefers-color-scheme` sin que JS tenga que
+reaccionar. Igual el idioma: `'auto'` es la ausencia de `maremoto-lang` en
+`localStorage`. Guardar el valor resuelto sería mentir —quien cambie el idioma
+de su navegador mañana seguiría viendo el de hoy.
+
+**El panel de debug se abre con `Ctrl+Alt+D`** (o `?debug=1` en la URL; `Esc`
+cierra). Trae selector de paleta, modo, modo quieto —el equivalente del
+`ghost-calm` del dashboard—, idioma en tres estados (`auto` / ES / EN; el botón
+de la barra solo sabe ES/EN, así que volver a `auto` solo se hace acá), y el
+**contraste medido** de cada nivel de
+tinta contra el fondo real, en verde o rojo según el piso AA de 4.5:1. No existe
+en el DOM hasta que se abre por primera vez; el visitante solo ve el botón de
+modo en la barra.
+
+`Ctrl+Alt+D` y no `Ctrl+Shift+D`, que en Chrome es "marcar todas las pestañas".
+
+### Cambiar o agregar una paleta
+
+Los valores viven en `tools/gen_palettes.py`, no a mano en el CSS:
+
+```bash
+cd D:/ware/ware-landing-page; python tools/gen_palettes.py > /tmp/pal.css; python tools/gen_swatch.py > /tmp/sw.css #
+```
+
+y se pegan sobre los dos bloques generados de `style.css` (`--g-*` y `.dbg-sw`).
+Después medir: abrir el panel y recorrer las 7 paletas × 2 modos mirando la
+lectura de contraste. Así se corrigieron dos acentos claros que no llegaban al
+piso AA (marca 4.06 → 4.61, `warm` 4.27 → 4.75). `lowcontrast` falla a propósito
+—reproduce el default viejo de GhostShell— y por eso está rotulado en el panel.
+
+Nadie fuera del bloque de paletas escribe un hex: el resto de la hoja usa los
+alias (`--ink`, `--fg`, `--line`, `--accent`…). Un color literal en una regla es
+un bug que solo aparece en el tema que no probaste.
 
 ## Antes de tocar el contenido
 
