@@ -146,6 +146,16 @@
 
   if (read(K_CALM) === '1' || (DEFAULTS.calm && read(K_CALM) === null)) root.classList.add('calm');
 
+  /* Migracion, una sola vez. La version anterior guardaba el idioma RESUELTO en
+     cada carga, asi que todo visitante que ya paso por el sitio tiene la clave
+     puesta y para el 'auto' no existiria nunca. El valor guardado no es prueba
+     de que alguien haya elegido nada — lo escribio el codigo — asi que se
+     limpia. Quien si eligio, vuelve a elegir una vez. */
+  if (read('maremoto-lang-v') !== '2') {
+    write(K_LANG, null);
+    write('maremoto-lang-v', '2');
+  }
+
   /* ---------- contraste medido ---------- */
 
   /* Se mide contra el fondo que quedo pintado, no se declara. Un hex mal

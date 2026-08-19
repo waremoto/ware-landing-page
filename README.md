@@ -134,6 +134,22 @@ modo en la barra.
 
 `Ctrl+Alt+D` y no `Ctrl+Shift+D`, que en Chrome es "marcar todas las pestañas".
 
+### Al desplegar: subir `?v=` de los assets
+
+Los `<link>`/`<script>` de las 6 páginas llevan `?v=AAAAMMDD`. **Cambiar
+`style.css`, `script.js` o `theme.js` sin subir ese número deja el sitio a medio
+desplegar**: el HTML tiene `max-age=600` pero Cloudflare estaba sirviendo un
+`style.css` con `age` de 2,4 días pese a su `max-age=3600` —edge TTL propio—, así
+que el 2026-08-19 salió el markup nuevo con la hoja vieja. La query string es una
+URL distinta y el edge no la tiene.
+
+```bash
+cd D:/ware/ware-landing-page; grep -rn "?v=" --include=*.html . #
+```
+
+Para que el cambio se vea *ya* en vez de al expirar el caché, purgar el caché de
+Cloudflare de la zona `maremoto.dev` (dashboard → Caching → Purge Everything).
+
 ### Cambiar o agregar una paleta
 
 Los valores viven en `tools/gen_palettes.py`, no a mano en el CSS:
