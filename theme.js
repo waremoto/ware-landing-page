@@ -329,6 +329,7 @@
       effectiveLang: window.maremotoLang ? window.maremotoLang.current() : (root.getAttribute('lang') || effectiveLang()),
       contrastVsBg: c,
       viewport: window.innerWidth + 'x' + window.innerHeight,
+      rail: window.maremotoRail ? { stops: window.maremotoRail.count, at: window.maremotoRail.index } : null,
       /* Lo que veria alguien sin nada guardado — para poder comparar de un
          vistazo si lo que estas mirando es el sitio o tu propia preferencia. */
       siteDefaults: DEFAULTS,
@@ -358,6 +359,17 @@
       list.appendChild(li);
     });
     panel._meas.appendChild(list);
+
+    /* Riel de scroll: cuantas paradas quedaron y en cual estamos. Es el numero
+       que uno quiere ver al tocar el reparto de tramos de rail.js — si una
+       seccion larga da una sola parada, algo se midio mal. */
+    if (window.maremotoRail) {
+      var r = window.maremotoRail;
+      var li2 = el('li');
+      li2.appendChild(el('span', 'dbg-k', 'paradas'));
+      li2.appendChild(el('span', 'dbg-v', r.count ? (r.index + 1) + ' / ' + r.count : 'sin riel'));
+      list.appendChild(li2);
+    }
   }
 
   function toggle(force) {

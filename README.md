@@ -16,6 +16,7 @@ Abrir `index.html` en el navegador. No hay paso de build.
 | `index.html` | El sitio completo — 10 secciones |
 | `style.css` | Paletas + alias de tokens + layout. Modo por `data-theme`, paleta por `data-palette` |
 | `theme.js` | Modo, paleta y panel de debug. Bloqueante en el `<head>` de cada página |
+| `rail.js` | Paradas de scroll magnéticas medidas contra el viewport + navegación por flechas |
 | `script.js` | Idioma, reveal al hacer scroll, borde del nav, diagramas. Sin dependencias |
 | `tools/gen_palettes.py` | Genera el bloque de paletas de `style.css` desde una tabla |
 | `tools/gen_swatch.py` | Genera las muestras del panel desde la misma tabla |
@@ -167,6 +168,44 @@ piso AA (marca 4.06 → 4.61, `warm` 4.27 → 4.75). `lowcontrast` falla a prop�
 Nadie fuera del bloque de paletas escribe un hex: el resto de la hoja usa los
 alias (`--ink`, `--fg`, `--line`, `--accent`…). Un color literal en una regla es
 un bug que solo aparece en el tema que no probaste.
+
+## Scroll por pasos (`rail.js`)
+
+El sitio se recorre en **pasos que nunca son más altos que la pantalla**, con
+imán del navegador y flechas del teclado:
+
+| Tecla | |
+|---|---|
+| `↓` `→` `AvPág` | siguiente parada |
+| `↑` `←` `RePág` | anterior |
+| `Inicio` / `Fin` | primera / última |
+
+Enganchar el imán al borde de cada `<section>` —lo que hacía antes— sólo
+funciona mientras la sección quepa en pantalla. Acá la mitad no cabe, y menos
+con un `<details>` abierto: la sección quedaba con una sola parada arriba y su
+final no lo veía nadie.
+
+`rail.js` mide cada bloque contra el alto útil (viewport − barra) y lo parte en
+tramos con 12% de solape, repartidos parejos entre el inicio del bloque y el
+punto donde su final calza abajo. **La última parada de una sección larga
+termina exactamente en su borde inferior**, así que se recorre entera. Después
+rellena las costuras entre bloques: un salto de sección a sección puede pasar el
+alto de la pantalla (medido: 854px contra 832) y dejar una franja que no se ve
+completa en ninguna de las dos paradas.
+
+Las paradas son marcas de 1px, absolutas y `aria-hidden`, dentro de un riel sin
+`pointer-events`. Se hace así —y no moviendo el scroll a mano en cada rueda—
+porque **el imán lo pone el navegador**: la inercia del trackpad, la barra y el
+teclado siguen siendo nativos. Borrar `rail.js` deja el sitio scrolleando como
+siempre (el CSS mantiene una parada por sección vía `html:not(.has-rail)`).
+
+Se remide al cambiar el tamaño, al abrir o cerrar un `<details>`, al cambiar de
+idioma (el español corre 20-25% más largo), cuando cargan las tipografías y al
+volver a una pestaña que estuvo oculta. Bajo 640px de alto no se engancha nada.
+
+El panel de debug muestra `paradas 7 / 17` — si una sección larga aparece con
+una sola parada, algo se midió mal. `window.maremotoRail` expone
+`{ stops, index, count, go, next, prev, refresh }`.
 
 ## Antes de tocar el contenido
 

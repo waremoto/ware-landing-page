@@ -321,17 +321,40 @@
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
-/* Las secciones tienden a quedar calzadas bajo la barra en vez de partidas por
-   la mitad. "proximity" y no "mandatory": corrige solo cuando el scroll ya se
-   detuvo cerca de un borde, nunca secuestra el gesto. Y alinea al inicio y no
-   al centro: una seccion mas alta que la pantalla, centrada, se come su propio
+/* Las secciones quedan calzadas bajo la barra en vez de partidas por la mitad.
+   "proximity" y no "mandatory": corrige solo cuando el scroll ya se detuvo
+   cerca de una parada, nunca secuestra el gesto. Y alinea al inicio y no al
+   centro: una seccion mas alta que la pantalla, centrada, se come su propio
    titulo. En pantallas bajas no se activa, porque ahi todo es mas alto que la
-   ventana y el ajuste solo estorbaria. */
+   ventana y el ajuste solo estorbaria.
+
+   QUIEN PONE LAS PARADAS. Con rail.js cargado (`html.has-rail`) son las marcas
+   del riel, medidas contra el viewport, y las secciones DEJAN de ser parada
+   ellas mismas — si no, una seccion larga tendria dos imanes peleando en su
+   borde superior. Sin JS gana la regla de abajo y el sitio se comporta como
+   antes: una parada por seccion. */
 @media (min-height: 640px) {
   html { scroll-snap-type: y proximity; }
-  .hero, .section { scroll-snap-align: start; }
+  html:not(.has-rail) .hero,
+  html:not(.has-rail) .section { scroll-snap-align: start; }
 }
 .hero, .section { scroll-margin-top: calc(var(--nav-h) + .25rem); }
+
+/* El riel: marcas de 1px en coordenadas del documento. Sin ancho, sin color y
+   sin pointer-events — existen solo para que el navegador tenga donde enganchar.
+   `contain: layout size` para que no participen del layout de nadie. */
+.snap-rail {
+  position: absolute; top: 0; left: 0;
+  width: 0; height: 0;
+  pointer-events: none;
+  contain: layout size;
+}
+.snap-rail i {
+  position: absolute; left: 0;
+  width: 1px; height: 1px;
+  scroll-snap-align: start;
+  scroll-margin-top: calc(var(--nav-h) + .25rem);
+}
 
 body {
   background: var(--ink);
