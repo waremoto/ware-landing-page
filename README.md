@@ -169,59 +169,30 @@ Nadie fuera del bloque de paletas escribe un hex: el resto de la hoja usa los
 alias (`--ink`, `--fg`, `--line`, `--accent`…). Un color literal en una regla es
 un bug que solo aparece en el tema que no probaste.
 
-## Scroll por pasos (`rail.js`)
+## Scroll por secciones (`rail.js`)
 
-El sitio se recorre en **pasos que nunca son más altos que la pantalla**, con
-imán del navegador y flechas del teclado:
+Una parada por `<section>` (y el hero), en su **borde superior**. El teclado
+salta al tope de la próxima sección — nada más:
 
 | Tecla | |
 |---|---|
-| `↓` `→` `AvPág` | siguiente parada |
+| `↓` `→` `AvPág` | siguiente sección |
 | `↑` `←` `RePág` | anterior |
 | `Inicio` / `Fin` | primera / última |
 
-Enganchar el imán al borde de cada `<section>` —lo que hacía antes— sólo
-funciona mientras la sección quepa en pantalla. Acá la mitad no cabe, y menos
-con un `<details>` abierto: la sección quedaba con una sola parada arriba y su
-final no lo veía nadie.
+Si una sección no entra completa en la pantalla, se corta — a propósito. El
+teclado muestra el próximo título, no cada tramo de contenido; para ver el
+resto de una sección larga se scrollea a mano, como en cualquier página.
 
-`rail.js` no reparte con una división: elige entre los cortes que el contenido ya
-tiene. Tres reglas, en orden.
+El imán al soltar el mouse o el trackpad es **CSS puro**
+(`scroll-snap-align: start` en `.hero`/`.section`, ver `style.css`) —
+`rail.js` no lo toca, solo añade la navegación por teclado entre esos mismos
+bordes, usando el mismo `scroll-margin-top` que ya define el CSS para que
+ambos caminos terminen en el mismo píxel. Borrar `rail.js` deja el sitio
+scrolleando exactamente igual, solo sin las flechas.
 
-**1. Átomos — lo que no se parte.** `figure`, `.compare`, `.shell`, `.how`,
-`.grid`, `.fit`, `.steps`, `.cform`, `.notnegotiable`, y `data-rail="atom"` para
-marcar a mano cualquier otra cosa. Un átomo más alto que la pantalla sí se abre:
-si no, quedaría una franja imposible de mirar entera.
-
-**2. Empaquetado por costuras.** Desde cada parada se toma la costura más lejana
-que entre en pantalla. Eso junta las seis secciones plegadas —eran seis paradas
-al 30% de pantalla, ahora entran de a tres— y vuelve imposible cortar dentro de
-un átomo.
-
-**3. Presupuesto de aire.** Si a un paso le falta ≤9% para entrar, no se parte:
-se le baja `--rail-squeeze` a sus secciones (0.92 → 0.86 → 0.80) hasta que entra.
-**El aire cede; la tipografía no se toca nunca** — achicar texto cambia dónde
-cortan las líneas, y entonces la altura no baja de forma predecible: el mismo −4%
-saca 12px o 80px según si un titular pasa de tres líneas a dos. Un buscador
-iterando sobre eso oscila. El piso es 0.80 porque lo que se nota no es que una
-sección esté apretada sino que lo esté *al lado* de una que no.
-
-Lo que no se pueda pagar con aire, se parte — y después de todo eso corre un pase
-de cobertura que es la única regla innegociable: **ninguna franja puede quedar sin
-verse entera en algún paso**, aunque para lograrlo haya que cortar feo.
-
-Las paradas son marcas de 1px, absolutas y `aria-hidden`, dentro de un riel sin
-`pointer-events`. Se hace así —y no moviendo el scroll a mano en cada rueda—
-porque **el imán lo pone el navegador**: la inercia del trackpad, la barra y el
-teclado siguen siendo nativos. Borrar `rail.js` deja el sitio scrolleando como
-siempre (el CSS mantiene una parada por sección vía `html:not(.has-rail)`).
-
-Se remide al cambiar el tamaño, al abrir o cerrar un `<details>`, al cambiar de
-idioma (el español corre 20-25% más largo), cuando cargan las tipografías y al
-volver a una pestaña que estuvo oculta. Bajo 640px de alto no se engancha nada.
-
-Medido a 1440×900: **17 paradas mecánicas → 11 con sentido**, ningún átomo
-cortado, cero franjas sin cubrir. A 1200 de alto son 7; a 720, 14.
+Bajo 640px de alto no se engancha nada — ahí casi todo es más alto que la
+ventana y saltar de sección en sección no ayuda.
 
 El panel de debug muestra `paradas 7 / 11` y `aire cedido 2 secc.` — si una
 sección larga aparece con una sola parada, o si el aire cedido sube en una
